@@ -65,12 +65,12 @@ Graph::Graph(int** tmp,int i){
         disTime[j] = -1;
         finTime[j] = -1;
     }
-    cout << "In class Graph constructor" <<endl;
-    for(int k = 0 ; k<length; k++){
-        for(int j = 0 ; j<length ; j++)
-            cout << matrix[k][j] << " ";
-        cout <<endl;
-    }    
+    // cout << "In class Graph constructor" <<endl;
+    // for(int k = 0 ; k<length; k++){
+    //     for(int j = 0 ; j<length ; j++)
+    //         cout << matrix[k][j] << " ";
+    //     cout <<endl;
+    // }    
 }
 
 
@@ -122,7 +122,7 @@ bool ReadCmd::exec(int argc, char **argv) {
         inFile >> tmp >> tmp;
         // cout << "tmp: " << tmp << endl;
         suc = atoi(tmp.substr(1).c_str());
-        cout << "(pre,suc) : " << pre <<" " << suc <<endl;
+        // cout << "(pre,suc) : " << pre <<" " << suc <<endl;
         inFile.getline(buf,256);
         // cout << "buf: " << buf << endl;
         string str(buf);
@@ -131,12 +131,12 @@ bool ReadCmd::exec(int argc, char **argv) {
         // cout << "str.sub: " << str.substr(pos+1,last-pos-1) << endl;
         matrix[pre][suc] = atoi(str.substr(pos+1,last-pos-1).c_str());
     }
-    cout << "lalala" <<endl;
-    for(int i = 0 ; i<vertexNum; i++){
-        for(int j = 0 ; j<vertexNum ; j++)
-            cout << matrix[i][j] << " ";
-        cout <<endl;
-    }
+    // cout << "lalala" <<endl;
+    // for(int i = 0 ; i<vertexNum; i++){
+    //     for(int j = 0 ; j<vertexNum ; j++)
+    //         cout << matrix[i][j] << " ";
+    //     cout <<endl;
+    // }
 
     graph = new Graph(matrix,vertexNum);
 
@@ -166,7 +166,7 @@ WriteDfsCmd::~WriteDfsCmd() {}
 bool WriteDfsCmd::exec(int argc, char **argv) {
     optMgr_.parse(argc, argv);
 
-    if (argc < 4) {
+    if (argc < 5) {        
         fprintf(stderr, "**ERROR SysSetCmd::exec(): ");
         fprintf(stderr, "variable and value needed\n");
         return false;
@@ -182,7 +182,7 @@ bool WriteDfsCmd::exec(int argc, char **argv) {
     string tmp;
     
     if (optMgr_.getParsedOpt("s")) {
-        cout << "sourcenode: " << optMgr_.getParsedValue("s") <<endl;
+        // cout << "sourcenode: " << optMgr_.getParsedValue("s") <<endl;
         tmp = optMgr_.getParsedValue("s");
         sourcenode = atoi(tmp.substr(1).c_str());
     }
@@ -202,9 +202,9 @@ bool WriteDfsCmd::exec(int argc, char **argv) {
             DFS_VISIT(sourcenode,time);
 
 
-    for(int i=0;i<graph->getlength();i++){
-        cout<<graph->getPre(i) << " " <<endl;
-    }
+    // for(int i=0;i<graph->getlength();i++){
+    //     cout<<graph->getPre(i) << " " <<endl;
+    // }
 
 
     //==============================
@@ -212,7 +212,7 @@ bool WriteDfsCmd::exec(int argc, char **argv) {
 
     list<int> finTimeList;
     for(int j=0;j<graph->getlength();j++){
-        cout << j << " FinTime: " << graph->getFinTime(j) <<endl;
+        // cout << j << " FinTime: " << graph->getFinTime(j) <<endl;
         finTimeList.push_back(graph->getFinTime(j));
         graph->finTimeMap[graph->getFinTime(j)] = j;
     }
@@ -224,7 +224,7 @@ bool WriteDfsCmd::exec(int argc, char **argv) {
         int suc = graph->finTimeMap[*it];
         int pre = graph->getPre(suc);        
         if(pre!=-1){
-            cout << "(pre,suc): " << pre << " " << suc << endl;
+            // cout << "(pre,suc): " << pre << " " << suc << endl;
             outFile << "v" << pre << " -- v" << suc ;
             if(graph->getMatrix(pre,suc)!=0)
                 outFile << " [label = " << graph->getMatrix(pre,suc) << "];" << endl;
@@ -240,8 +240,8 @@ bool WriteDfsCmd::exec(int argc, char **argv) {
 }
 
 void WriteDfsCmd::DFS_VISIT(int i,int& time){
-    cout << endl;
-    cout << "i: " << i <<endl;
+    // cout << endl;
+    // cout << "i: " << i <<endl;
     time+=1;
     graph->setDisTime(i,time);
     graph->setColor(i,0); //color:gray
@@ -261,9 +261,9 @@ void WriteDfsCmd::DFS_VISIT(int i,int& time){
         }
     }
     vertexlist.sort();    
-    cout << "vertexlist.sort(): " <<endl;
-    for(list<int>::iterator it = vertexlist.begin();it!=vertexlist.end();it++)
-        cout << *it << " ";    
+    // cout << "vertexlist.sort(): " <<endl;
+    // for(list<int>::iterator it = vertexlist.begin();it!=vertexlist.end();it++)
+    //     cout << *it << " ";    
 
     for(list<int>::iterator it = vertexlist.begin();it!=vertexlist.end();it++)
         DFS_VISIT(graph->sucMap[*it],time);
@@ -272,8 +272,32 @@ void WriteDfsCmd::DFS_VISIT(int i,int& time){
     time += 1;
     // if(!vertexlist.empty() ){
     if(graph->getFinTime(i)==-1){
-        cout << "graph->setFinTime("<<i<<","<<time<<")"<<endl;
+        // cout << "graph->setFinTime("<<i<<","<<time<<")"<<endl;
         graph->setFinTime(i,time);
     }
 }
 
+
+WriteBfsCmd::WriteBfsCmd(const char * const name) : Cmd(name) {
+    optMgr_.setShortDes("Perform depth first search starting from source node.  Then write to a dot file.");
+    optMgr_.setDes("test");
+
+    Opt *opt = new Opt(Opt::BOOL, "print usage", "");
+    opt->addFlag("h");
+    opt->addFlag("help");
+    optMgr_.regOpt(opt);
+
+    opt = new Opt(Opt::STR_REQ, "", "<sourcenode>");
+    opt->addFlag("s");
+    optMgr_.regOpt(opt);
+
+    opt = new Opt(Opt::STR_REQ, "", "<dot_filename>");
+    opt->addFlag("o");
+    optMgr_.regOpt(opt);
+}
+
+WriteBfsCmd::~WriteBfsCmd() {}
+
+bool WriteBfsCmd::exec(int argc, char **argv) {
+
+}

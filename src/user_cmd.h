@@ -66,5 +66,14 @@ public:
     void DFS_VISIT(int i,int& time);    
 };
 
+class WriteBfsCmd : public CommonNs::Cmd {
+public:
+         WriteBfsCmd(const char * const name);
+         ~WriteBfsCmd();
+
+    bool exec(int argc, char **argv);    
+};
+
+
 #endif
 
