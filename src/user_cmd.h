@@ -4,6 +4,8 @@
 // Synopsis   [ ]
 // Date       [ 2012/04/10 created ]
 // **************************************************************************
+#include <map>
+#include <iostream>
 
 #ifndef _TEST_CMD_H_
 #define _TEST_CMD_H_
@@ -22,13 +24,27 @@ class Graph{
 public:
     Graph(int** tmp,int i);
     int getlength(){return length;}
+    int getColor(int i){return color[i];}
+    int getPre(int i){return pre[i];}
+    int getDisTime(int i){return disTime[i];}
+    int getFinTime(int i){return finTime[i];}
+    int getMatrix(int i,int j){return matrix[i][j];}
 
+	void setColor(int i,int x){color[i]=x;}
+    void setPre(int i,int x){pre[i]=x;}
+    void setDisTime(int i,int x){disTime[i]=x;}
+    void setFinTime(int i,int x){finTime[i]=x;}
+    void setMatrix(int i,int j,int x){matrix[i][j]=x;}
+
+    map<int,int> sucMap;
+    map<int,int> finTimeMap;
+
+private:
     int* color;
     int* pre;
     int* disTime;
     int* finTime;
 	int** matrix;
-private:
     int length;
 };
 

@@ -1,7 +1,8 @@
 AR       := ar
 ARFLAGS  := cr
 CXX      := g++
-CPPFLAGS := -O2
+# CPPFLAGS := -O2
+CPPFLAGS := -O0 -g
 
 all : libgraphlab.a
 	@echo -n ""

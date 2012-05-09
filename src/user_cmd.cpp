@@ -11,6 +11,7 @@
 #include <iostream>
 #include <fstream>
 #include <list>
+#include <map>
 using namespace std;
 using namespace CommonNs;
 
@@ -54,6 +55,16 @@ bool TestCmd::exec(int argc, char **argv) {
 Graph::Graph(int** tmp,int i){
     matrix = tmp;
     length = i;
+    color = new int[length];
+    pre = new int[length];
+    disTime = new int[length];
+    finTime = new int[length];
+    for(int j=0;j<length;j++){
+        color[j] = -1;
+        pre[j] = -1;
+        disTime[j] = -1;
+        finTime[j] = -1;
+    }
 }
 
 
@@ -173,21 +184,32 @@ bool WriteDfsCmd::exec(int argc, char **argv) {
     //     return false;
     // }
 
-    //========dfs
+    //========dfs 
+    //(white,gray,black)==(-1,0,1)
     for(int i=0;i<graph->getlength();i++){
-        graph->color[i] = -1;
-        graph->pre[i] = -1;
+        graph->setColor(i,0);
+        graph->setPre(i,-1); //nil
     }
 
     int time = 0;
 
     for(int i=0;i<graph->getlength();i++)
-        if(graph->color[i] == -1)
+        if(graph->getColor(i) == -1)
             DFS_VISIT(i,time);
 
     //========print out
-    // for(int j=0;j<graph->length();j++)
+    list<int> finTimeList;
+    for(int j=0;j<graph->getlength();j++){
+        finTimeList.push_back(graph->getFinTime(j));
+        graph->finTimeMap[graph->getFinTime(j)] = j;
+    }
+    finTimeList.sort();
 
+    // for(list<int>::iterator it=finTimeList.end()-1;it!=finTimeList.begin();it--)
+    //     outFile << "v" << graph->finTimeMap[*it]
+    //     outFile << " [label = " << 
+
+    // print first
 
     outFile << "}";
     outFile.close();
@@ -196,23 +218,29 @@ bool WriteDfsCmd::exec(int argc, char **argv) {
 
 void WriteDfsCmd::DFS_VISIT(int i,int time){
     time+=1;
-    graph->disTime[i] = time;
-    graph->color[i] = 0;
+    graph->setDisTime(i,time);
+    graph->setColor(i,0);
     list<int> vertexlist;
-    for(int j=0;j<graph->getlength();j++)
-        if(graph->matrix[i][j]!=0){
-            if(graph->color[j] == -1)
-                vertexlist.push_back(graph->matrix[i][j]);
+    for(int j=0;j<graph->getlength();j++){
+        if(graph->getMatrix(i,j)!=0){
+            if(graph->getColor(j) == -1){
+                vertexlist.push_back(graph->getMatrix(i,j));
+                graph->setPre(j,i);
+                graph->sucMap[graph->getMatrix(i,j)] = j;
+            }
         }
-        else if(graph->matrix[j][i]!=0){
-            if(graph->color[j] == -1)
-                vertexlist.push_back(graph->matrix[j][i]);
+        else if(graph->getMatrix(j,i)!=0){
+            if(graph->getColor(j) == -1){
+                vertexlist.push_back(graph->getMatrix(j,i));
+                graph->setPre(j,i);
+                graph->sucMap[graph->getMatrix(j,i)] = j;
+            }
         }
-
+    }
     vertexlist.sort();
     for(list<int>::iterator it = vertexlist.begin();it!=vertexlist.end();it++)
-        DFS_VISIT(*it,time);
-    graph->color[i] = 1;
+        DFS_VISIT(graph->sucMap[*it],time);
+    graph->setColor(i,1);
     time += 1;
-    graph->finTime[i] = time;
+    graph->setFinTime(i,time);
 }
