@@ -166,6 +166,12 @@ WriteDfsCmd::~WriteDfsCmd() {}
 bool WriteDfsCmd::exec(int argc, char **argv) {
     optMgr_.parse(argc, argv);
 
+    if (argc < 4) {
+        fprintf(stderr, "**ERROR SysSetCmd::exec(): ");
+        fprintf(stderr, "variable and value needed\n");
+        return false;
+    }    
+
     if (optMgr_.getParsedOpt("h")) {
         optMgr_.usage();
         return true;
@@ -174,7 +180,7 @@ bool WriteDfsCmd::exec(int argc, char **argv) {
     int sourcenode;
     ofstream outFile;
     string tmp;
-    // try{
+    
     if (optMgr_.getParsedOpt("s")) {
         cout << "sourcenode: " << optMgr_.getParsedValue("s") <<endl;
         tmp = optMgr_.getParsedValue("s");
@@ -184,24 +190,15 @@ bool WriteDfsCmd::exec(int argc, char **argv) {
         cout << optMgr_.getParsedValue("o") <<endl;
         outFile.open(optMgr_.getParsedValue("o"));
     }
+
+
     outFile << "graph gn" << graph->getlength() << "_dfs {" << endl;
-    // }catch(string e){
-    //     cout << "lack sth!: " << e << endl;
-    //     return false;
-    // }
 
-    //========dfs 
-    //(white,gray,black)==(-1,0,1)
-    // for(int i=0;i<graph->getlength();i++){
-    //     graph->setColor(i,0);
-    //     graph->setPre(i,-1); //nil
-    // }
-
-    int time = 0;
-
-    //didn't consider source....
+    //==============================
+    //dfs
+    int time = 0;    
     for(int j=0;j<graph->getlength();j++)
-        if((graph->getMatrix(sourcenode,j)!=0)&&(graph->getColor(j) == -1))
+        if((graph->getMatrix(sourcenode,j)!=0 || graph->getMatrix(j,sourcenode)!=0)&&(graph->getColor(j) == -1))
             DFS_VISIT(sourcenode,time);
 
 
@@ -220,19 +217,12 @@ bool WriteDfsCmd::exec(int argc, char **argv) {
         graph->finTimeMap[graph->getFinTime(j)] = j;
     }
     finTimeList.sort();
-    // list<int>::iterator it=finTimeList.begin();
-    // int index = 0;
-    // for(;it!=finTimeList.end();it++){        
-    //     cout << index << ": " << *it << endl;
-    //     index++;
-    // }
 
     list<int>::iterator it=finTimeList.end();
     it--;
     for(;;it--){
         int suc = graph->finTimeMap[*it];
-        int pre = graph->getPre(suc);
-        //pre == -1 ??sourcenode....
+        int pre = graph->getPre(suc);        
         if(pre!=-1){
             cout << "(pre,suc): " << pre << " " << suc << endl;
             outFile << "v" << pre << " -- v" << suc ;
@@ -256,42 +246,34 @@ void WriteDfsCmd::DFS_VISIT(int i,int& time){
     graph->setDisTime(i,time);
     graph->setColor(i,0); //color:gray
     list<int> vertexlist;
-    for(int j=0;j<graph->getlength();j++){
-        cout << "getM(i,j): " << graph->getMatrix(i,j) <<endl;
-        cout << "getM(j,i): " << graph->getMatrix(j,i) <<endl;
-        if(graph->getColor(j) == -1){ //color:white
+    for(int j=0;j<graph->getlength();j++){        
+        if( graph->getColor(j) == -1){ //color:white
             if(graph->getMatrix(i,j)!=0){
                 vertexlist.push_back(graph->getMatrix(i,j));                    
                 graph->sucMap[graph->getMatrix(i,j)] = j;
+                graph->setPre(j,i);
             }
             else if(graph->getMatrix(j,i)!=0){
                 vertexlist.push_back(graph->getMatrix(j,i));             
                 graph->sucMap[graph->getMatrix(j,i)] = j;
+                graph->setPre(j,i);
             }
-            graph->setPre(j,i);
-            cout << "graph->setPre(j,i): " << j <<" "<< i << endl;
         }
     }
-    vertexlist.sort();
-    cout << "after vertexlist.sort(): "<<endl;
+    vertexlist.sort();    
+    cout << "vertexlist.sort(): " <<endl;
     for(list<int>::iterator it = vertexlist.begin();it!=vertexlist.end();it++)
-        cout << *it << " ";
+        cout << *it << " ";    
 
     for(list<int>::iterator it = vertexlist.begin();it!=vertexlist.end();it++)
         DFS_VISIT(graph->sucMap[*it],time);
 
     graph->setColor(i,1);
     time += 1;
-    if((!vertexlist.empty())|| (!noGray())){
-        cout << "graph->setFinTime("<<i<<","<<time<<") " <<endl;
+    // if(!vertexlist.empty() ){
+    if(graph->getFinTime(i)==-1){
+        cout << "graph->setFinTime("<<i<<","<<time<<")"<<endl;
         graph->setFinTime(i,time);
     }
 }
 
-bool WriteDfsCmd::noGray(){
-    for(int j=0;j<graph->getlength();j++){
-        if(graph->getColor(j)==-1)
-            return false;
-    }
-    return true;
-}

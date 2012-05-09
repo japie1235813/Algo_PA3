@@ -63,8 +63,7 @@ public:
          ~WriteDfsCmd();
 
     bool exec(int argc, char **argv);
-    void DFS_VISIT(int i,int& time);
-    bool noGray();
+    void DFS_VISIT(int i,int& time);    
 };
 
 #endif
