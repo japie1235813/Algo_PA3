@@ -1,2 +1,5 @@
 graph gn4_dfs {
+v1 -- v3 [label = 1];
+v1 -- v3 [label = 1];
+v3 -- v2 [label = 0];
 }

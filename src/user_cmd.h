@@ -4,13 +4,14 @@
 // Synopsis   [ ]
 // Date       [ 2012/04/10 created ]
 // **************************************************************************
-#include <map>
-#include <iostream>
 
 #ifndef _TEST_CMD_H_
 #define _TEST_CMD_H_
 
+#include <map>
+#include <iostream>
 #include "../lib/cmd.h"
+using namespace std;
 
 class TestCmd : public CommonNs::Cmd {
 public:
