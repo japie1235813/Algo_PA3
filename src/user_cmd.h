@@ -40,5 +40,13 @@ public:
     bool exec(int argc, char **argv);
 };
 
+class WriteDfsCmd : public CommonNs::Cmd {
+public:
+         WriteDfsCmd(const char * const name);
+         ~WriteDfsCmd();
+
+    bool exec(int argc, char **argv);
+};
+
 #endif
 

@@ -120,3 +120,55 @@ bool ReadCmd::exec(int argc, char **argv) {
     return true;
 }
 
+WriteDfsCmd::WriteDfsCmd(const char * const name) : Cmd(name) {
+    optMgr_.setShortDes("Perform depth first search starting from source node.  Then write to a dot file.");
+    optMgr_.setDes("test");
+
+    Opt *opt = new Opt(Opt::BOOL, "print usage", "");
+    opt->addFlag("h");
+    opt->addFlag("help");
+    optMgr_.regOpt(opt);
+
+    opt = new Opt(Opt::STR_REQ, "", "<sourcenode>");
+    opt->addFlag("s");
+    optMgr_.regOpt(opt);
+
+    opt = new Opt(Opt::STR_REQ, "", "<dot_filename>");
+    opt->addFlag("o");
+    optMgr_.regOpt(opt);
+}
+
+WriteDfsCmd::~WriteDfsCmd() {}
+
+bool WriteDfsCmd::exec(int argc, char **argv) {
+    optMgr_.parse(argc, argv);
+
+    if (optMgr_.getParsedOpt("h")) {
+        optMgr_.usage();
+        return true;
+    }
+
+    int sourcenode;
+    ofstream outFile;
+    string tmp;
+    // try{
+    if (optMgr_.getParsedOpt("s")) {
+        cout << "sourcenode: " << optMgr_.getParsedValue("s") <<endl;
+        tmp = optMgr_.getParsedValue("s");
+        sourcenode = atoi(tmp.substr(1).c_str());
+    }
+    if (optMgr_.getParsedOpt("o")) {
+        cout << optMgr_.getParsedValue("o") <<endl;
+        outFile.open(optMgr_.getParsedValue("o"));
+        //outFile.open();
+    }
+    outFile << "graph gn" << graph->getlength() << "_dfs {" << endl;
+    // }catch(string e){
+    //     cout << "lack sth!: " << e << endl;
+    //     return false;
+    // }
+
+    outFile << "}";
+    outFile.close();
+    return true;
+}

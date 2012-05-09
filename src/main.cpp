@@ -113,7 +113,8 @@ void initCmds(CmdMgr *mgr) {
   mgr->regCmd(testCmd);
   Cmd *readCmd = new ReadCmd("read_graph");
   mgr->regCmd(readCmd);
-
+  Cmd *writeDfsCmd = new WriteDfsCmd("write_tree_dfs");
+  mgr->regCmd(writeDfsCmd);
 
 }
 
