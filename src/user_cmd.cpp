@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include <fstream>
-
+#include <list>
 using namespace std;
 using namespace CommonNs;
 
@@ -50,6 +50,12 @@ bool TestCmd::exec(int argc, char **argv) {
 
     return true;
 }
+
+Graph::Graph(int** tmp,int i){
+    matrix = tmp;
+    length = i;
+}
+
 
 
 ReadCmd::ReadCmd(const char * const name) : Cmd(name) {    
@@ -108,12 +114,12 @@ bool ReadCmd::exec(int argc, char **argv) {
         // cout << "str.sub: " << str.substr(pos+1,last-pos-1) << endl;
         matrix[pre][suc] = atoi(str.substr(pos+1,last-pos-1).c_str());
     }
-    // cout << "lalala" <<endl;
-    // for(int i = 0 ; i<vertexNum; i++){
-    //     for(int j = 0 ; j<vertexNum ; j++)
-    //         cout << matrix[i][j] << " ";
-    //     cout <<endl;
-    // }
+    cout << "lalala" <<endl;
+    for(int i = 0 ; i<vertexNum; i++){
+        for(int j = 0 ; j<vertexNum ; j++)
+            cout << matrix[i][j] << " ";
+        cout <<endl;
+    }
 
     graph = new Graph(matrix,vertexNum);
 
@@ -160,7 +166,6 @@ bool WriteDfsCmd::exec(int argc, char **argv) {
     if (optMgr_.getParsedOpt("o")) {
         cout << optMgr_.getParsedValue("o") <<endl;
         outFile.open(optMgr_.getParsedValue("o"));
-        //outFile.open();
     }
     outFile << "graph gn" << graph->getlength() << "_dfs {" << endl;
     // }catch(string e){
@@ -168,7 +173,46 @@ bool WriteDfsCmd::exec(int argc, char **argv) {
     //     return false;
     // }
 
+    //========dfs
+    for(int i=0;i<graph->getlength();i++){
+        graph->color[i] = -1;
+        graph->pre[i] = -1;
+    }
+
+    int time = 0;
+
+    for(int i=0;i<graph->getlength();i++)
+        if(graph->color[i] == -1)
+            DFS_VISIT(i,time);
+
+    //========print out
+    // for(int j=0;j<graph->length();j++)
+
+
     outFile << "}";
     outFile.close();
     return true;
+}
+
+void WriteDfsCmd::DFS_VISIT(int i,int time){
+    time+=1;
+    graph->disTime[i] = time;
+    graph->color[i] = 0;
+    list<int> vertexlist;
+    for(int j=0;j<graph->getlength();j++)
+        if(graph->matrix[i][j]!=0){
+            if(graph->color[j] == -1)
+                vertexlist.push_back(graph->matrix[i][j]);
+        }
+        else if(graph->matrix[j][i]!=0){
+            if(graph->color[j] == -1)
+                vertexlist.push_back(graph->matrix[j][i]);
+        }
+
+    vertexlist.sort();
+    for(list<int>::iterator it = vertexlist.begin();it!=vertexlist.end();it++)
+        DFS_VISIT(*it,time);
+    graph->color[i] = 1;
+    time += 1;
+    graph->finTime[i] = time;
 }

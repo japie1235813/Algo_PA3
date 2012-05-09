@@ -20,16 +20,16 @@ public:
 
 class Graph{
 public:
-    Graph(int** tmp,int i){
-    	matrix = tmp;
-        length = i;
-    }    
+    Graph(int** tmp,int i);
     int getlength(){return length;}
 
-private:
+    int* color;
+    int* pre;
+    int* disTime;
+    int* finTime;
 	int** matrix;
+private:
     int length;
-
 };
 
 class ReadCmd : public CommonNs::Cmd {
@@ -46,6 +46,7 @@ public:
          ~WriteDfsCmd();
 
     bool exec(int argc, char **argv);
+    void DFS_VISIT(int i,int time);
 };
 
 #endif
