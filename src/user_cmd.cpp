@@ -227,9 +227,9 @@ bool WriteDfsCmd::exec(int argc, char **argv) {
             // cout << "(pre,suc): " << pre << " " << suc << endl;
             outFile << "v" << pre << " -- v" << suc ;
             if(graph->getMatrix(pre,suc)!=0)
-                outFile << " [label = " << graph->getMatrix(pre,suc) << "];" << endl;
+                outFile << " [label = \"" << graph->getMatrix(pre,suc) << "\"];" << endl;
             else
-                outFile << " [label = " << graph->getMatrix(suc,pre) << "];" << endl;
+                outFile << " [label = \"" << graph->getMatrix(suc,pre) << "\"];" << endl;
         }
         if(it==finTimeList.begin()) break;
     }    
@@ -260,8 +260,8 @@ void WriteDfsCmd::DFS_VISIT(int i,int& time){
             }
         }
     }
-    vertexlist.sort();    
-    // cout << "vertexlist.sort(): " <<endl;
+    //vertexlist.sort();    
+    // cout << "! vertexlist.sort(): " <<endl;
     // for(list<int>::iterator it = vertexlist.begin();it!=vertexlist.end();it++)
     //     cout << *it << " ";    
 
@@ -329,9 +329,11 @@ bool WriteBfsCmd::exec(int argc, char **argv) {
 
     outFile << "graph gn" << graph->getlength() << "_bfs {" << endl;
 
-    for(int j=0;j<length;j++){
-        disTime[j] = 1e9;
+    for(int j=0;j<graph->getlength();j++){
+        graph->setDisTime(j,1e9);
     }
     graph->setColor(sourcenode,0);
     graph->setDisTime(sourcenode,0);
+
+
 }
