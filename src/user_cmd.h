@@ -71,7 +71,8 @@ public:
          WriteBfsCmd(const char * const name);
          ~WriteBfsCmd();
 
-    bool exec(int argc, char **argv);    
+    bool exec(int argc, char **argv);
+    
 };
 
 

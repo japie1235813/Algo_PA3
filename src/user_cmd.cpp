@@ -355,4 +355,34 @@ bool WriteBfsCmd::exec(int argc, char **argv) {
         graph->setColor(popNode,1);
     }
 
+    //=============================
+    //print out
+
+    list<int> disTimeList;
+    for(int j=0;j<graph->getlength();j++){
+        // cout << j << " FinTime: " << graph->getFinTime(j) <<endl;
+        disTimeList.push_back(graph->getDisTime(j));
+        graph->finTimeMap[graph->getDisTime(j)] = j;
+    }
+    disTimeList.sort();
+
+    list<int>::iterator it=disTimeList.end();
+    it--;
+    for(;;it--){
+        int suc = graph->finTimeMap[*it];
+        int pre = graph->getPre(suc);        
+        if(pre!=-1){
+            // cout << "(pre,suc): " << pre << " " << suc << endl;
+            outFile << "v" << pre << " -- v" << suc ;
+            if(graph->getMatrix(pre,suc)!=0)
+                outFile << " [label = \"" << graph->getMatrix(pre,suc) << "\"];" << endl;
+            else
+                outFile << " [label = \"" << graph->getMatrix(suc,pre) << "\"];" << endl;
+        }
+        if(it==disTimeList.begin()) break;
+    }    
+
+    outFile << "}";
+    outFile.close();
+
 }
