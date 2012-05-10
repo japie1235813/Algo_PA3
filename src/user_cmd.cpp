@@ -335,5 +335,24 @@ bool WriteBfsCmd::exec(int argc, char **argv) {
     graph->setColor(sourcenode,0);
     graph->setDisTime(sourcenode,0);
 
+    list<int> queueList;
+    queueList.push_back(sourcenode);
+    int popNode;
+
+    while(!queueList.empty()){
+        popNode = queueList.front();
+        queueList.pop_front();
+        for(int j = 0 ; j < graph->getlength(); j++){
+            if( graph->getColor(j) == -1){ //color:white
+                if((graph->getMatrix(popNode,j)!=0)||(graph->getMatrix(j,popNode)!=0)){
+                    graph->setColor(j,0);
+                    graph->setDisTime(j,graph->getDisTime(popNode)+1);
+                    graph->setPre(j,popNode);
+                    queueList.push_back(j);
+                }
+            }
+        }
+        graph->setColor(popNode,1);
+    }
 
 }
