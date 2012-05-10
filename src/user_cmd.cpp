@@ -279,7 +279,7 @@ void WriteDfsCmd::DFS_VISIT(int i,int& time){
 
 
 WriteBfsCmd::WriteBfsCmd(const char * const name) : Cmd(name) {
-    optMgr_.setShortDes("Perform depth first search starting from source node.  Then write to a dot file.");
+    optMgr_.setShortDes("Perform breadth first search starting from source node.  Then write to a dot file.");
     optMgr_.setDes("test");
 
     Opt *opt = new Opt(Opt::BOOL, "print usage", "");
@@ -299,5 +299,39 @@ WriteBfsCmd::WriteBfsCmd(const char * const name) : Cmd(name) {
 WriteBfsCmd::~WriteBfsCmd() {}
 
 bool WriteBfsCmd::exec(int argc, char **argv) {
+    optMgr_.parse(argc, argv);
 
+    if (argc < 5) {        
+        fprintf(stderr, "**ERROR SysSetCmd::exec(): ");
+        fprintf(stderr, "variable and value needed\n");
+        return false;
+    }    
+
+    if (optMgr_.getParsedOpt("h")) {
+        optMgr_.usage();
+        return true;
+    }
+
+    int sourcenode;
+    ofstream outFile;
+    string tmp;
+    
+    if (optMgr_.getParsedOpt("s")) {
+        // cout << "sourcenode: " << optMgr_.getParsedValue("s") <<endl;
+        tmp = optMgr_.getParsedValue("s");
+        sourcenode = atoi(tmp.substr(1).c_str());
+    }
+    if (optMgr_.getParsedOpt("o")) {
+        // cout << optMgr_.getParsedValue("o") <<endl;
+        outFile.open(optMgr_.getParsedValue("o"));
+    }
+
+
+    outFile << "graph gn" << graph->getlength() << "_bfs {" << endl;
+
+    for(int j=0;j<length;j++){
+        disTime[j] = 1e9;
+    }
+    graph->setColor(sourcenode,0);
+    graph->setDisTime(sourcenode,0);
 }

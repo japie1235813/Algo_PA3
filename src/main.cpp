@@ -115,6 +115,7 @@ void initCmds(CmdMgr *mgr) {
   mgr->regCmd(readCmd);
   Cmd *writeDfsCmd = new WriteDfsCmd("write_tree_dfs");
   mgr->regCmd(writeDfsCmd);
-
+  Cmd *writeBfsCmd = new WriteBfsCmd("write_tree_bfs");
+  mgr->regCmd(writeBfsCmd);
 }
 
