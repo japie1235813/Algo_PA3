@@ -1,6 +1,5 @@
 graph gn4_bfs {
-v0 -- v3 [label = "4"];
-v0 -- v3 [label = "4"];
-v0 -- v3 [label = "4"];
-v0 -- v3 [label = "4"];
+v2 -- v3 [label = "3"];
+v2 -- v3 [label = "3"];
+v2 -- v3 [label = "3"];
 }

@@ -181,13 +181,11 @@ bool WriteDfsCmd::exec(int argc, char **argv) {
     ofstream outFile;
     string tmp;
     
-    if (optMgr_.getParsedOpt("s")) {
-        // cout << "sourcenode: " << optMgr_.getParsedValue("s") <<endl;
+    if (optMgr_.getParsedOpt("s")) {        
         tmp = optMgr_.getParsedValue("s");
         sourcenode = atoi(tmp.substr(1).c_str());
     }
-    if (optMgr_.getParsedOpt("o")) {
-        cout << optMgr_.getParsedValue("o") <<endl;
+    if (optMgr_.getParsedOpt("o")) {        
         outFile.open(optMgr_.getParsedValue("o"));
     }
 
@@ -316,13 +314,11 @@ bool WriteBfsCmd::exec(int argc, char **argv) {
     ofstream outFile;
     string tmp;
     
-    if (optMgr_.getParsedOpt("s")) {
-        // cout << "sourcenode: " << optMgr_.getParsedValue("s") <<endl;
+    if (optMgr_.getParsedOpt("s")) {        
         tmp = optMgr_.getParsedValue("s");
         sourcenode = atoi(tmp.substr(1).c_str());
     }
-    if (optMgr_.getParsedOpt("o")) {
-        // cout << optMgr_.getParsedValue("o") <<endl;
+    if (optMgr_.getParsedOpt("o")) {        
         outFile.open(optMgr_.getParsedValue("o"));
     }
 
@@ -337,7 +333,8 @@ bool WriteBfsCmd::exec(int argc, char **argv) {
 
     list<int> queueList;
     queueList.push_back(sourcenode);
-    int popNode;
+    int popNode;    
+    int time = 0;
 
     while(!queueList.empty()){
         popNode = queueList.front();
@@ -346,7 +343,8 @@ bool WriteBfsCmd::exec(int argc, char **argv) {
             if( graph->getColor(j) == -1){ //color:white
                 if((graph->getMatrix(popNode,j)!=0)||(graph->getMatrix(j,popNode)!=0)){
                     graph->setColor(j,0);
-                    graph->setDisTime(j,graph->getDisTime(popNode)+1);
+                    graph->setDisTime(j,++time);
+                    // cout << " graph->setPre("<<j<<","<<popNode<<")"<<endl;
                     graph->setPre(j,popNode);
                     queueList.push_back(j);
                 }
@@ -357,29 +355,31 @@ bool WriteBfsCmd::exec(int argc, char **argv) {
 
     //=============================
     //print out
+    // for(int j=0;j<graph->getlength();j++)
+    //     cout << j << ": " << graph->getPre(j) << "  ";
+
 
     list<int> disTimeList;
     for(int j=0;j<graph->getlength();j++){
-        // cout << j << " FinTime: " << graph->getFinTime(j) <<endl;
+        // cout << j << " DisTime: " << graph->getDisTime(j) <<endl;
         disTimeList.push_back(graph->getDisTime(j));
         graph->finTimeMap[graph->getDisTime(j)] = j;
     }
     disTimeList.sort();
 
-    list<int>::iterator it=disTimeList.end();
-    it--;
-    for(;;it--){
+    list<int>::iterator it=disTimeList.begin();
+    // it--;
+    for(;it!=disTimeList.end();it++){
         int suc = graph->finTimeMap[*it];
         int pre = graph->getPre(suc);        
+        // cout << "(pre,suc): " << pre << " " << suc << endl;
         if(pre!=-1){
-            // cout << "(pre,suc): " << pre << " " << suc << endl;
             outFile << "v" << pre << " -- v" << suc ;
             if(graph->getMatrix(pre,suc)!=0)
                 outFile << " [label = \"" << graph->getMatrix(pre,suc) << "\"];" << endl;
             else
                 outFile << " [label = \"" << graph->getMatrix(suc,pre) << "\"];" << endl;
-        }
-        if(it==disTimeList.begin()) break;
+        }        
     }    
 
     outFile << "}";
