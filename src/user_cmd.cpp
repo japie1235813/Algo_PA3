@@ -59,21 +59,27 @@ Graph::Graph(int** tmp,int i){
     pre = new int[length];
     disTime = new int[length];
     finTime = new int[length];
+
+    // cout << "In class Graph constructor" <<endl;
+    // for(int k = 0 ; k<length; k++){
+    //     for(int j = 0 ; j<length ; j++)
+    //         cout << matrix[k][j] << " ";
+    //     cout <<endl;
+    // }
+}
+
+void
+Graph::reset(){
     for(int j=0;j<length;j++){
         color[j] = -1;
         pre[j] = -1;
         disTime[j] = -1;
         finTime[j] = -1;
     }
-    // cout << "In class Graph constructor" <<endl;
-    // for(int k = 0 ; k<length; k++){
-    //     for(int j = 0 ; j<length ; j++)
-    //         cout << matrix[k][j] << " ";
-    //     cout <<endl;
-    // }    
 }
 
 
+//================ read
 
 ReadCmd::ReadCmd(const char * const name) : Cmd(name) {    
     optMgr_.setShortDes("read the graph in dot format");
@@ -143,6 +149,8 @@ bool ReadCmd::exec(int argc, char **argv) {
     return true;
 }
 
+//================dfs
+
 WriteDfsCmd::WriteDfsCmd(const char * const name) : Cmd(name) {
     optMgr_.setShortDes("Perform depth first search starting from source node.  Then write to a dot file.");
     optMgr_.setDes("test");
@@ -164,6 +172,7 @@ WriteDfsCmd::WriteDfsCmd(const char * const name) : Cmd(name) {
 WriteDfsCmd::~WriteDfsCmd() {}
 
 bool WriteDfsCmd::exec(int argc, char **argv) {
+    graph->reset();
     optMgr_.parse(argc, argv);
 
     if (argc < 5) {        
@@ -275,6 +284,7 @@ void WriteDfsCmd::DFS_VISIT(int i,int& time){
     }
 }
 
+//================
 
 WriteBfsCmd::WriteBfsCmd(const char * const name) : Cmd(name) {
     optMgr_.setShortDes("Perform breadth first search starting from source node.  Then write to a dot file.");
@@ -297,6 +307,7 @@ WriteBfsCmd::WriteBfsCmd(const char * const name) : Cmd(name) {
 WriteBfsCmd::~WriteBfsCmd() {}
 
 bool WriteBfsCmd::exec(int argc, char **argv) {
+    graph->reset();
     optMgr_.parse(argc, argv);
 
     if (argc < 5) {        
@@ -321,6 +332,7 @@ bool WriteBfsCmd::exec(int argc, char **argv) {
     if (optMgr_.getParsedOpt("o")) {        
         outFile.open(optMgr_.getParsedValue("o"));
     }
+
 
 
     outFile << "graph gn" << graph->getlength() << "_bfs {" << endl;
@@ -355,13 +367,14 @@ bool WriteBfsCmd::exec(int argc, char **argv) {
 
     //=============================
     //print out
-    // for(int j=0;j<graph->getlength();j++)
-    //     cout << j << ": " << graph->getPre(j) << "  ";
+    cout << "checkout Pre: " <<endl;
+    for(int j=0;j<graph->getlength();j++)
+        cout << j << ": " << graph->getPre(j) << "  ";
 
 
     list<int> disTimeList;
     for(int j=0;j<graph->getlength();j++){
-        // cout << j << " DisTime: " << graph->getDisTime(j) <<endl;
+        cout << j << " DisTime: " << graph->getDisTime(j) <<endl;
         disTimeList.push_back(graph->getDisTime(j));
         graph->finTimeMap[graph->getDisTime(j)] = j;
     }
@@ -372,7 +385,7 @@ bool WriteBfsCmd::exec(int argc, char **argv) {
     for(;it!=disTimeList.end();it++){
         int suc = graph->finTimeMap[*it];
         int pre = graph->getPre(suc);        
-        // cout << "(pre,suc): " << pre << " " << suc << endl;
+        cout << "(pre,suc): " << pre << " " << suc << endl;
         if(pre!=-1){
             outFile << "v" << pre << " -- v" << suc ;
             if(graph->getMatrix(pre,suc)!=0)
@@ -384,5 +397,64 @@ bool WriteBfsCmd::exec(int argc, char **argv) {
 
     outFile << "}";
     outFile.close();
+}
+
+
+
+//================ MST
+
+
+WriteMstCmd::WriteMstCmd(const char * const name) : Cmd(name) {
+    optMgr_.setShortDes("Perform breadth first search starting from source node.  Then write to a dot file.");
+    optMgr_.setDes("test");
+
+    Opt *opt = new Opt(Opt::BOOL, "print usage", "");
+    opt->addFlag("h");
+    opt->addFlag("help");
+    optMgr_.regOpt(opt);
+
+    opt = new Opt(Opt::STR_REQ, "", "<rootnode>");
+    opt->addFlag("r");
+    optMgr_.regOpt(opt);
+
+    opt = new Opt(Opt::STR_REQ, "", "<dot_filename>");
+    opt->addFlag("o");
+    optMgr_.regOpt(opt);
+
+    opt = new Opt(Opt::STR_REQ, "", "prim");
+    opt->addFlag("a");
+    optMgr_.regOpt(opt);    
+}
+
+WriteMstCmd::~WriteMstCmd() {}
+
+bool WriteMstCmd::exec(int argc, char **argv) {
+    optMgr_.parse(argc, argv);
+
+    if (argc < 7) {        
+        fprintf(stderr, "**ERROR SysSetCmd::exec(): ");
+        fprintf(stderr, "variable and value needed\n");
+        return false;
+    }    
+
+    if (optMgr_.getParsedOpt("h")) {
+        optMgr_.usage();
+        return true;
+    }
+
+    int sourcenode;
+    ofstream outFile;
+    string tmp;
+    
+    if (optMgr_.getParsedOpt("r")) {        
+        tmp = optMgr_.getParsedValue("r");
+        sourcenode = atoi(tmp.substr(1).c_str());
+    }
+    if (optMgr_.getParsedOpt("o")) {        
+        outFile.open(optMgr_.getParsedValue("o"));
+    }
+
 
 }
+
+

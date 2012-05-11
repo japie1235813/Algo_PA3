@@ -24,6 +24,8 @@ public:
 class Graph{
 public:
     Graph(int** tmp,int i);
+    void reset();
+    
     int getlength(){return length;}
     int getColor(int i){return color[i];}
     int getPre(int i){return pre[i];}
@@ -75,6 +77,14 @@ public:
     
 };
 
+class WriteMstCmd : public CommonNs::Cmd {
+public:
+         WriteMstCmd(const char * const name);
+         ~WriteMstCmd();
+
+    bool exec(int argc, char **argv);
+    
+};
 
 #endif
 
