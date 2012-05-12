@@ -506,18 +506,10 @@ bool WriteMstCmd::exec(int argc, char **argv) {
         c++;
         cout <<endl;
         cout << "popNode: (" << *popNode.first << "," << popNode.second << ") " <<endl;        
-        bool success = false;
-        int choseIndex = -1;
+        bool success = false;        
         for(int j=0;j<graph->getlength();j++){
             int val = max(graph->getMatrix(j,popNode.second),graph->getMatrix(popNode.second,j));
-            if( val != 0){ //j belong to popNode's adj
-                // Node n(graph->getKey(j),j);
-
-                // Node p=pqMap.find(n)->first;
-                // cout <<"pqMap.find(n)->first: " <<endl;
-                // cout << "("<<p.first << "," << p.second << ")"<<endl;
-                // cout <<"pqMap.find(n)->second: " <<endl;
-                // cout << pqMap.find(n)->second << endl;
+            if( val != 0){ //j belong to popNode's adj                
                 cout << j << ": val: "<<val << " Key: " << *graph->getKey(j) << endl;
                 cout << "pqMap.find(j)->second: " << pqMap.find(j)->second << endl;
 
@@ -532,7 +524,7 @@ bool WriteMstCmd::exec(int argc, char **argv) {
                     pqMap[j] = val;
                     cout << "pqMap["<<j<<"] = "<<val<<";"<<endl;
                     cout <<"success!"<<endl;
-                    success = true;                    
+                    success = true;                
                 }
             }
         }
