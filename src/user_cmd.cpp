@@ -12,10 +12,21 @@
 #include <fstream>
 #include <list>
 #include <map>
+#include <queue>
+#include <utility>
+#include <algorithm>
 using namespace std;
 using namespace CommonNs;
 
 Graph *graph;
+
+#define NIL     -1
+#define WHITE   -1
+#define GRAY    0
+#define BLACK   1
+#define INF     1e9
+
+typedef pair<int*,int> Node;
 
 TestCmd::TestCmd(const char * const name) : Cmd(name) {
     optMgr_.setShortDes("test");
@@ -59,6 +70,7 @@ Graph::Graph(int** tmp,int i){
     pre = new int[length];
     disTime = new int[length];
     finTime = new int[length];
+    key = new int[length];
 
     // cout << "In class Graph constructor" <<endl;
     // for(int k = 0 ; k<length; k++){
@@ -71,10 +83,11 @@ Graph::Graph(int** tmp,int i){
 void
 Graph::reset(){
     for(int j=0;j<length;j++){
-        color[j] = -1;
-        pre[j] = -1;
+        color[j] = WHITE;
+        pre[j] = NIL;
         disTime[j] = -1;
         finTime[j] = -1;
+        key[j] = INF;
     }
 }
 
@@ -338,7 +351,7 @@ bool WriteBfsCmd::exec(int argc, char **argv) {
     outFile << "graph gn" << graph->getlength() << "_bfs {" << endl;
 
     for(int j=0;j<graph->getlength();j++){
-        graph->setDisTime(j,1e9);
+        graph->setDisTime(j,INF);
     }
     graph->setColor(sourcenode,0);
     graph->setDisTime(sourcenode,0);
@@ -367,14 +380,14 @@ bool WriteBfsCmd::exec(int argc, char **argv) {
 
     //=============================
     //print out
-    cout << "checkout Pre: " <<endl;
-    for(int j=0;j<graph->getlength();j++)
-        cout << j << ": " << graph->getPre(j) << "  ";
+    // cout << "checkout Pre: " <<endl;
+    // for(int j=0;j<graph->getlength();j++)
+    //     cout << j << ": " << graph->getPre(j) << "  ";
 
 
     list<int> disTimeList;
     for(int j=0;j<graph->getlength();j++){
-        cout << j << " DisTime: " << graph->getDisTime(j) <<endl;
+        // cout << j << " DisTime: " << graph->getDisTime(j) <<endl;
         disTimeList.push_back(graph->getDisTime(j));
         graph->finTimeMap[graph->getDisTime(j)] = j;
     }
@@ -385,7 +398,7 @@ bool WriteBfsCmd::exec(int argc, char **argv) {
     for(;it!=disTimeList.end();it++){
         int suc = graph->finTimeMap[*it];
         int pre = graph->getPre(suc);        
-        cout << "(pre,suc): " << pre << " " << suc << endl;
+        // cout << "(pre,suc): " << pre << " " << suc << endl;
         if(pre!=-1){
             outFile << "v" << pre << " -- v" << suc ;
             if(graph->getMatrix(pre,suc)!=0)
@@ -430,6 +443,7 @@ WriteMstCmd::~WriteMstCmd() {}
 
 bool WriteMstCmd::exec(int argc, char **argv) {
     optMgr_.parse(argc, argv);
+    graph->reset();
 
     if (argc < 7) {        
         fprintf(stderr, "**ERROR SysSetCmd::exec(): ");
@@ -454,6 +468,92 @@ bool WriteMstCmd::exec(int argc, char **argv) {
         outFile.open(optMgr_.getParsedValue("o"));
     }
 
+
+
+    priority_queue<Node,vector<Node>,greater<Node> > pq;
+    map<int,int> pqMap;
+
+    //set each node key
+    for(int i=0;i<graph->getlength();i++){
+        int minKey = INF;
+        // for(int j=0;j<graph->getlength();j++){
+        //     int maximum = max(graph->getMatrix(i,j),graph->getMatrix(j,i));
+        //     if(maximum != 0 && (maximum < minKey))
+        //         minKey = maximum;
+        // }
+        graph->setKey(i,minKey);
+        cout << "graph->setKey("<<i<<","<<minKey<<");"<<endl;
+    }    
+    graph->setKey(sourcenode,0);
+
+
+    //put each vertex into queue
+    for(int i=0;i<graph->getlength();i++){
+        // if(graph->getKey(i)!=INF){
+            Node n(graph->getKey(i),i);
+            pq.push(n);
+            cout << "pqMap["<<i<<"] = "<<*(n.first)<<"\""<<endl;
+            pqMap[i] = *(n.first);            
+        // }
+    }
+
+    Node popNode = pq.top();
+    pq.pop();
+    int c = 0;
+    cout << "BEFORE WHILE: pq.size " << pq.size() <<endl;
+
+    while(1){
+        c++;
+        cout <<endl;
+        cout << "popNode: (" << *popNode.first << "," << popNode.second << ") " <<endl;        
+        bool success = false;
+        int choseIndex = -1;
+        for(int j=0;j<graph->getlength();j++){
+            int val = max(graph->getMatrix(j,popNode.second),graph->getMatrix(popNode.second,j));
+            if( val != 0){ //j belong to popNode's adj
+                // Node n(graph->getKey(j),j);
+
+                // Node p=pqMap.find(n)->first;
+                // cout <<"pqMap.find(n)->first: " <<endl;
+                // cout << "("<<p.first << "," << p.second << ")"<<endl;
+                // cout <<"pqMap.find(n)->second: " <<endl;
+                // cout << pqMap.find(n)->second << endl;
+                cout << j << ": val: "<<val << " Key: " << *graph->getKey(j) << endl;
+                cout << "pqMap.find(j)->second: " << pqMap.find(j)->second << endl;
+
+                if( ((pqMap.find(j)->second!=(NIL))) && (val < *graph->getKey(j))){
+                // if(val < *graph->getKey(j)){ 
+                    //j in queue and w(j,v) < j.key
+                    graph->setPre(j,popNode.second);
+                    // graph->setSuc(popNode.second,j);
+                    cout << "graph->setPre("<<popNode.second<<","<<j<<")"<<endl;
+                    graph->setKey(j,val);
+                    cout << "graph->setKey("<<j<<","<<val<<")"<<endl;
+                    pqMap[j] = val;
+                    cout << "pqMap["<<j<<"] = "<<val<<";"<<endl;
+                    cout <<"success!"<<endl;
+                    success = true;                    
+                }
+            }
+        }
+        
+        if(pq.empty()||c==10) break;
+        Node tmp = popNode;
+        pqMap[popNode.second] = NIL; //make popNode black
+        popNode = pq.top();
+        pq.pop();
+        cout << "pq.size " << pq.size() <<endl;
+        if(!success){
+            cout << "pq.push(tmp)" << *tmp.first << ", " << tmp.second << endl;
+            pq.push(tmp);
+            pqMap[tmp.second] = *graph->getKey(tmp.second);
+            cout << "pq.size" << pq.size() <<endl;            
+        }
+    }
+
+
+    for(int j=0;j<graph->getlength();j++)
+        cout << j <<" Pre: " << graph->getPre(j) << endl;
 
 }
 

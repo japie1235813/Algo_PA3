@@ -25,19 +25,21 @@ class Graph{
 public:
     Graph(int** tmp,int i);
     void reset();
-    
+
     int getlength(){return length;}
     int getColor(int i){return color[i];}
     int getPre(int i){return pre[i];}
     int getDisTime(int i){return disTime[i];}
     int getFinTime(int i){return finTime[i];}
     int getMatrix(int i,int j){return matrix[i][j];}
+    int* getKey(int i){return &key[i];}
 
 	void setColor(int i,int x){color[i]=x;}
     void setPre(int i,int x){pre[i]=x;}
     void setDisTime(int i,int x){disTime[i]=x;}
     void setFinTime(int i,int x){finTime[i]=x;}
     void setMatrix(int i,int j,int x){matrix[i][j]=x;}
+    void setKey(int i,int x){key[i]=x;}
 
     map<int,int> sucMap;
     map<int,int> finTimeMap;
@@ -49,6 +51,7 @@ private:
     int* finTime;
 	int** matrix;
     int length;
+    int* key;
 };
 
 class ReadCmd : public CommonNs::Cmd {

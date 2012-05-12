@@ -5,6 +5,6 @@ write_tree_dfs -s v0 -o outputs/gn4_dfs_2.dot
 #dot -Tpng inputs/gn4_dfs.dot -o outputs/gn4_dfs.png
 #display outputs/gn4_dfs.png
 write_tree_bfs -s v0 -o outputs/gn4_bfs_2.dot
-exit
 write_tree_mst -a prim -r v0 -o output/gn4_mst_p.dot
+exit
 is_spanning_tree -i output/gn4_mst_p.dot
