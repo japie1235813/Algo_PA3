@@ -12,6 +12,7 @@
 #include <iostream>
 #include "../lib/cmd.h"
 using namespace std;
+typedef pair<int*,int> Node;
 
 class TestCmd : public CommonNs::Cmd {
 public:
@@ -43,6 +44,7 @@ public:
 
     map<int,int> sucMap;
     map<int,int> finTimeMap;
+    map<Node,int> pqMap;
 
 private:
     int* color;
@@ -86,6 +88,7 @@ public:
          ~WriteMstCmd();
 
     bool exec(int argc, char **argv);
+    void HeapDecreaseKey(vector<Node>& v,int i,int key);
     
 };
 

@@ -15,6 +15,7 @@
 #include <queue>
 #include <utility>
 #include <algorithm>
+#include <vector>
 using namespace std;
 using namespace CommonNs;
 
@@ -441,6 +442,18 @@ WriteMstCmd::WriteMstCmd(const char * const name) : Cmd(name) {
 
 WriteMstCmd::~WriteMstCmd() {}
 
+
+class comparison
+{
+  bool reverse;
+public:
+  comparison(){}
+  bool operator() (const Node& lhs, const Node&rhs) const
+  {
+    return *(lhs.first)>*(rhs.first);
+  }
+};
+
 bool WriteMstCmd::exec(int argc, char **argv) {
     optMgr_.parse(argc, argv);
     graph->reset();
@@ -470,50 +483,50 @@ bool WriteMstCmd::exec(int argc, char **argv) {
 
 
 
-    priority_queue<Node,vector<Node>,greater<Node> > pq;
-    map<int,int> pqMap;
+    vector<Node> pq;
+    
+    
 
     //set each node key
-    for(int i=0;i<graph->getlength();i++){
-        int minKey = INF;
-        // for(int j=0;j<graph->getlength();j++){
-        //     int maximum = max(graph->getMatrix(i,j),graph->getMatrix(j,i));
-        //     if(maximum != 0 && (maximum < minKey))
-        //         minKey = maximum;
-        // }
-        graph->setKey(i,minKey);
-        cout << "graph->setKey("<<i<<","<<minKey<<");"<<endl;
-    }    
+    for(int i=0;i<graph->getlength();i++)
+        graph->setKey(i,INF);        
     graph->setKey(sourcenode,0);
 
 
     //put each vertex into queue
     for(int i=0;i<graph->getlength();i++){
-        // if(graph->getKey(i)!=INF){
-            Node n(graph->getKey(i),i);
-            pq.push(n);
-            cout << "pqMap["<<i<<"] = "<<*(n.first)<<"\""<<endl;
-            pqMap[i] = *(n.first);            
-        // }
+        Node n(graph->getKey(i),i);
+        pq.push_back(n);        
     }
+    
+    make_heap(pq.begin(),pq.end(),comparison());
 
-    Node popNode = pq.top();
-    pq.pop();
+    for(int i=0;i<graph->getlength();i++){
+        graph->pqMap[pq[i]] = i;
+    }
+    Node popNode;
+
+    for(vector<Node>::iterator it=pq.begin();it!=pq.end();it++)
+        cout << *((*it).first) <<" , "<< (*it).second << " | " ;
+    cout << endl;
+
     int c = 0;
-    cout << "BEFORE WHILE: pq.size " << pq.size() <<endl;
-
+    
     while(1){
         c++;
-        cout <<endl;
+        popNode = pq.front();
+
+        cout <<endl <<endl;
         cout << "popNode: (" << *popNode.first << "," << popNode.second << ") " <<endl;        
-        bool success = false;        
+        bool success = false;
+
+
         for(int j=0;j<graph->getlength();j++){
             int val = max(graph->getMatrix(j,popNode.second),graph->getMatrix(popNode.second,j));
             if( val != 0){ //j belong to popNode's adj                
                 cout << j << ": val: "<<val << " Key: " << *graph->getKey(j) << endl;
-                cout << "pqMap.find(j)->second: " << pqMap.find(j)->second << endl;
-
-                if( ((pqMap.find(j)->second!=(NIL))) && (val < *graph->getKey(j))){
+                Node n(graph->getKey(j),j);
+                if( ( (graph->pqMap.find(n)->second)!= NIL ) && (val < *graph->getKey(j))){  //v in queue
                 // if(val < *graph->getKey(j)){ 
                     //j in queue and w(j,v) < j.key
                     graph->setPre(j,popNode.second);
@@ -521,26 +534,21 @@ bool WriteMstCmd::exec(int argc, char **argv) {
                     cout << "graph->setPre("<<popNode.second<<","<<j<<")"<<endl;
                     graph->setKey(j,val);
                     cout << "graph->setKey("<<j<<","<<val<<")"<<endl;
-                    pqMap[j] = val;
-                    cout << "pqMap["<<j<<"] = "<<val<<";"<<endl;
-                    cout <<"success!"<<endl;
-                    success = true;                
+                    //then increase key <- remeber to modify Map
+                    HeapDecreaseKey(pq,graph->pqMap.find(n)->second,val);
                 }
             }
         }
         
         if(pq.empty()||c==10) break;
-        Node tmp = popNode;
-        pqMap[popNode.second] = NIL; //make popNode black
-        popNode = pq.top();
-        pq.pop();
-        cout << "pq.size " << pq.size() <<endl;
-        if(!success){
-            cout << "pq.push(tmp)" << *tmp.first << ", " << tmp.second << endl;
-            pq.push(tmp);
-            pqMap[tmp.second] = *graph->getKey(tmp.second);
-            cout << "pq.size" << pq.size() <<endl;            
-        }
+    
+        //dequeue        
+        graph->pqMap[popNode] = NIL; //make popNode black
+        pop_heap (pq.begin(),pq.end(),comparison()); pq.pop_back();
+        for(vector<Node>::iterator it=pq.begin();it!=pq.end();it++)
+            cout << *((*it).first) <<" , "<< (*it).second << " | " ;
+        cout << endl;        
+    
     }
 
 
@@ -549,4 +557,27 @@ bool WriteMstCmd::exec(int argc, char **argv) {
 
 }
 
+void WriteMstCmd::HeapDecreaseKey(vector<Node>& v,int i,int key){
+    cout << "HeapDecreaseKey("<< i << "," << key << ")" <<endl;
+    if(key > *(v[i].first)){
+        cout << "not decrease!"<<endl;
+        return;
+    }
+    cout << "*(v[<<i].first) = key;" << *(v[i].first) << " = " << key <<endl;
+    // *(v[i].first) = key;
+    while( i>1 && ( *(v[i/2].first) > *(v[i].first) ) ){
+        cout << "exchange v[i] w/ v[i/2]: " <<endl;
+        cout << "*(v[i].first): " << *(v[i].first) << " <-> " << v[i/2].first << endl;
+        cout << "*(v[i].second): " << v[i].second << " <-> " << v[i/2].second << endl;
 
+        graph->pqMap[v[i]] = i/2;
+        graph->pqMap[v[i/2]] = i;        
+        Node tmp = v[i];
+        v[i] = v[i/2];
+        v[i/2] = tmp;
+        i = i/2;
+    }
+    for(vector<Node>::iterator it=v.begin();it!=v.end();it++)
+        cout << *((*it).first) <<" , "<< (*it).second << " | " ;
+    cout << endl;
+}
