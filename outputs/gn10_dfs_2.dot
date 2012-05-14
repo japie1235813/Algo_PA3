@@ -1,11 +1,11 @@
 graph gn10_dfs {
-v0 -- v1 [label = "96"];
-v1 -- v2 [label = "61"];
-v2 -- v3 [label = "71"];
-v3 -- v4 [label = "91"];
+v0 -- v3 [label = "85"];
+v3 -- v2 [label = "71"];
+v2 -- v1 [label = "61"];
+v1 -- v8 [label = "99"];
+v8 -- v4 [label = "68"];
 v4 -- v5 [label = "59"];
 v5 -- v6 [label = "70"];
 v6 -- v7 [label = "79"];
-v7 -- v8 [label = "29"];
-v8 -- v9 [label = "76"];
+v7 -- v9 [label = "93"];
 }

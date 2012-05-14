@@ -92,5 +92,13 @@ public:
     
 };
 
+class IsSpanningTreeCmd : public CommonNs::Cmd {
+public:
+         IsSpanningTreeCmd(const char * const name);
+         ~IsSpanningTreeCmd();
+
+    bool exec(int argc, char **argv);    
+};
+
 #endif
 

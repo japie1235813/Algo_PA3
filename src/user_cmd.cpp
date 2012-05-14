@@ -120,15 +120,19 @@ bool ReadCmd::exec(int argc, char **argv) {
         return true;
     }
 
-    char buf[256];
-
     string tmp = "";
     int vertexNum = -1;
     int pre = -1 ,suc = -1;
     ifstream inFile(argv[1],ios::in);
-    inFile >> tmp >> tmp ;
-    cout << "tmp:" << tmp << endl;
-    vertexNum = atoi(tmp.substr(2).c_str());
+    char buf[256];
+    while(1){
+        inFile.getline(buf,256);
+        cout << "tmp2:" << buf << endl;
+        if(buf[0] != '/' && buf[1] != '/') break;
+    }
+
+    tmp = buf;
+    vertexNum = atoi(tmp.substr(8).c_str());
     cout << "vertexNum: " << vertexNum <<endl;
     int** matrix = new int*[vertexNum];    
     for(int i=0;i<vertexNum;i++)
@@ -612,4 +616,45 @@ void WriteMstCmd::HeapDecreaseKey(vector<Node>& v,int i,int key){
     for(vector<Node>::iterator it=v.begin();it!=v.end();it++)
         cout << *((*it).first) <<" , "<< (*it).second << " | " ;
     cout << endl;
+}
+
+
+//================is_spanning_tree
+
+IsSpanningTreeCmd::IsSpanningTreeCmd(const char * const name) : Cmd(name) {
+    optMgr_.setShortDes("Perform depth first search starting from source node.  Then write to a dot file.");
+    optMgr_.setDes("test");
+
+    Opt *opt = new Opt(Opt::BOOL, "print usage", "");
+    opt->addFlag("h");
+    opt->addFlag("help");
+    optMgr_.regOpt(opt);
+
+    opt = new Opt(Opt::STR_REQ, "", "<dot_filename>");
+    opt->addFlag("i");
+    optMgr_.regOpt(opt);
+}
+
+IsSpanningTreeCmd::~IsSpanningTreeCmd() {}
+
+bool IsSpanningTreeCmd::exec(int argc, char **argv) {    
+    optMgr_.parse(argc, argv);
+
+    if (argc < 3) {        
+        fprintf(stderr, "**ERROR SysSetCmd::exec(): ");
+        fprintf(stderr, "variable and value needed\n");
+        return false;
+    }    
+
+    if (optMgr_.getParsedOpt("h")) {
+        optMgr_.usage();
+        return true;
+    }
+    
+    string tmp;
+
+    ifstream inFile(argv[2],ios::in);
+    // if
+
+
 }
