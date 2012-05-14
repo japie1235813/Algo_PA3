@@ -1,0 +1,11 @@
+graph gn10_mst_p {
+v3 -- v1 [label = "32663"];
+v1 -- v2 [label = "61"];
+v0 -- v3 [label = "32663"];
+v7 -- v4 [label = "39"];
+v6 -- v5 [label = "70"];
+v3 -- v6 [label = "58"];
+v5 -- v7 [label = "59"];
+v5 -- v8 [label = "22"];
+v6 -- v9 [label = "52"];
+}

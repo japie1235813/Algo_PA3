@@ -347,10 +347,10 @@ bool WriteBfsCmd::exec(int argc, char **argv) {
         outFile.open(optMgr_.getParsedValue("o"));
     }
 
-
-
     outFile << "graph gn" << graph->getlength() << "_bfs {" << endl;
 
+
+    //=======BFS
     for(int j=0;j<graph->getlength();j++){
         graph->setDisTime(j,INF);
     }
@@ -480,11 +480,12 @@ bool WriteMstCmd::exec(int argc, char **argv) {
     if (optMgr_.getParsedOpt("o")) {        
         outFile.open(optMgr_.getParsedValue("o"));
     }
-
-
-
-    vector<Node> pq;
     
+    outFile << "graph gn" << graph->getlength() << "_mst_p {" << endl;
+
+
+    //========MST
+    vector<Node> pq;
     
 
     //set each node key
@@ -551,9 +552,34 @@ bool WriteMstCmd::exec(int argc, char **argv) {
     
     }
 
-
     for(int j=0;j<graph->getlength();j++)
         cout << j <<" Pre: " << graph->getPre(j) << endl;
+
+
+    //=======print out
+
+    int weight = 0;
+    for(int i = 0 ;i < graph->getlength() ;i++){        
+        int pre = graph->getPre(i);
+        // cout << "(pre,suc): " << pre << " " << suc << endl;
+        if(pre!=-1){
+            outFile << "v" << pre << " -- v" << i ;
+            if(graph->getMatrix(pre,i)!=0){
+                outFile << " [label = \"" << graph->getMatrix(pre,i) << "\"];" << endl;
+                weight += graph->getMatrix(pre,i);
+            }
+            else{
+                outFile << " [label = \"" << graph->getMatrix(i,pre) << "\"];" << endl;
+                weight += graph->getMatrix(pre,i);
+            }
+        }        
+    }    
+
+    cout << "weight: " << weight << endl;
+    outFile << "}";
+    outFile.close();
+
+
 
 }
 
@@ -565,6 +591,7 @@ void WriteMstCmd::HeapDecreaseKey(vector<Node>& v,int i,int key){
     }
     cout << "*(v[<<i].first) = key;" << *(v[i].first) << " = " << key <<endl;
     // *(v[i].first) = key;
+
     while( i>1 && ( *(v[i/2].first) > *(v[i].first) ) ){
         cout << "exchange v[i] w/ v[i/2]: " <<endl;
         cout << "*(v[i].first): " << *(v[i].first) << " <-> " << v[i/2].first << endl;

@@ -118,7 +118,6 @@ void initCmds(CmdMgr *mgr) {
   Cmd *writeBfsCmd = new WriteBfsCmd("write_tree_bfs");
   mgr->regCmd(writeBfsCmd);
   Cmd *writeMstCmd = new WriteMstCmd("write_tree_mst");
-  mgr->regCmd(writeMstCmd);
-  
+  mgr->regCmd(writeMstCmd); 
 }
 
