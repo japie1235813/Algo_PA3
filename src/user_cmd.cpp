@@ -88,7 +88,7 @@ Graph::reset(){
         pre[j] = NIL;
         disTime[j] = -1;
         finTime[j] = -1;
-        key[j] = INF;
+        key[j] = INF;        
     }
 }
 
@@ -127,12 +127,16 @@ bool ReadCmd::exec(int argc, char **argv) {
     int pre = -1 ,suc = -1;
     ifstream inFile(argv[1],ios::in);
     inFile >> tmp >> tmp ;
-    // cout << "tmp:" << tmp << endl;
+    cout << "tmp:" << tmp << endl;
     vertexNum = atoi(tmp.substr(2).c_str());
-    // cout << "vertexNum: " << vertexNum <<endl;
+    cout << "vertexNum: " << vertexNum <<endl;
     int** matrix = new int*[vertexNum];    
     for(int i=0;i<vertexNum;i++)
         matrix[i] = new int[vertexNum];
+
+    for(int i=0;i<vertexNum;i++)
+        for(int j=0;j<vertexNum;j++)
+            matrix[i][j] = 0;
 
     inFile >> tmp;
     while(1){
@@ -140,26 +144,27 @@ bool ReadCmd::exec(int argc, char **argv) {
         if(strcmp(tmp.c_str(),"}")==0) break;
         pre = atoi(tmp.substr(1).c_str());
         inFile >> tmp >> tmp;
-        // cout << "tmp: " << tmp << endl;
+        cout << "tmp: " << tmp << endl;
         suc = atoi(tmp.substr(1).c_str());
-        // cout << "(pre,suc) : " << pre <<" " << suc <<endl;
+        cout << "(pre,suc) : " << pre <<" " << suc <<endl;
         inFile.getline(buf,256);
-        // cout << "buf: " << buf << endl;
+        cout << "buf: " << buf << endl;
         string str(buf);
         int pos = str.find_first_of("\"");
         int last = str.find_last_of("\"");
-        // cout << "str.sub: " << str.substr(pos+1,last-pos-1) << endl;
+        cout << "str.sub: " << str.substr(pos+1,last-pos-1) << endl;
         matrix[pre][suc] = atoi(str.substr(pos+1,last-pos-1).c_str());
     }
-    // cout << "lalala" <<endl;
-    // for(int i = 0 ; i<vertexNum; i++){
-    //     for(int j = 0 ; j<vertexNum ; j++)
-    //         cout << matrix[i][j] << " ";
-    //     cout <<endl;
-    // }
+    cout << "lalala" <<endl;
+    for(int i = 0 ; i<vertexNum; i++){
+        for(int j = 0 ; j<vertexNum ; j++)
+            cout << matrix[i][j] << " ";
+        cout <<endl;
+    }
 
     graph = new Graph(matrix,vertexNum);
 
+    inFile.close();
     return true;
 }
 
