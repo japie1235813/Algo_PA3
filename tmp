@@ -3,36 +3,7 @@
         V 2012.4  
 gn4_2.bat 1> 
 
-gn4_2.bat 2> read_graph inputs/gn4.dot
-
-tmp0: Graph gn4 {
-tmp1: v0
-tmp2: v1
-(pre,suc) : 0 1
-str.sub: 2
-matrix[0][1] = 2
-tmp1: v1
-tmp2: v2
-(pre,suc) : 1 2
-str.sub: 5
-matrix[1][2] = 5
-tmp1: v0
-tmp2: v3
-(pre,suc) : 0 3
-str.sub: 4
-matrix[0][3] = 4
-tmp1: v2
-tmp2: v3
-(pre,suc) : 2 3
-str.sub: 3
-matrix[2][3] = 3
-tmp1: v1
-tmp2: v3
-(pre,suc) : 1 3
-str.sub: 1
-matrix[1][3] = 1
-tmp1: }
-gn4_2.bat 3> read_graph inputs/gn100.dot
+gn4_2.bat 2> read_graph inputs/gn100.dot
 
 tmp0: Graph gn100 {
 tmp1: v0
@@ -1486,7 +1457,7 @@ tmp2: v34
 str.sub: 24
 matrix[48][34] = 24
 tmp1: }
-gn4_2.bat 4> write_tree_mst -a prim -r v0 -o outputs/gn100_mst_p_2.dot
+gn4_2.bat 3> write_tree_mst -a prim -r v0 -o outputs/gn100_mst_p_2.dot
 
 graph->getlength(): 100
 
@@ -1500,8 +1471,15 @@ popNode: (0,0)
 
 popNode: (30,1) 
 0: val: 30 Key: 0
+2: val: 0 Key: 1000000000
 28: val: 14 Key: 1000000000
 48: val: 74 Key: 1000000000
+
+
+popNode: (0,2) 
+1: val: 0 Key: 30
+3: val: 17 Key: 1000000000
+18: val: 79 Key: 1000000000
 
 
 popNode: (14,28) 
@@ -1512,7 +1490,7 @@ popNode: (14,28)
 
 
 popNode: (5,29) 
-3: val: 36 Key: 1000000000
+3: val: 36 Key: 17
 28: val: 5 Key: 14
 30: val: 9 Key: 1000000000
 43: val: 6 Key: 1000000000
@@ -1537,11 +1515,22 @@ popNode: (9,30)
 44: val: 30 Key: 14
 48: val: 67 Key: 74
 60: val: 4 Key: 1000000000
+68: val: 0 Key: 1000000000
 84: val: 59 Key: 54
+
+
+popNode: (0,68) 
+30: val: 0 Key: 9
+37: val: 31 Key: 1000000000
+62: val: 59 Key: 93
+67: val: 66 Key: 1000000000
+69: val: 16 Key: 1000000000
+81: val: 14 Key: 1000000000
 
 
 popNode: (1,34) 
 8: val: 44 Key: 1000000000
+12: val: 0 Key: 1000000000
 20: val: 21 Key: 1000000000
 30: val: 1 Key: 9
 33: val: 93 Key: 1000000000
@@ -1564,7 +1553,7 @@ popNode: (8,35)
 10: val: 7 Key: 1000000000
 34: val: 8 Key: 1
 36: val: 61 Key: 1000000000
-67: val: 46 Key: 1000000000
+67: val: 46 Key: 66
 83: val: 69 Key: 1000000000
 
 
@@ -1573,111 +1562,900 @@ popNode: (7,10)
 11: val: 67 Key: 1000000000
 35: val: 7 Key: 8
 45: val: 37 Key: 1000000000
+
+
+popNode: (11,70) 
+43: val: 11 Key: 6
+69: val: 35 Key: 16
+71: val: 25 Key: 1000000000
+
+
+popNode: (16,58) 
+24: val: 45 Key: 1000000000
+34: val: 16 Key: 1
+57: val: 83 Key: 1000000000
+59: val: 30 Key: 34
+
+
+popNode: (12,4) 
+3: val: 32 Key: 17
+5: val: 45 Key: 1000000000
+30: val: 12 Key: 9
+43: val: 14 Key: 6
+
+
+popNode: (16,69) 
+50: val: 4 Key: 68
+52: val: 27 Key: 1000000000
+68: val: 16 Key: 0
+70: val: 35 Key: 11
+
+
+popNode: (4,50) 
+16: val: 50 Key: 1000000000
+18: val: 87 Key: 79
+34: val: 68 Key: 1
+40: val: 96 Key: 1000000000
+45: val: 33 Key: 37
+48: val: 66 Key: 24
+49: val: 57 Key: 1000000000
+51: val: 91 Key: 1000000000
+69: val: 4 Key: 16
+
+
+popNode: (21,20) 
+13: val: 11 Key: 1000000000
+19: val: 45 Key: 1000000000
+21: val: 98 Key: 1000000000
+34: val: 21 Key: 1
+49: val: 14 Key: 57
+78: val: 98 Key: 1000000000
+93: val: 40 Key: 1000000000
+98: val: 39 Key: 1000000000
+
+
+popNode: (11,13) 
+8: val: 85 Key: 44
+12: val: 43 Key: 0
+14: val: 46 Key: 93
+20: val: 11 Key: 21
+44: val: 45 Key: 14
+80: val: 57 Key: 82
+85: val: 50 Key: 1000000000
+86: val: 6 Key: 1000000000
+94: val: 37 Key: 1000000000
+
+
+popNode: (6,86) 
+13: val: 6 Key: 11
+77: val: 85 Key: 1000000000
+85: val: 17 Key: 50
+87: val: 34 Key: 80
+
+
+popNode: (21,38) 
+14: val: 58 Key: 46
+37: val: 98 Key: 31
+39: val: 31 Key: 1000000000
+56: val: 14 Key: 1000000000
+60: val: 21 Key: 4
+64: val: 0 Key: 1000000000
+92: val: 40 Key: 1000000000
+
+
+popNode: (0,12) 
+11: val: 65 Key: 67
+13: val: 43 Key: 11
+34: val: 0 Key: 1
+47: val: 76 Key: 1000000000
+91: val: 3 Key: 1000000000
+
+
+popNode: (0,64) 
+6: val: 33 Key: 1000000000
+16: val: 33 Key: 50
+38: val: 0 Key: 21
+47: val: 62 Key: 76
+63: val: 91 Key: 1000000000
+65: val: 18 Key: 1000000000
+
+
+popNode: (14,81) 
+68: val: 14 Key: 0
+73: val: 74 Key: 1000000000
+80: val: 91 Key: 57
+82: val: 19 Key: 49
+
+
+popNode: (3,91) 
+12: val: 3 Key: 0
+27: val: 83 Key: 28
+37: val: 77 Key: 31
+55: val: 88 Key: 1000000000
+84: val: 70 Key: 54
+90: val: 82 Key: 1000000000
+92: val: 62 Key: 40
+
+
+popNode: (14,44) 
+13: val: 45 Key: 11
+25: val: 6 Key: 1000000000
+30: val: 30 Key: 9
+43: val: 14 Key: 6
+45: val: 2 Key: 33
+77: val: 56 Key: 85
+
+
+popNode: (2,45) 
+5: val: 23 Key: 45
+10: val: 37 Key: 7
+15: val: 84 Key: 1000000000
+33: val: 14 Key: 93
+44: val: 2 Key: 14
+46: val: 18 Key: 21
+50: val: 33 Key: 4
+79: val: 86 Key: 1000000000
+90: val: 0 Key: 82
+93: val: 11 Key: 40
+97: val: 33 Key: 1000000000
+
+
+popNode: (6,25) 
+7: val: 34 Key: 1000000000
+24: val: 55 Key: 45
+26: val: 10 Key: 1000000000
+44: val: 6 Key: 14
+
+
+popNode: (10,26) 
+18: val: 24 Key: 79
+25: val: 10 Key: 6
+27: val: 5 Key: 28
+82: val: 90 Key: 19
+
+
+popNode: (5,27) 
+15: val: 49 Key: 84
+26: val: 5 Key: 10
+28: val: 28 Key: 14
+42: val: 25 Key: 79
+91: val: 83 Key: 3
+
+
+popNode: (14,33) 
+15: val: 14 Key: 49
+32: val: 50 Key: 1000000000
+34: val: 93 Key: 1
+45: val: 14 Key: 2
+53: val: 2 Key: 1000000000
+63: val: 11 Key: 91
+71: val: 52 Key: 25
+98: val: 46 Key: 39
+
+
+popNode: (2,53) 
+14: val: 52 Key: 46
+33: val: 2 Key: 14
+52: val: 2 Key: 27
+54: val: 65 Key: 1000000000
+83: val: 25 Key: 69
+97: val: 47 Key: 33
+
+
+popNode: (11,93) 
+20: val: 40 Key: 21
+42: val: 15 Key: 25
+45: val: 11 Key: 2
+55: val: 17 Key: 88
+92: val: 4 Key: 40
+94: val: 81 Key: 37
+
+
+popNode: (11,63) 
+11: val: 20 Key: 65
+31: val: 73 Key: 70
+33: val: 11 Key: 14
+57: val: 97 Key: 83
+62: val: 37 Key: 59
+64: val: 91 Key: 0
+76: val: 62 Key: 1000000000
+
+
+popNode: (2,52) 
+51: val: 20 Key: 91
+53: val: 2 Key: 2
+69: val: 27 Key: 16
+74: val: 43 Key: 1000000000
+
+
+popNode: (14,49) 
+9: val: 15 Key: 79
+20: val: 14 Key: 21
+48: val: 78 Key: 24
+50: val: 57 Key: 4
+98: val: 52 Key: 39
+
+
+popNode: (15,42) 
+27: val: 25 Key: 5
+41: val: 0 Key: 1000000000
+43: val: 79 Key: 6
+48: val: 72 Key: 24
+73: val: 43 Key: 74
+77: val: 25 Key: 56
+93: val: 15 Key: 11
+
+
+popNode: (14,56) 
+38: val: 14 Key: 21
+55: val: 84 Key: 17
+57: val: 87 Key: 83
+61: val: 72 Key: 65
+66: val: 96 Key: 1000000000
+96: val: 92 Key: 1000000000
+
+
+popNode: (17,55) 
+8: val: 74 Key: 44
+37: val: 30 Key: 31
+54: val: 66 Key: 65
+56: val: 84 Key: 14
+80: val: 11 Key: 57
+91: val: 88 Key: 3
+93: val: 17 Key: 11
+
+
+popNode: (11,80) 
+13: val: 57 Key: 11
+43: val: 82 Key: 6
+55: val: 11 Key: 17
+66: val: 93 Key: 96
+77: val: 17 Key: 25
+79: val: 20 Key: 86
+81: val: 91 Key: 14
+
+
+popNode: (0,90) 
+5: val: 18 Key: 23
+32: val: 54 Key: 50
+45: val: 0 Key: 2
+65: val: 23 Key: 18
+78: val: 29 Key: 98
+89: val: 20 Key: 1000000000
+91: val: 82 Key: 3
+
+
+popNode: (14,15) 
+8: val: 94 Key: 44
+14: val: 22 Key: 46
+16: val: 17 Key: 33
+27: val: 49 Key: 5
+33: val: 14 Key: 14
+45: val: 84 Key: 2
+59: val: 18 Key: 30
+96: val: 46 Key: 92
+
+
+popNode: (17,3) 
+2: val: 17 Key: 0
+4: val: 32 Key: 12
+14: val: 90 Key: 22
+29: val: 36 Key: 5
+
+
+popNode: (17,85) 
+13: val: 50 Key: 11
+18: val: 6 Key: 24
+54: val: 88 Key: 65
+66: val: 70 Key: 93
+84: val: 44 Key: 54
+86: val: 17 Key: 6
+87: val: 42 Key: 34
+
+
+popNode: (0,41) 
+24: val: 81 Key: 45
+40: val: 25 Key: 96
+42: val: 0 Key: 15
+61: val: 61 Key: 65
+
+
+popNode: (17,16) 
+7: val: 14 Key: 34
+15: val: 17 Key: 14
+17: val: 49 Key: 1000000000
+22: val: 76 Key: 1000000000
+50: val: 50 Key: 4
+64: val: 33 Key: 0
+89: val: 79 Key: 20
+99: val: 31 Key: 1000000000
+
+
+popNode: (18,65) 
+64: val: 18 Key: 0
+66: val: 19 Key: 70
+90: val: 23 Key: 0
+98: val: 56 Key: 39
+
+
+popNode: (4,92) 
+38: val: 40 Key: 21
+91: val: 62 Key: 3
+93: val: 4 Key: 11
+97: val: 86 Key: 33
+
+
+popNode: (17,77) 
+18: val: 66 Key: 6
+42: val: 25 Key: 15
+44: val: 56 Key: 14
+57: val: 1 Key: 83
+76: val: 71 Key: 62
+78: val: 49 Key: 29
+80: val: 17 Key: 11
+86: val: 85 Key: 6
+
+
+popNode: (17,85) 
+13: val: 50 Key: 11
+18: val: 6 Key: 6
+54: val: 88 Key: 65
+66: val: 70 Key: 19
+84: val: 44 Key: 44
+86: val: 17 Key: 6
+87: val: 42 Key: 34
+
+
+popNode: (15,9) 
+8: val: 88 Key: 44
+10: val: 79 Key: 7
+47: val: 36 Key: 62
+49: val: 15 Key: 14
+
+
+popNode: (18,5) 
+4: val: 45 Key: 12
+6: val: 37 Key: 33
+18: val: 82 Key: 6
+45: val: 23 Key: 2
+73: val: 90 Key: 43
+87: val: 76 Key: 34
+90: val: 18 Key: 0
+
+
+popNode: (19,82) 
+11: val: 45 Key: 20
+17: val: 23 Key: 49
+24: val: 56 Key: 45
+26: val: 90 Key: 10
+60: val: 49 Key: 4
+81: val: 19 Key: 14
+83: val: 16 Key: 25
+
+
+popNode: (16,83) 
+17: val: 90 Key: 23
+35: val: 69 Key: 8
+53: val: 25 Key: 2
+59: val: 57 Key: 18
+71: val: 76 Key: 25
+82: val: 16 Key: 19
+84: val: 9 Key: 44
+
+
+popNode: (19,66) 
+31: val: 6 Key: 70
+37: val: 96 Key: 30
+56: val: 96 Key: 14
+65: val: 19 Key: 18
+67: val: 36 Key: 46
+80: val: 93 Key: 11
+85: val: 70 Key: 17
+95: val: 87 Key: 1000000000
+
+
+popNode: (18,46) 
+6: val: 5 Key: 33
+43: val: 21 Key: 6
+45: val: 18 Key: 2
+47: val: 11 Key: 36
+84: val: 77 Key: 9
+88: val: 10 Key: 1000000000
+
+
+popNode: (5,6) 
+5: val: 37 Key: 18
+7: val: 7 Key: 14
+46: val: 5 Key: 18
+51: val: 94 Key: 20
+64: val: 33 Key: 0
+72: val: 12 Key: 1000000000
+
+
+popNode: (6,18) 
+2: val: 79 Key: 0
+5: val: 82 Key: 18
+17: val: 49 Key: 23
+19: val: 69 Key: 45
+24: val: 59 Key: 45
+26: val: 24 Key: 10
+50: val: 87 Key: 4
+77: val: 66 Key: 17
+85: val: 6 Key: 17
+97: val: 2 Key: 33
+
+
+popNode: (7,7) 
+6: val: 7 Key: 5
+8: val: 46 Key: 44
+16: val: 14 Key: 17
+25: val: 34 Key: 6
+
+
+popNode: (10,88) 
+46: val: 10 Key: 18
+79: val: 64 Key: 20
+87: val: 16 Key: 34
+89: val: 49 Key: 20
+
+
+popNode: (11,70) 
+43: val: 11 Key: 6
+69: val: 35 Key: 16
+71: val: 25 Key: 25
+
+
+popNode: (11,47) 
+9: val: 36 Key: 15
+12: val: 76 Key: 0
+46: val: 11 Key: 18
+48: val: 50 Key: 24
+64: val: 62 Key: 0
+73: val: 35 Key: 43
+
+
+popNode: (12,72) 
+6: val: 12 Key: 5
+71: val: 73 Key: 25
+73: val: 12 Key: 35
+
+
+popNode: (12,73) 
+5: val: 90 Key: 18
+31: val: 14 Key: 6
+37: val: 96 Key: 30
+42: val: 43 Key: 15
+47: val: 35 Key: 11
+54: val: 70 Key: 65
+72: val: 12 Key: 12
+74: val: 26 Key: 43
+76: val: 10 Key: 62
+81: val: 74 Key: 14
+96: val: 93 Key: 46
+
+
+popNode: (16,58) 
+24: val: 45 Key: 45
+34: val: 16 Key: 1
+57: val: 83 Key: 1
+59: val: 30 Key: 18
+
+
+popNode: (20,11) 
+10: val: 67 Key: 7
+12: val: 65 Key: 0
+31: val: 84 Key: 6
+32: val: 91 Key: 50
+61: val: 76 Key: 61
+63: val: 20 Key: 11
+82: val: 45 Key: 19
+97: val: 4 Key: 2
+
+
+popNode: (20,51) 
+6: val: 94 Key: 5
+48: val: 13 Key: 24
+50: val: 91 Key: 4
+52: val: 20 Key: 2
+
+
+popNode: (20,89) 
+16: val: 79 Key: 17
+40: val: 53 Key: 25
+88: val: 49 Key: 10
+90: val: 20 Key: 0
+
+
+popNode: (2,97) 
+11: val: 4 Key: 20
+18: val: 2 Key: 6
+45: val: 33 Key: 2
+53: val: 47 Key: 2
+92: val: 86 Key: 4
+96: val: 42 Key: 46
+98: val: 61 Key: 39
+
+
+popNode: (6,31) 
+11: val: 84 Key: 20
+30: val: 70 Key: 9
+32: val: 50 Key: 50
+63: val: 73 Key: 11
+66: val: 6 Key: 19
+73: val: 14 Key: 12
+75: val: 83 Key: 48
+
+
+popNode: (20,79) 
+8: val: 41 Key: 44
+24: val: 45 Key: 45
+45: val: 86 Key: 2
+76: val: 69 Key: 10
+78: val: 73 Key: 29
+80: val: 20 Key: 11
+88: val: 64 Key: 10
+
+
+popNode: (1,57) 
+56: val: 87 Key: 14
+58: val: 83 Key: 16
+63: val: 97 Key: 11
+77: val: 1 Key: 17
+
+
+popNode: (18,59) 
+15: val: 18 Key: 14
+58: val: 30 Key: 16
+60: val: 34 Key: 4
+74: val: 10 Key: 26
+83: val: 57 Key: 16
+
+
+popNode: (21,20) 
+13: val: 11 Key: 11
+19: val: 45 Key: 45
+21: val: 98 Key: 98
+34: val: 21 Key: 1
+49: val: 14 Key: 14
+78: val: 98 Key: 29
+93: val: 40 Key: 11
+98: val: 39 Key: 39
+
+
+popNode: (22,14) 
+3: val: 90 Key: 17
+13: val: 46 Key: 11
+15: val: 22 Key: 14
+38: val: 58 Key: 21
+43: val: 93 Key: 6
+53: val: 52 Key: 2
+
+
+popNode: (23,17) 
+16: val: 49 Key: 17
+18: val: 49 Key: 6
+82: val: 23 Key: 19
+83: val: 90 Key: 16
+99: val: 21 Key: 31
+
+
+popNode: (13,48) 
+1: val: 74 Key: 30
+30: val: 67 Key: 9
+34: val: 24 Key: 1
+42: val: 72 Key: 15
+47: val: 50 Key: 11
+49: val: 78 Key: 14
+50: val: 66 Key: 4
+51: val: 13 Key: 20
+
+
+popNode: (16,87) 
+0: val: 80 Key: 0
+5: val: 76 Key: 18
+62: val: 79 Key: 37
+85: val: 42 Key: 17
+86: val: 34 Key: 6
+88: val: 16 Key: 10
+99: val: 36 Key: 21
+
+
+popNode: (19,82) 
+11: val: 45 Key: 20
+17: val: 23 Key: 23
+24: val: 56 Key: 45
+26: val: 90 Key: 10
+60: val: 49 Key: 4
+81: val: 19 Key: 14
+83: val: 16 Key: 16
+
+
+popNode: (25,71) 
+33: val: 52 Key: 14
+70: val: 25 Key: 11
+72: val: 73 Key: 12
+83: val: 76 Key: 16
+96: val: 11 Key: 42
+
+
+popNode: (17,55) 
+8: val: 74 Key: 41
+37: val: 30 Key: 30
+54: val: 66 Key: 65
+56: val: 84 Key: 14
+80: val: 11 Key: 11
+91: val: 88 Key: 3
+93: val: 17 Key: 11
+
+
+popNode: (25,40) 
+39: val: 86 Key: 31
+41: val: 25 Key: 0
+50: val: 96 Key: 4
+54: val: 38 Key: 65
+89: val: 53 Key: 20
+
+
+popNode: (21,99) 
+16: val: 31 Key: 17
+17: val: 21 Key: 23
+24: val: 4 Key: 45
+87: val: 36 Key: 16
+98: val: 49 Key: 39
+
+
+popNode: (21,38) 
+14: val: 58 Key: 22
+37: val: 98 Key: 30
+39: val: 31 Key: 31
+56: val: 14 Key: 14
+60: val: 21 Key: 4
+64: val: 0 Key: 0
+92: val: 40 Key: 4
+
+
+popNode: (29,78) 
+20: val: 98 Key: 21
+39: val: 80 Key: 31
+77: val: 49 Key: 17
+79: val: 73 Key: 20
+90: val: 29 Key: 0
+
+
+popNode: (11,96) 
+15: val: 46 Key: 14
+56: val: 92 Key: 14
+71: val: 11 Key: 25
+73: val: 93 Key: 12
+95: val: 20 Key: 87
+97: val: 42 Key: 2
+
+
+popNode: (30,37) 
+36: val: 4 Key: 61
+38: val: 98 Key: 21
+55: val: 30 Key: 17
+61: val: 12 Key: 61
+66: val: 96 Key: 19
+68: val: 31 Key: 0
+73: val: 96 Key: 12
+91: val: 77 Key: 3
+98: val: 3 Key: 39
+
+
+popNode: (6,25) 
+7: val: 34 Key: 7
+24: val: 55 Key: 4
+26: val: 10 Key: 10
+44: val: 6 Key: 14
+
+
+popNode: (31,39) 
+19: val: 94 Key: 45
+24: val: 67 Key: 4
+38: val: 31 Key: 21
+40: val: 86 Key: 25
+78: val: 80 Key: 29
+
+
+popNode: (3,98) 
+20: val: 39 Key: 21
+33: val: 46 Key: 14
+37: val: 3 Key: 30
+49: val: 52 Key: 14
+65: val: 56 Key: 18
+97: val: 61 Key: 2
+99: val: 49 Key: 21
+
+
+popNode: (20,95) 
+32: val: 38 Key: 50
+36: val: 25 Key: 4
+66: val: 87 Key: 19
+94: val: 89 Key: 37
+96: val: 20 Key: 11
+
+
+popNode: (36,67) 
+35: val: 46 Key: 8
+66: val: 36 Key: 19
+68: val: 66 Key: 0
+
+
+popNode: (4,36) 
+8: val: 39 Key: 41
+35: val: 61 Key: 8
+37: val: 4 Key: 30
+95: val: 25 Key: 20
+
+
+popNode: (9,84) 
+0: val: 54 Key: 0
+30: val: 59 Key: 9
+46: val: 77 Key: 18
+83: val: 9 Key: 16
+85: val: 44 Key: 17
+91: val: 70 Key: 3
+
+
+popNode: (12,61) 
+11: val: 76 Key: 20
+34: val: 65 Key: 1
+37: val: 12 Key: 30
+41: val: 61 Key: 0
+56: val: 72 Key: 14
+60: val: 77 Key: 4
+62: val: 89 Key: 37
+
+
+popNode: (37,62) 
+0: val: 93 Key: 0
+19: val: 20 Key: 45
+61: val: 89 Key: 12
+63: val: 37 Key: 11
+68: val: 59 Key: 0
+87: val: 79 Key: 16
+
+
+popNode: (38,32) 
+11: val: 91 Key: 20
+31: val: 50 Key: 6
+33: val: 50 Key: 14
+90: val: 54 Key: 0
+95: val: 38 Key: 20
+
+
+popNode: (39,8) 
+7: val: 46 Key: 7
+9: val: 88 Key: 15
+13: val: 85 Key: 11
+15: val: 94 Key: 14
+34: val: 44 Key: 1
+36: val: 39 Key: 4
+55: val: 74 Key: 17
+79: val: 41 Key: 20
+94: val: 90 Key: 37
+
+
+popNode: (76,22) 
+16: val: 76 Key: 17
+21: val: 4 Key: 98
+23: val: 85 Key: 1000000000
+
+
+popNode: (4,21) 
+20: val: 98 Key: 21
+22: val: 4 Key: 76
+
+
+popNode: (4,21) 
+20: val: 98 Key: 21
+22: val: 4 Key: 76
 0 Pre: -1
 1 Pre: 0
-2 Pre: -1
-3 Pre: 29
+2 Pre: 1
+3 Pre: 2
 4 Pre: 30
-5 Pre: -1
-6 Pre: -1
-7 Pre: -1
-8 Pre: 34
-9 Pre: 10
+5 Pre: 90
+6 Pre: 46
+7 Pre: 6
+8 Pre: 36
+9 Pre: 49
 10 Pre: 35
-11 Pre: 10
-12 Pre: -1
-13 Pre: -1
-14 Pre: 43
-15 Pre: -1
-16 Pre: -1
-17 Pre: -1
-18 Pre: -1
-19 Pre: -1
+11 Pre: 63
+12 Pre: 34
+13 Pre: 20
+14 Pre: 15
+15 Pre: 33
+16 Pre: 15
+17 Pre: 82
+18 Pre: 85
+19 Pre: 62
 20 Pre: 34
-21 Pre: -1
-22 Pre: -1
-23 Pre: -1
-24 Pre: -1
-25 Pre: -1
-26 Pre: -1
-27 Pre: 28
+21 Pre: 22
+22 Pre: 16
+23 Pre: 22
+24 Pre: 99
+25 Pre: 44
+26 Pre: 25
+27 Pre: 26
 28 Pre: 1
 29 Pre: 28
 30 Pre: 29
-31 Pre: 30
-32 Pre: -1
-33 Pre: 34
+31 Pre: 66
+32 Pre: 95
+33 Pre: 45
 34 Pre: 30
 35 Pre: 34
-36 Pre: 35
-37 Pre: -1
+36 Pre: 37
+37 Pre: 55
 38 Pre: 60
-39 Pre: -1
-40 Pre: -1
-41 Pre: -1
-42 Pre: 43
+39 Pre: 38
+40 Pre: 41
+41 Pre: 42
+42 Pre: 93
 43 Pre: 29
 44 Pre: 43
-45 Pre: 10
-46 Pre: 43
-47 Pre: -1
-48 Pre: 34
-49 Pre: -1
-50 Pre: 34
-51 Pre: -1
-52 Pre: -1
-53 Pre: -1
-54 Pre: -1
-55 Pre: -1
-56 Pre: -1
-57 Pre: -1
+45 Pre: 44
+46 Pre: 45
+47 Pre: 46
+48 Pre: 51
+49 Pre: 20
+50 Pre: 69
+51 Pre: 52
+52 Pre: 53
+53 Pre: 33
+54 Pre: 40
+55 Pre: 93
+56 Pre: 38
+57 Pre: 77
 58 Pre: 34
-59 Pre: 60
+59 Pre: 15
 60 Pre: 30
-61 Pre: 34
-62 Pre: 0
-63 Pre: -1
-64 Pre: -1
-65 Pre: -1
-66 Pre: -1
-67 Pre: 35
-68 Pre: -1
-69 Pre: -1
+61 Pre: 37
+62 Pre: 63
+63 Pre: 33
+64 Pre: 38
+65 Pre: 64
+66 Pre: 65
+67 Pre: 66
+68 Pre: 30
+69 Pre: 68
 70 Pre: 43
-71 Pre: -1
-72 Pre: -1
-73 Pre: -1
-74 Pre: -1
+71 Pre: 70
+72 Pre: 6
+73 Pre: 72
+74 Pre: 59
 75 Pre: 28
-76 Pre: -1
-77 Pre: -1
-78 Pre: -1
-79 Pre: -1
-80 Pre: 43
-81 Pre: -1
-82 Pre: 60
-83 Pre: 35
-84 Pre: 0
-85 Pre: -1
-86 Pre: -1
-87 Pre: 0
-88 Pre: -1
-89 Pre: -1
-90 Pre: -1
-91 Pre: -1
-92 Pre: -1
-93 Pre: -1
-94 Pre: -1
-95 Pre: -1
-96 Pre: -1
-97 Pre: -1
-98 Pre: -1
-99 Pre: -1
-weight: 726
+76 Pre: 73
+77 Pre: 80
+78 Pre: 90
+79 Pre: 80
+80 Pre: 55
+81 Pre: 68
+82 Pre: 81
+83 Pre: 82
+84 Pre: 83
+85 Pre: 86
+86 Pre: 13
+87 Pre: 88
+88 Pre: 46
+89 Pre: 90
+90 Pre: 45
+91 Pre: 12
+92 Pre: 93
+93 Pre: 45
+94 Pre: 13
+95 Pre: 96
+96 Pre: 71
+97 Pre: 18
+98 Pre: 37
+99 Pre: 17
+weight: 721
 write_tree_mst -a prim
-0s
+4.001s
 11.875MB
 11.8789MB
 
-gn4_2.bat 5> exit
+gn4_2.bat 4> exit
 

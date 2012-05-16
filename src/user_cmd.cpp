@@ -144,7 +144,7 @@ bool ReadCmd::exec(int argc, char **argv) {
 
     for(int i=0;i<vertexNum;i++)
         for(int j=0;j<vertexNum;j++)
-            matrix[i][j] = 0;
+            matrix[i][j] = NIL;
 
     // inFile >> tmp;
     cout << "tmp0: " << tmp << endl;
@@ -242,7 +242,7 @@ bool WriteDfsCmd::exec(int argc, char **argv) {
     //dfs
     int time = 0;    
     for(int j=0;j<graph->getlength();j++)
-        if((graph->getMatrix(sourcenode,j)!=0 || graph->getMatrix(j,sourcenode)!=0)&&(graph->getColor(j) == -1))
+        if((graph->getMatrix(sourcenode,j)!=NIL || graph->getMatrix(j,sourcenode)!=NIL)&&(graph->getColor(j) == -1))
             DFS_VISIT(sourcenode,time);
 
 
@@ -302,12 +302,12 @@ void WriteDfsCmd::DFS_VISIT(int i,int& time){
     list<int> vertexlist;
     for(int j=0;j<graph->getlength();j++){        
         if( graph->getColor(j) == -1){ //color:white
-            if(graph->getMatrix(i,j)!=0){
+            if(graph->getMatrix(i,j)!=NIL){
                 vertexlist.push_back(graph->getMatrix(i,j));                    
                 graph->sucMap[graph->getMatrix(i,j)] = j;
                 graph->setPre(j,i);
             }
-            else if(graph->getMatrix(j,i)!=0){
+            else if(graph->getMatrix(j,i)!=NIL){
                 vertexlist.push_back(graph->getMatrix(j,i));             
                 graph->sucMap[graph->getMatrix(j,i)] = j;
                 graph->setPre(j,i);
@@ -401,7 +401,7 @@ bool WriteBfsCmd::exec(int argc, char **argv) {
         queueList.pop_front();
         for(int j = 0 ; j < graph->getlength(); j++){
             if( graph->getColor(j) == -1){ //color:white
-                if((graph->getMatrix(popNode,j)!=0)||(graph->getMatrix(j,popNode)!=0)){
+                if((graph->getMatrix(popNode,j)!=NIL)||(graph->getMatrix(j,popNode)!=NIL)){
                     graph->setColor(j,0);
                     graph->setDisTime(j,++time);
                     // cout << " graph->setPre("<<j<<","<<popNode<<")"<<endl;
@@ -436,7 +436,7 @@ bool WriteBfsCmd::exec(int argc, char **argv) {
         // cout << "(pre,suc): " << pre << " " << suc << endl;
         if(pre!=-1){
             outFile << "v" << pre << " -- v" << suc ;
-            if(graph->getMatrix(pre,suc)!=0)
+            if(graph->getMatrix(pre,suc)!=NIL)
                 outFile << " [label = \"" << graph->getMatrix(pre,suc) << "\"];" << endl;
             else
                 outFile << " [label = \"" << graph->getMatrix(suc,pre) << "\"];" << endl;
@@ -571,7 +571,7 @@ bool WriteMstCmd::exec(int argc, char **argv) {
 
         for(int j=0;j<graph->getlength();j++){
             int val = max(graph->getMatrix(j,popNode.second),graph->getMatrix(popNode.second,j));
-            if( val != 0){ //j belong to popNode's adj                
+            if( val != NIL){ //j belong to popNode's adj                
                 cout << j << ": val: "<<val << " Key: " << *graph->getKey(j) << endl;
                 Node n(graph->getKey(j),j);
                 if( ( (graph->pqMap.find(n)->second)!= NIL ) && (val < *graph->getKey(j))){  //v in queue
@@ -588,7 +588,7 @@ bool WriteMstCmd::exec(int argc, char **argv) {
             }
         }
         
-        if(pq.empty()||c==10) break;
+        if(pq.empty()) break;
     
         //dequeue        
         graph->pqMap[popNode] = NIL; //make popNode black
@@ -611,7 +611,7 @@ bool WriteMstCmd::exec(int argc, char **argv) {
         // cout << "(pre,suc): " << pre << " " << suc << endl;
         if(pre!=-1){
             outFile << "v" << pre << " -- v" << i ;
-            if(graph->getMatrix(pre,i)!=0){
+            if(graph->getMatrix(pre,i)!=NIL){
                 outFile << " [label = \"" << graph->getMatrix(pre,i) << "\"];" << endl;
                 weight += graph->getMatrix(pre,i);
             }
