@@ -691,14 +691,15 @@ bool IsSpanningTreeCmd::exec(int argc, char **argv) {
         edge++;
     }
 
+    //check edge number
     if(edge!=spanMap.size()-1){
-        cout <<"NO!!!" <<endl;
+        cout <<"No" <<endl;
         return 0;
     }
 
 
-    cout << "spanMap.size" << spanMap.size() << endl;
-    cout << "spanMap:" << endl;
+    // cout << "spanMap.size" << spanMap.size() << endl;
+    // cout << "spanMap:" << endl;
     for(map<int,map<int,int> >::iterator it = spanMap.begin();it!=spanMap.end();it++){
         cout << (*it).first << " : " ;
         for(map<int,int>::iterator i = (*it).second.begin();i!=(*it).second.end();i++){
@@ -708,23 +709,49 @@ bool IsSpanningTreeCmd::exec(int argc, char **argv) {
     }
 
     // int** matrix;
-    int** matrix = new int*[spanMap.size()];
-    for(int i = 0;i<spanMap.size();i++)
-        matrix[i] = new int[spanMap.size()];
+    // int** matrix = new int*[spanMap.size()];
+    // for(int i = 0;i<spanMap.size();i++)
+    //     matrix[i] = new int[spanMap.size()];
 
-    for(int i = 0;i<spanMap.size();i++)
-        for(int j = 0;j<spanMap.size();j++)
-            matrix[i][j] = 0;
+    // for(int i = 0;i<spanMap.size();i++)
+    //     for(int j = 0;j<spanMap.size();j++)
+    //         matrix[i][j] = 0;
 
-    for(map<int,map<int,int> >::iterator it = spanMap.begin();it!=spanMap.end();it++){
-        cout << (*it).first << " : " ;
-        for(map<int,int>::iterator i = (*it).second.begin();i!=(*it).second.end();i++){
-            cout << (*i).first << ", " << (*i).second <<  " && ";        
-            matrix[(*it).first][(*i).first] = (*i).second;
-        }
-        cout <<endl;    
-    }
+    // for(map<int,map<int,int> >::iterator it = spanMap.begin();it!=spanMap.end();it++){
+    //     cout << (*it).first << " : " ;
+    //     for(map<int,int>::iterator i = (*it).second.begin();i!=(*it).second.end();i++){
+    //         cout << (*i).first << ", " << (*i).second <<  " && ";        
+    //         matrix[(*it).first][(*i).first] = (*i).second;
+    //     }
+    //     cout <<endl;    
+    // }
 
-    
+    //check connectivity
+    int count = 0; 
+    int* visted = new int[spanMap.size()];
+    for(int i = 0 ; i < spanMap.size() ; i++ )
+        visted[i] = 0;
+
+    dfs(1,spanMap,visted,count);
+
+    if(count != spanMap.size()){
+        cout << "No" << endl;
+    }else
+        cout << "Yes" << endl;
 
 }
+
+void
+IsSpanningTreeCmd::dfs(int v,map<int,map<int,int> > spanMap,int* visted,int& count){
+    map<int,int>::iterator it;
+    visted[v] = 1;
+
+    for(it = spanMap[v].begin();it!=spanMap[v].end();it++){
+        if(visted[(*it).first] != 1)
+            dfs( (*it).first ,spanMap,visted,count);
+    }
+
+    count++;
+    // cout << v << " count: " << count << endl;
+}
+

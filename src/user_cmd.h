@@ -97,7 +97,8 @@ public:
          IsSpanningTreeCmd(const char * const name);
          ~IsSpanningTreeCmd();
 
-    bool exec(int argc, char **argv);    
+    bool exec(int argc, char **argv);
+    void dfs(int v,map<int,map<int,int> > spanMap,int* visted,int& count);
 };
 
 #endif
