@@ -1,0 +1,1683 @@
+        Welcome to GraphLab 
+       (c) NTUEE Algorithms 
+        V 2012.4  
+gn4_2.bat 1> 
+
+gn4_2.bat 2> read_graph inputs/gn4.dot
+
+tmp0: Graph gn4 {
+tmp1: v0
+tmp2: v1
+(pre,suc) : 0 1
+str.sub: 2
+matrix[0][1] = 2
+tmp1: v1
+tmp2: v2
+(pre,suc) : 1 2
+str.sub: 5
+matrix[1][2] = 5
+tmp1: v0
+tmp2: v3
+(pre,suc) : 0 3
+str.sub: 4
+matrix[0][3] = 4
+tmp1: v2
+tmp2: v3
+(pre,suc) : 2 3
+str.sub: 3
+matrix[2][3] = 3
+tmp1: v1
+tmp2: v3
+(pre,suc) : 1 3
+str.sub: 1
+matrix[1][3] = 1
+tmp1: }
+gn4_2.bat 3> read_graph inputs/gn100.dot
+
+tmp0: Graph gn100 {
+tmp1: v0
+tmp2: v1
+(pre,suc) : 0 1
+str.sub: 30
+matrix[0][1] = 30
+tmp1: v1
+tmp2: v2
+(pre,suc) : 1 2
+str.sub: 0
+matrix[1][2] = 0
+tmp1: v2
+tmp2: v3
+(pre,suc) : 2 3
+str.sub: 17
+matrix[2][3] = 17
+tmp1: v3
+tmp2: v4
+(pre,suc) : 3 4
+str.sub: 32
+matrix[3][4] = 32
+tmp1: v4
+tmp2: v5
+(pre,suc) : 4 5
+str.sub: 45
+matrix[4][5] = 45
+tmp1: v5
+tmp2: v6
+(pre,suc) : 5 6
+str.sub: 37
+matrix[5][6] = 37
+tmp1: v6
+tmp2: v7
+(pre,suc) : 6 7
+str.sub: 7
+matrix[6][7] = 7
+tmp1: v7
+tmp2: v8
+(pre,suc) : 7 8
+str.sub: 46
+matrix[7][8] = 46
+tmp1: v8
+tmp2: v9
+(pre,suc) : 8 9
+str.sub: 88
+matrix[8][9] = 88
+tmp1: v9
+tmp2: v10
+(pre,suc) : 9 10
+str.sub: 79
+matrix[9][10] = 79
+tmp1: v10
+tmp2: v11
+(pre,suc) : 10 11
+str.sub: 67
+matrix[10][11] = 67
+tmp1: v11
+tmp2: v12
+(pre,suc) : 11 12
+str.sub: 65
+matrix[11][12] = 65
+tmp1: v12
+tmp2: v13
+(pre,suc) : 12 13
+str.sub: 43
+matrix[12][13] = 43
+tmp1: v13
+tmp2: v14
+(pre,suc) : 13 14
+str.sub: 46
+matrix[13][14] = 46
+tmp1: v14
+tmp2: v15
+(pre,suc) : 14 15
+str.sub: 22
+matrix[14][15] = 22
+tmp1: v15
+tmp2: v16
+(pre,suc) : 15 16
+str.sub: 17
+matrix[15][16] = 17
+tmp1: v16
+tmp2: v17
+(pre,suc) : 16 17
+str.sub: 49
+matrix[16][17] = 49
+tmp1: v17
+tmp2: v18
+(pre,suc) : 17 18
+str.sub: 49
+matrix[17][18] = 49
+tmp1: v18
+tmp2: v19
+(pre,suc) : 18 19
+str.sub: 69
+matrix[18][19] = 69
+tmp1: v19
+tmp2: v20
+(pre,suc) : 19 20
+str.sub: 45
+matrix[19][20] = 45
+tmp1: v20
+tmp2: v21
+(pre,suc) : 20 21
+str.sub: 98
+matrix[20][21] = 98
+tmp1: v21
+tmp2: v22
+(pre,suc) : 21 22
+str.sub: 4
+matrix[21][22] = 4
+tmp1: v22
+tmp2: v23
+(pre,suc) : 22 23
+str.sub: 85
+matrix[22][23] = 85
+tmp1: v23
+tmp2: v24
+(pre,suc) : 23 24
+str.sub: 83
+matrix[23][24] = 83
+tmp1: v24
+tmp2: v25
+(pre,suc) : 24 25
+str.sub: 55
+matrix[24][25] = 55
+tmp1: v25
+tmp2: v26
+(pre,suc) : 25 26
+str.sub: 10
+matrix[25][26] = 10
+tmp1: v26
+tmp2: v27
+(pre,suc) : 26 27
+str.sub: 5
+matrix[26][27] = 5
+tmp1: v27
+tmp2: v28
+(pre,suc) : 27 28
+str.sub: 28
+matrix[27][28] = 28
+tmp1: v28
+tmp2: v29
+(pre,suc) : 28 29
+str.sub: 5
+matrix[28][29] = 5
+tmp1: v29
+tmp2: v30
+(pre,suc) : 29 30
+str.sub: 9
+matrix[29][30] = 9
+tmp1: v30
+tmp2: v31
+(pre,suc) : 30 31
+str.sub: 70
+matrix[30][31] = 70
+tmp1: v31
+tmp2: v32
+(pre,suc) : 31 32
+str.sub: 50
+matrix[31][32] = 50
+tmp1: v32
+tmp2: v33
+(pre,suc) : 32 33
+str.sub: 50
+matrix[32][33] = 50
+tmp1: v33
+tmp2: v34
+(pre,suc) : 33 34
+str.sub: 93
+matrix[33][34] = 93
+tmp1: v34
+tmp2: v35
+(pre,suc) : 34 35
+str.sub: 8
+matrix[34][35] = 8
+tmp1: v35
+tmp2: v36
+(pre,suc) : 35 36
+str.sub: 61
+matrix[35][36] = 61
+tmp1: v36
+tmp2: v37
+(pre,suc) : 36 37
+str.sub: 4
+matrix[36][37] = 4
+tmp1: v37
+tmp2: v38
+(pre,suc) : 37 38
+str.sub: 98
+matrix[37][38] = 98
+tmp1: v38
+tmp2: v39
+(pre,suc) : 38 39
+str.sub: 31
+matrix[38][39] = 31
+tmp1: v39
+tmp2: v40
+(pre,suc) : 39 40
+str.sub: 86
+matrix[39][40] = 86
+tmp1: v40
+tmp2: v41
+(pre,suc) : 40 41
+str.sub: 25
+matrix[40][41] = 25
+tmp1: v41
+tmp2: v42
+(pre,suc) : 41 42
+str.sub: 0
+matrix[41][42] = 0
+tmp1: v42
+tmp2: v43
+(pre,suc) : 42 43
+str.sub: 79
+matrix[42][43] = 79
+tmp1: v43
+tmp2: v44
+(pre,suc) : 43 44
+str.sub: 14
+matrix[43][44] = 14
+tmp1: v44
+tmp2: v45
+(pre,suc) : 44 45
+str.sub: 2
+matrix[44][45] = 2
+tmp1: v45
+tmp2: v46
+(pre,suc) : 45 46
+str.sub: 18
+matrix[45][46] = 18
+tmp1: v46
+tmp2: v47
+(pre,suc) : 46 47
+str.sub: 11
+matrix[46][47] = 11
+tmp1: v47
+tmp2: v48
+(pre,suc) : 47 48
+str.sub: 50
+matrix[47][48] = 50
+tmp1: v48
+tmp2: v49
+(pre,suc) : 48 49
+str.sub: 78
+matrix[48][49] = 78
+tmp1: v49
+tmp2: v50
+(pre,suc) : 49 50
+str.sub: 57
+matrix[49][50] = 57
+tmp1: v50
+tmp2: v51
+(pre,suc) : 50 51
+str.sub: 91
+matrix[50][51] = 91
+tmp1: v51
+tmp2: v52
+(pre,suc) : 51 52
+str.sub: 20
+matrix[51][52] = 20
+tmp1: v52
+tmp2: v53
+(pre,suc) : 52 53
+str.sub: 2
+matrix[52][53] = 2
+tmp1: v53
+tmp2: v54
+(pre,suc) : 53 54
+str.sub: 65
+matrix[53][54] = 65
+tmp1: v54
+tmp2: v55
+(pre,suc) : 54 55
+str.sub: 66
+matrix[54][55] = 66
+tmp1: v55
+tmp2: v56
+(pre,suc) : 55 56
+str.sub: 84
+matrix[55][56] = 84
+tmp1: v56
+tmp2: v57
+(pre,suc) : 56 57
+str.sub: 87
+matrix[56][57] = 87
+tmp1: v57
+tmp2: v58
+(pre,suc) : 57 58
+str.sub: 83
+matrix[57][58] = 83
+tmp1: v58
+tmp2: v59
+(pre,suc) : 58 59
+str.sub: 30
+matrix[58][59] = 30
+tmp1: v59
+tmp2: v60
+(pre,suc) : 59 60
+str.sub: 34
+matrix[59][60] = 34
+tmp1: v60
+tmp2: v61
+(pre,suc) : 60 61
+str.sub: 77
+matrix[60][61] = 77
+tmp1: v61
+tmp2: v62
+(pre,suc) : 61 62
+str.sub: 89
+matrix[61][62] = 89
+tmp1: v62
+tmp2: v63
+(pre,suc) : 62 63
+str.sub: 37
+matrix[62][63] = 37
+tmp1: v63
+tmp2: v64
+(pre,suc) : 63 64
+str.sub: 91
+matrix[63][64] = 91
+tmp1: v64
+tmp2: v65
+(pre,suc) : 64 65
+str.sub: 18
+matrix[64][65] = 18
+tmp1: v65
+tmp2: v66
+(pre,suc) : 65 66
+str.sub: 19
+matrix[65][66] = 19
+tmp1: v66
+tmp2: v67
+(pre,suc) : 66 67
+str.sub: 36
+matrix[66][67] = 36
+tmp1: v67
+tmp2: v68
+(pre,suc) : 67 68
+str.sub: 66
+matrix[67][68] = 66
+tmp1: v68
+tmp2: v69
+(pre,suc) : 68 69
+str.sub: 16
+matrix[68][69] = 16
+tmp1: v69
+tmp2: v70
+(pre,suc) : 69 70
+str.sub: 35
+matrix[69][70] = 35
+tmp1: v70
+tmp2: v71
+(pre,suc) : 70 71
+str.sub: 25
+matrix[70][71] = 25
+tmp1: v71
+tmp2: v72
+(pre,suc) : 71 72
+str.sub: 73
+matrix[71][72] = 73
+tmp1: v72
+tmp2: v73
+(pre,suc) : 72 73
+str.sub: 12
+matrix[72][73] = 12
+tmp1: v73
+tmp2: v74
+(pre,suc) : 73 74
+str.sub: 26
+matrix[73][74] = 26
+tmp1: v74
+tmp2: v75
+(pre,suc) : 74 75
+str.sub: 1
+matrix[74][75] = 1
+tmp1: v75
+tmp2: v76
+(pre,suc) : 75 76
+str.sub: 76
+matrix[75][76] = 76
+tmp1: v76
+tmp2: v77
+(pre,suc) : 76 77
+str.sub: 71
+matrix[76][77] = 71
+tmp1: v77
+tmp2: v78
+(pre,suc) : 77 78
+str.sub: 49
+matrix[77][78] = 49
+tmp1: v78
+tmp2: v79
+(pre,suc) : 78 79
+str.sub: 73
+matrix[78][79] = 73
+tmp1: v79
+tmp2: v80
+(pre,suc) : 79 80
+str.sub: 20
+matrix[79][80] = 20
+tmp1: v80
+tmp2: v81
+(pre,suc) : 80 81
+str.sub: 91
+matrix[80][81] = 91
+tmp1: v81
+tmp2: v82
+(pre,suc) : 81 82
+str.sub: 19
+matrix[81][82] = 19
+tmp1: v82
+tmp2: v83
+(pre,suc) : 82 83
+str.sub: 16
+matrix[82][83] = 16
+tmp1: v83
+tmp2: v84
+(pre,suc) : 83 84
+str.sub: 9
+matrix[83][84] = 9
+tmp1: v84
+tmp2: v85
+(pre,suc) : 84 85
+str.sub: 44
+matrix[84][85] = 44
+tmp1: v85
+tmp2: v86
+(pre,suc) : 85 86
+str.sub: 17
+matrix[85][86] = 17
+tmp1: v86
+tmp2: v87
+(pre,suc) : 86 87
+str.sub: 34
+matrix[86][87] = 34
+tmp1: v87
+tmp2: v88
+(pre,suc) : 87 88
+str.sub: 16
+matrix[87][88] = 16
+tmp1: v88
+tmp2: v89
+(pre,suc) : 88 89
+str.sub: 49
+matrix[88][89] = 49
+tmp1: v89
+tmp2: v90
+(pre,suc) : 89 90
+str.sub: 20
+matrix[89][90] = 20
+tmp1: v90
+tmp2: v91
+(pre,suc) : 90 91
+str.sub: 82
+matrix[90][91] = 82
+tmp1: v91
+tmp2: v92
+(pre,suc) : 91 92
+str.sub: 62
+matrix[91][92] = 62
+tmp1: v92
+tmp2: v93
+(pre,suc) : 92 93
+str.sub: 4
+matrix[92][93] = 4
+tmp1: v93
+tmp2: v94
+(pre,suc) : 93 94
+str.sub: 81
+matrix[93][94] = 81
+tmp1: v94
+tmp2: v95
+(pre,suc) : 94 95
+str.sub: 89
+matrix[94][95] = 89
+tmp1: v95
+tmp2: v96
+(pre,suc) : 95 96
+str.sub: 20
+matrix[95][96] = 20
+tmp1: v96
+tmp2: v97
+(pre,suc) : 96 97
+str.sub: 42
+matrix[96][97] = 42
+tmp1: v97
+tmp2: v98
+(pre,suc) : 97 98
+str.sub: 61
+matrix[97][98] = 61
+tmp1: v98
+tmp2: v99
+(pre,suc) : 98 99
+str.sub: 49
+matrix[98][99] = 49
+tmp1: v62
+tmp2: v19
+(pre,suc) : 62 19
+str.sub: 20
+matrix[62][19] = 20
+tmp1: v42
+tmp2: v93
+(pre,suc) : 42 93
+str.sub: 15
+matrix[42][93] = 15
+tmp1: v12
+tmp2: v47
+(pre,suc) : 12 47
+str.sub: 76
+matrix[12][47] = 76
+tmp1: v55
+tmp2: v80
+(pre,suc) : 55 80
+str.sub: 11
+matrix[55][80] = 11
+tmp1: v33
+tmp2: v45
+(pre,suc) : 33 45
+str.sub: 14
+matrix[33][45] = 14
+tmp1: v11
+tmp2: v63
+(pre,suc) : 11 63
+str.sub: 20
+matrix[11][63] = 20
+tmp1: v56
+tmp2: v61
+(pre,suc) : 56 61
+str.sub: 72
+matrix[56][61] = 72
+tmp1: v50
+tmp2: v16
+(pre,suc) : 50 16
+str.sub: 50
+matrix[50][16] = 50
+tmp1: v18
+tmp2: v2
+(pre,suc) : 18 2
+str.sub: 79
+matrix[18][2] = 79
+tmp1: v61
+tmp2: v34
+(pre,suc) : 61 34
+str.sub: 65
+matrix[61][34] = 65
+tmp1: v62
+tmp2: v68
+(pre,suc) : 62 68
+str.sub: 59
+matrix[62][68] = 59
+tmp1: v79
+tmp2: v24
+(pre,suc) : 79 24
+str.sub: 45
+matrix[79][24] = 45
+tmp1: v13
+tmp2: v44
+(pre,suc) : 13 44
+str.sub: 45
+matrix[13][44] = 45
+tmp1: v50
+tmp2: v40
+(pre,suc) : 50 40
+str.sub: 96
+matrix[50][40] = 96
+tmp1: v77
+tmp2: v86
+(pre,suc) : 77 86
+str.sub: 85
+matrix[77][86] = 85
+tmp1: v37
+tmp2: v66
+(pre,suc) : 37 66
+str.sub: 96
+matrix[37][66] = 96
+tmp1: v13
+tmp2: v20
+(pre,suc) : 13 20
+str.sub: 11
+matrix[13][20] = 11
+tmp1: v11
+tmp2: v61
+(pre,suc) : 11 61
+str.sub: 76
+matrix[11][61] = 76
+tmp1: v48
+tmp2: v1
+(pre,suc) : 48 1
+str.sub: 74
+matrix[48][1] = 74
+tmp1: v8
+tmp2: v94
+(pre,suc) : 8 94
+str.sub: 90
+matrix[8][94] = 90
+tmp1: v16
+tmp2: v64
+(pre,suc) : 16 64
+str.sub: 33
+matrix[16][64] = 33
+tmp1: v38
+tmp2: v64
+(pre,suc) : 38 64
+str.sub: 0
+matrix[38][64] = 0
+tmp1: v41
+tmp2: v61
+(pre,suc) : 41 61
+str.sub: 61
+matrix[41][61] = 61
+tmp1: v0
+tmp2: v62
+(pre,suc) : 0 62
+str.sub: 93
+matrix[0][62] = 93
+tmp1: v51
+tmp2: v48
+(pre,suc) : 51 48
+str.sub: 13
+matrix[51][48] = 13
+tmp1: v53
+tmp2: v14
+(pre,suc) : 53 14
+str.sub: 52
+matrix[53][14] = 52
+tmp1: v94
+tmp2: v13
+(pre,suc) : 94 13
+str.sub: 37
+matrix[94][13] = 37
+tmp1: v66
+tmp2: v56
+(pre,suc) : 66 56
+str.sub: 96
+matrix[66][56] = 96
+tmp1: v17
+tmp2: v83
+(pre,suc) : 17 83
+str.sub: 90
+matrix[17][83] = 90
+tmp1: v59
+tmp2: v83
+(pre,suc) : 59 83
+str.sub: 57
+matrix[59][83] = 57
+tmp1: v59
+tmp2: v74
+(pre,suc) : 59 74
+str.sub: 10
+matrix[59][74] = 10
+tmp1: v39
+tmp2: v19
+(pre,suc) : 39 19
+str.sub: 94
+matrix[39][19] = 94
+tmp1: v83
+tmp2: v71
+(pre,suc) : 83 71
+str.sub: 76
+matrix[83][71] = 76
+tmp1: v77
+tmp2: v42
+(pre,suc) : 77 42
+str.sub: 25
+matrix[77][42] = 25
+tmp1: v68
+tmp2: v37
+(pre,suc) : 68 37
+str.sub: 31
+matrix[68][37] = 31
+tmp1: v20
+tmp2: v78
+(pre,suc) : 20 78
+str.sub: 98
+matrix[20][78] = 98
+tmp1: v63
+tmp2: v76
+(pre,suc) : 63 76
+str.sub: 62
+matrix[63][76] = 62
+tmp1: v15
+tmp2: v27
+(pre,suc) : 15 27
+str.sub: 49
+matrix[15][27] = 49
+tmp1: v48
+tmp2: v30
+(pre,suc) : 48 30
+str.sub: 67
+matrix[48][30] = 67
+tmp1: v85
+tmp2: v54
+(pre,suc) : 85 54
+str.sub: 88
+matrix[85][54] = 88
+tmp1: v39
+tmp2: v24
+(pre,suc) : 39 24
+str.sub: 67
+matrix[39][24] = 67
+tmp1: v90
+tmp2: v32
+(pre,suc) : 90 32
+str.sub: 54
+matrix[90][32] = 54
+tmp1: v47
+tmp2: v9
+(pre,suc) : 47 9
+str.sub: 36
+matrix[47][9] = 36
+tmp1: v91
+tmp2: v84
+(pre,suc) : 91 84
+str.sub: 70
+matrix[91][84] = 70
+tmp1: v80
+tmp2: v77
+(pre,suc) : 80 77
+str.sub: 17
+matrix[80][77] = 17
+tmp1: v18
+tmp2: v85
+(pre,suc) : 18 85
+str.sub: 6
+matrix[18][85] = 6
+tmp1: v97
+tmp2: v18
+(pre,suc) : 97 18
+str.sub: 2
+matrix[97][18] = 2
+tmp1: v34
+tmp2: v8
+(pre,suc) : 34 8
+str.sub: 44
+matrix[34][8] = 44
+tmp1: v81
+tmp2: v68
+(pre,suc) : 81 68
+str.sub: 14
+matrix[81][68] = 14
+tmp1: v37
+tmp2: v61
+(pre,suc) : 37 61
+str.sub: 12
+matrix[37][61] = 12
+tmp1: v15
+tmp2: v33
+(pre,suc) : 15 33
+str.sub: 14
+matrix[15][33] = 14
+tmp1: v18
+tmp2: v77
+(pre,suc) : 18 77
+str.sub: 66
+matrix[18][77] = 66
+tmp1: v43
+tmp2: v46
+(pre,suc) : 43 46
+str.sub: 21
+matrix[43][46] = 21
+tmp1: v49
+tmp2: v9
+(pre,suc) : 49 9
+str.sub: 15
+matrix[49][9] = 15
+tmp1: v11
+tmp2: v97
+(pre,suc) : 11 97
+str.sub: 4
+matrix[11][97] = 4
+tmp1: v87
+tmp2: v5
+(pre,suc) : 87 5
+str.sub: 76
+matrix[87][5] = 76
+tmp1: v15
+tmp2: v45
+(pre,suc) : 15 45
+str.sub: 84
+matrix[15][45] = 84
+tmp1: v87
+tmp2: v85
+(pre,suc) : 87 85
+str.sub: 42
+matrix[87][85] = 42
+tmp1: v6
+tmp2: v64
+(pre,suc) : 6 64
+str.sub: 33
+matrix[6][64] = 33
+tmp1: v88
+tmp2: v46
+(pre,suc) : 88 46
+str.sub: 10
+matrix[88][46] = 10
+tmp1: v98
+tmp2: v20
+(pre,suc) : 98 20
+str.sub: 39
+matrix[98][20] = 39
+tmp1: v67
+tmp2: v35
+(pre,suc) : 67 35
+str.sub: 46
+matrix[67][35] = 46
+tmp1: v70
+tmp2: v43
+(pre,suc) : 70 43
+str.sub: 11
+matrix[70][43] = 11
+tmp1: v65
+tmp2: v90
+(pre,suc) : 65 90
+str.sub: 23
+matrix[65][90] = 23
+tmp1: v93
+tmp2: v20
+(pre,suc) : 93 20
+str.sub: 40
+matrix[93][20] = 40
+tmp1: v44
+tmp2: v25
+(pre,suc) : 44 25
+str.sub: 6
+matrix[44][25] = 6
+tmp1: v12
+tmp2: v34
+(pre,suc) : 12 34
+str.sub: 0
+matrix[12][34] = 0
+tmp1: v62
+tmp2: v87
+(pre,suc) : 62 87
+str.sub: 79
+matrix[62][87] = 79
+tmp1: v44
+tmp2: v77
+(pre,suc) : 44 77
+str.sub: 56
+matrix[44][77] = 56
+tmp1: v14
+tmp2: v3
+(pre,suc) : 14 3
+str.sub: 90
+matrix[14][3] = 90
+tmp1: v99
+tmp2: v24
+(pre,suc) : 99 24
+str.sub: 4
+matrix[99][24] = 4
+tmp1: v59
+tmp2: v15
+(pre,suc) : 59 15
+str.sub: 18
+matrix[59][15] = 18
+tmp1: v98
+tmp2: v65
+(pre,suc) : 98 65
+str.sub: 56
+matrix[98][65] = 56
+tmp1: v4
+tmp2: v43
+(pre,suc) : 4 43
+str.sub: 14
+matrix[4][43] = 14
+tmp1: v31
+tmp2: v11
+(pre,suc) : 31 11
+str.sub: 84
+matrix[31][11] = 84
+tmp1: v7
+tmp2: v25
+(pre,suc) : 7 25
+str.sub: 34
+matrix[7][25] = 34
+tmp1: v13
+tmp2: v86
+(pre,suc) : 13 86
+str.sub: 6
+matrix[13][86] = 6
+tmp1: v99
+tmp2: v87
+(pre,suc) : 99 87
+str.sub: 36
+matrix[99][87] = 36
+tmp1: v45
+tmp2: v79
+(pre,suc) : 45 79
+str.sub: 86
+matrix[45][79] = 86
+tmp1: v32
+tmp2: v95
+(pre,suc) : 32 95
+str.sub: 38
+matrix[32][95] = 38
+tmp1: v20
+tmp2: v34
+(pre,suc) : 20 34
+str.sub: 21
+matrix[20][34] = 21
+tmp1: v50
+tmp2: v18
+(pre,suc) : 50 18
+str.sub: 87
+matrix[50][18] = 87
+tmp1: v16
+tmp2: v22
+(pre,suc) : 16 22
+str.sub: 76
+matrix[16][22] = 76
+tmp1: v48
+tmp2: v42
+(pre,suc) : 48 42
+str.sub: 72
+matrix[48][42] = 72
+tmp1: v55
+tmp2: v93
+(pre,suc) : 55 93
+str.sub: 17
+matrix[55][93] = 17
+tmp1: v90
+tmp2: v5
+(pre,suc) : 90 5
+str.sub: 18
+matrix[90][5] = 18
+tmp1: v43
+tmp2: v80
+(pre,suc) : 43 80
+str.sub: 82
+matrix[43][80] = 82
+tmp1: v31
+tmp2: v66
+(pre,suc) : 31 66
+str.sub: 6
+matrix[31][66] = 6
+tmp1: v30
+tmp2: v34
+(pre,suc) : 30 34
+str.sub: 1
+matrix[30][34] = 1
+tmp1: v84
+tmp2: v0
+(pre,suc) : 84 0
+str.sub: 54
+matrix[84][0] = 54
+tmp1: v58
+tmp2: v34
+(pre,suc) : 58 34
+str.sub: 16
+matrix[58][34] = 16
+tmp1: v31
+tmp2: v63
+(pre,suc) : 31 63
+str.sub: 73
+matrix[31][63] = 73
+tmp1: v85
+tmp2: v66
+(pre,suc) : 85 66
+str.sub: 70
+matrix[85][66] = 70
+tmp1: v75
+tmp2: v28
+(pre,suc) : 75 28
+str.sub: 48
+matrix[75][28] = 48
+tmp1: v39
+tmp2: v78
+(pre,suc) : 39 78
+str.sub: 80
+matrix[39][78] = 80
+tmp1: v99
+tmp2: v16
+(pre,suc) : 99 16
+str.sub: 31
+matrix[99][16] = 31
+tmp1: v69
+tmp2: v50
+(pre,suc) : 69 50
+str.sub: 4
+matrix[69][50] = 4
+tmp1: v54
+tmp2: v40
+(pre,suc) : 54 40
+str.sub: 38
+matrix[54][40] = 38
+tmp1: v27
+tmp2: v42
+(pre,suc) : 27 42
+str.sub: 25
+matrix[27][42] = 25
+tmp1: v69
+tmp2: v52
+(pre,suc) : 69 52
+str.sub: 27
+matrix[69][52] = 27
+tmp1: v83
+tmp2: v35
+(pre,suc) : 83 35
+str.sub: 69
+matrix[83][35] = 69
+tmp1: v24
+tmp2: v18
+(pre,suc) : 24 18
+str.sub: 59
+matrix[24][18] = 59
+tmp1: v45
+tmp2: v97
+(pre,suc) : 45 97
+str.sub: 33
+matrix[45][97] = 33
+tmp1: v90
+tmp2: v78
+(pre,suc) : 90 78
+str.sub: 29
+matrix[90][78] = 29
+tmp1: v53
+tmp2: v83
+(pre,suc) : 53 83
+str.sub: 25
+matrix[53][83] = 25
+tmp1: v30
+tmp2: v68
+(pre,suc) : 30 68
+str.sub: 0
+matrix[30][68] = 0
+tmp1: v18
+tmp2: v5
+(pre,suc) : 18 5
+str.sub: 82
+matrix[18][5] = 82
+tmp1: v38
+tmp2: v14
+(pre,suc) : 38 14
+str.sub: 58
+matrix[38][14] = 58
+tmp1: v81
+tmp2: v73
+(pre,suc) : 81 73
+str.sub: 74
+matrix[81][73] = 74
+tmp1: v97
+tmp2: v53
+(pre,suc) : 97 53
+str.sub: 47
+matrix[97][53] = 47
+tmp1: v45
+tmp2: v93
+(pre,suc) : 45 93
+str.sub: 11
+matrix[45][93] = 11
+tmp1: v71
+tmp2: v33
+(pre,suc) : 71 33
+str.sub: 52
+matrix[71][33] = 52
+tmp1: v11
+tmp2: v32
+(pre,suc) : 11 32
+str.sub: 91
+matrix[11][32] = 91
+tmp1: v13
+tmp2: v80
+(pre,suc) : 13 80
+str.sub: 57
+matrix[13][80] = 57
+tmp1: v5
+tmp2: v73
+(pre,suc) : 5 73
+str.sub: 90
+matrix[5][73] = 90
+tmp1: v47
+tmp2: v73
+(pre,suc) : 47 73
+str.sub: 35
+matrix[47][73] = 35
+tmp1: v36
+tmp2: v95
+(pre,suc) : 36 95
+str.sub: 25
+matrix[36][95] = 25
+tmp1: v96
+tmp2: v56
+(pre,suc) : 96 56
+str.sub: 92
+matrix[96][56] = 92
+tmp1: v96
+tmp2: v71
+(pre,suc) : 96 71
+str.sub: 11
+matrix[96][71] = 11
+tmp1: v16
+tmp2: v89
+(pre,suc) : 16 89
+str.sub: 79
+matrix[16][89] = 79
+tmp1: v73
+tmp2: v37
+(pre,suc) : 73 37
+str.sub: 96
+matrix[73][37] = 96
+tmp1: v38
+tmp2: v60
+(pre,suc) : 38 60
+str.sub: 21
+matrix[38][60] = 21
+tmp1: v98
+tmp2: v49
+(pre,suc) : 98 49
+str.sub: 52
+matrix[98][49] = 52
+tmp1: v72
+tmp2: v6
+(pre,suc) : 72 6
+str.sub: 12
+matrix[72][6] = 12
+tmp1: v82
+tmp2: v24
+(pre,suc) : 82 24
+str.sub: 56
+matrix[82][24] = 56
+tmp1: v35
+tmp2: v10
+(pre,suc) : 35 10
+str.sub: 7
+matrix[35][10] = 7
+tmp1: v55
+tmp2: v37
+(pre,suc) : 55 37
+str.sub: 30
+matrix[55][37] = 30
+tmp1: v73
+tmp2: v42
+(pre,suc) : 73 42
+str.sub: 43
+matrix[73][42] = 43
+tmp1: v12
+tmp2: v91
+(pre,suc) : 12 91
+str.sub: 3
+matrix[12][91] = 3
+tmp1: v10
+tmp2: v45
+(pre,suc) : 10 45
+str.sub: 37
+matrix[10][45] = 37
+tmp1: v37
+tmp2: v91
+(pre,suc) : 37 91
+str.sub: 77
+matrix[37][91] = 77
+tmp1: v41
+tmp2: v24
+(pre,suc) : 41 24
+str.sub: 81
+matrix[41][24] = 81
+tmp1: v85
+tmp2: v13
+(pre,suc) : 85 13
+str.sub: 50
+matrix[85][13] = 50
+tmp1: v48
+tmp2: v50
+(pre,suc) : 48 50
+str.sub: 66
+matrix[48][50] = 66
+tmp1: v77
+tmp2: v57
+(pre,suc) : 77 57
+str.sub: 1
+matrix[77][57] = 1
+tmp1: v76
+tmp2: v79
+(pre,suc) : 76 79
+str.sub: 69
+matrix[76][79] = 69
+tmp1: v13
+tmp2: v8
+(pre,suc) : 13 8
+str.sub: 85
+matrix[13][8] = 85
+tmp1: v49
+tmp2: v20
+(pre,suc) : 49 20
+str.sub: 14
+matrix[49][20] = 14
+tmp1: v8
+tmp2: v79
+(pre,suc) : 8 79
+str.sub: 41
+matrix[8][79] = 41
+tmp1: v46
+tmp2: v6
+(pre,suc) : 46 6
+str.sub: 5
+matrix[46][6] = 5
+tmp1: v17
+tmp2: v82
+(pre,suc) : 17 82
+str.sub: 23
+matrix[17][82] = 23
+tmp1: v45
+tmp2: v90
+(pre,suc) : 45 90
+str.sub: 0
+matrix[45][90] = 0
+tmp1: v38
+tmp2: v92
+(pre,suc) : 38 92
+str.sub: 40
+matrix[38][92] = 40
+tmp1: v43
+tmp2: v14
+(pre,suc) : 43 14
+str.sub: 93
+matrix[43][14] = 93
+tmp1: v73
+tmp2: v96
+(pre,suc) : 73 96
+str.sub: 93
+matrix[73][96] = 93
+tmp1: v99
+tmp2: v17
+(pre,suc) : 99 17
+str.sub: 21
+matrix[99][17] = 21
+tmp1: v26
+tmp2: v82
+(pre,suc) : 26 82
+str.sub: 90
+matrix[26][82] = 90
+tmp1: v3
+tmp2: v29
+(pre,suc) : 3 29
+str.sub: 36
+matrix[3][29] = 36
+tmp1: v8
+tmp2: v15
+(pre,suc) : 8 15
+str.sub: 94
+matrix[8][15] = 94
+tmp1: v63
+tmp2: v57
+(pre,suc) : 63 57
+str.sub: 97
+matrix[63][57] = 97
+tmp1: v30
+tmp2: v60
+(pre,suc) : 30 60
+str.sub: 4
+matrix[30][60] = 4
+tmp1: v51
+tmp2: v6
+(pre,suc) : 51 6
+str.sub: 94
+matrix[51][6] = 94
+tmp1: v95
+tmp2: v66
+(pre,suc) : 95 66
+str.sub: 87
+matrix[95][66] = 87
+tmp1: v84
+tmp2: v46
+(pre,suc) : 84 46
+str.sub: 77
+matrix[84][46] = 77
+tmp1: v33
+tmp2: v53
+(pre,suc) : 33 53
+str.sub: 2
+matrix[33][53] = 2
+tmp1: v94
+tmp2: v24
+(pre,suc) : 94 24
+str.sub: 42
+matrix[94][24] = 42
+tmp1: v52
+tmp2: v74
+(pre,suc) : 52 74
+str.sub: 43
+matrix[52][74] = 43
+tmp1: v28
+tmp2: v1
+(pre,suc) : 28 1
+str.sub: 14
+matrix[28][1] = 14
+tmp1: v11
+tmp2: v82
+(pre,suc) : 11 82
+str.sub: 45
+matrix[11][82] = 45
+tmp1: v24
+tmp2: v58
+(pre,suc) : 24 58
+str.sub: 45
+matrix[24][58] = 45
+tmp1: v66
+tmp2: v80
+(pre,suc) : 66 80
+str.sub: 93
+matrix[66][80] = 93
+tmp1: v82
+tmp2: v60
+(pre,suc) : 82 60
+str.sub: 49
+matrix[82][60] = 49
+tmp1: v73
+tmp2: v54
+(pre,suc) : 73 54
+str.sub: 70
+matrix[73][54] = 70
+tmp1: v8
+tmp2: v36
+(pre,suc) : 8 36
+str.sub: 39
+matrix[8][36] = 39
+tmp1: v76
+tmp2: v73
+(pre,suc) : 76 73
+str.sub: 10
+matrix[76][73] = 10
+tmp1: v98
+tmp2: v37
+(pre,suc) : 98 37
+str.sub: 3
+matrix[98][37] = 3
+tmp1: v33
+tmp2: v98
+(pre,suc) : 33 98
+str.sub: 46
+matrix[33][98] = 46
+tmp1: v30
+tmp2: v44
+(pre,suc) : 30 44
+str.sub: 30
+matrix[30][44] = 30
+tmp1: v8
+tmp2: v55
+(pre,suc) : 8 55
+str.sub: 74
+matrix[8][55] = 74
+tmp1: v26
+tmp2: v18
+(pre,suc) : 26 18
+str.sub: 24
+matrix[26][18] = 24
+tmp1: v7
+tmp2: v16
+(pre,suc) : 7 16
+str.sub: 14
+matrix[7][16] = 14
+tmp1: v45
+tmp2: v5
+(pre,suc) : 45 5
+str.sub: 23
+matrix[45][5] = 23
+tmp1: v45
+tmp2: v50
+(pre,suc) : 45 50
+str.sub: 33
+matrix[45][50] = 33
+tmp1: v76
+tmp2: v24
+(pre,suc) : 76 24
+str.sub: 21
+matrix[76][24] = 21
+tmp1: v15
+tmp2: v96
+(pre,suc) : 15 96
+str.sub: 46
+matrix[15][96] = 46
+tmp1: v97
+tmp2: v92
+(pre,suc) : 97 92
+str.sub: 86
+matrix[97][92] = 86
+tmp1: v87
+tmp2: v0
+(pre,suc) : 87 0
+str.sub: 80
+matrix[87][0] = 80
+tmp1: v75
+tmp2: v31
+(pre,suc) : 75 31
+str.sub: 83
+matrix[75][31] = 83
+tmp1: v33
+tmp2: v63
+(pre,suc) : 33 63
+str.sub: 11
+matrix[33][63] = 11
+tmp1: v91
+tmp2: v27
+(pre,suc) : 91 27
+str.sub: 83
+matrix[91][27] = 83
+tmp1: v43
+tmp2: v29
+(pre,suc) : 43 29
+str.sub: 6
+matrix[43][29] = 6
+tmp1: v89
+tmp2: v40
+(pre,suc) : 89 40
+str.sub: 53
+matrix[89][40] = 53
+tmp1: v79
+tmp2: v88
+(pre,suc) : 79 88
+str.sub: 64
+matrix[79][88] = 64
+tmp1: v31
+tmp2: v73
+(pre,suc) : 31 73
+str.sub: 14
+matrix[31][73] = 14
+tmp1: v55
+tmp2: v91
+(pre,suc) : 55 91
+str.sub: 88
+matrix[55][91] = 88
+tmp1: v84
+tmp2: v30
+(pre,suc) : 84 30
+str.sub: 59
+matrix[84][30] = 59
+tmp1: v30
+tmp2: v4
+(pre,suc) : 30 4
+str.sub: 12
+matrix[30][4] = 12
+tmp1: v34
+tmp2: v50
+(pre,suc) : 34 50
+str.sub: 68
+matrix[34][50] = 68
+tmp1: v56
+tmp2: v38
+(pre,suc) : 56 38
+str.sub: 14
+matrix[56][38] = 14
+tmp1: v64
+tmp2: v47
+(pre,suc) : 64 47
+str.sub: 62
+matrix[64][47] = 62
+tmp1: v48
+tmp2: v34
+(pre,suc) : 48 34
+str.sub: 24
+matrix[48][34] = 24
+tmp1: }
+gn4_2.bat 4> write_tree_mst -a prim -r v0 -o outputs/gn100_mst_p_2.dot
+
+graph->getlength(): 100
+
+
+popNode: (0,0) 
+1: val: 30 Key: 1000000000
+62: val: 93 Key: 1000000000
+84: val: 54 Key: 1000000000
+87: val: 80 Key: 1000000000
+
+
+popNode: (30,1) 
+0: val: 30 Key: 0
+28: val: 14 Key: 1000000000
+48: val: 74 Key: 1000000000
+
+
+popNode: (14,28) 
+1: val: 14 Key: 30
+27: val: 28 Key: 1000000000
+29: val: 5 Key: 1000000000
+75: val: 48 Key: 1000000000
+
+
+popNode: (5,29) 
+3: val: 36 Key: 1000000000
+28: val: 5 Key: 14
+30: val: 9 Key: 1000000000
+43: val: 6 Key: 1000000000
+
+
+popNode: (6,43) 
+4: val: 14 Key: 1000000000
+14: val: 93 Key: 1000000000
+29: val: 6 Key: 5
+42: val: 79 Key: 1000000000
+44: val: 14 Key: 1000000000
+46: val: 21 Key: 1000000000
+70: val: 11 Key: 1000000000
+80: val: 82 Key: 1000000000
+
+
+popNode: (9,30) 
+4: val: 12 Key: 14
+29: val: 9 Key: 5
+31: val: 70 Key: 1000000000
+34: val: 1 Key: 1000000000
+44: val: 30 Key: 14
+48: val: 67 Key: 74
+60: val: 4 Key: 1000000000
+84: val: 59 Key: 54
+
+
+popNode: (1,34) 
+8: val: 44 Key: 1000000000
+20: val: 21 Key: 1000000000
+30: val: 1 Key: 9
+33: val: 93 Key: 1000000000
+35: val: 8 Key: 1000000000
+48: val: 24 Key: 67
+50: val: 68 Key: 1000000000
+58: val: 16 Key: 1000000000
+61: val: 65 Key: 1000000000
+
+
+popNode: (4,60) 
+30: val: 4 Key: 9
+38: val: 21 Key: 1000000000
+59: val: 34 Key: 1000000000
+61: val: 77 Key: 65
+82: val: 49 Key: 1000000000
+
+
+popNode: (8,35) 
+10: val: 7 Key: 1000000000
+34: val: 8 Key: 1
+36: val: 61 Key: 1000000000
+67: val: 46 Key: 1000000000
+83: val: 69 Key: 1000000000
+
+
+popNode: (7,10) 
+9: val: 79 Key: 1000000000
+11: val: 67 Key: 1000000000
+35: val: 7 Key: 8
+45: val: 37 Key: 1000000000
+0 Pre: -1
+1 Pre: 0
+2 Pre: -1
+3 Pre: 29
+4 Pre: 30
+5 Pre: -1
+6 Pre: -1
+7 Pre: -1
+8 Pre: 34
+9 Pre: 10
+10 Pre: 35
+11 Pre: 10
+12 Pre: -1
+13 Pre: -1
+14 Pre: 43
+15 Pre: -1
+16 Pre: -1
+17 Pre: -1
+18 Pre: -1
+19 Pre: -1
+20 Pre: 34
+21 Pre: -1
+22 Pre: -1
+23 Pre: -1
+24 Pre: -1
+25 Pre: -1
+26 Pre: -1
+27 Pre: 28
+28 Pre: 1
+29 Pre: 28
+30 Pre: 29
+31 Pre: 30
+32 Pre: -1
+33 Pre: 34
+34 Pre: 30
+35 Pre: 34
+36 Pre: 35
+37 Pre: -1
+38 Pre: 60
+39 Pre: -1
+40 Pre: -1
+41 Pre: -1
+42 Pre: 43
+43 Pre: 29
+44 Pre: 43
+45 Pre: 10
+46 Pre: 43
+47 Pre: -1
+48 Pre: 34
+49 Pre: -1
+50 Pre: 34
+51 Pre: -1
+52 Pre: -1
+53 Pre: -1
+54 Pre: -1
+55 Pre: -1
+56 Pre: -1
+57 Pre: -1
+58 Pre: 34
+59 Pre: 60
+60 Pre: 30
+61 Pre: 34
+62 Pre: 0
+63 Pre: -1
+64 Pre: -1
+65 Pre: -1
+66 Pre: -1
+67 Pre: 35
+68 Pre: -1
+69 Pre: -1
+70 Pre: 43
+71 Pre: -1
+72 Pre: -1
+73 Pre: -1
+74 Pre: -1
+75 Pre: 28
+76 Pre: -1
+77 Pre: -1
+78 Pre: -1
+79 Pre: -1
+80 Pre: 43
+81 Pre: -1
+82 Pre: 60
+83 Pre: 35
+84 Pre: 0
+85 Pre: -1
+86 Pre: -1
+87 Pre: 0
+88 Pre: -1
+89 Pre: -1
+90 Pre: -1
+91 Pre: -1
+92 Pre: -1
+93 Pre: -1
+94 Pre: -1
+95 Pre: -1
+96 Pre: -1
+97 Pre: -1
+98 Pre: -1
+99 Pre: -1
+weight: 726
+write_tree_mst -a prim
+0s
+11.875MB
+11.8789MB
+
+gn4_2.bat 5> exit
+
