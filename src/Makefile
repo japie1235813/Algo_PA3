@@ -1,8 +1,8 @@
 AR       := ar
 ARFLAGS  := cr
 CXX      := g++
-CPPFLAGS := -O2 -I../lib
-# CPPFLAGS := -O0 -I../lib -g
+# CPPFLAGS := -O2 -I../lib
+CPPFLAGS := -O0 -I../lib -g
 
 all : ../bin/graphlab
 	@echo -n ""

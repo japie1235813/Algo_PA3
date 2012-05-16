@@ -4,7 +4,7 @@
 // Synopsis   [ ]
 // Date       [ 2012/04/10 created ]
 // **************************************************************************
-
+#include "tm_usage.h"
 #include "user_cmd.h"
 #include "stdio.h"
 #include <stdlib.h>
@@ -20,6 +20,7 @@ using namespace std;
 using namespace CommonNs;
 
 Graph *graph;
+extern TmUsage tmusg;
 
 #define NIL     -1
 #define WHITE   -1
@@ -114,6 +115,8 @@ ReadCmd::ReadCmd(const char * const name) : Cmd(name) {
 ReadCmd::~ReadCmd() {}
 
 bool ReadCmd::exec(int argc, char **argv) {
+    // tmusg.periodStart();
+
     optMgr_.parse(argc, argv);
 
     if (optMgr_.getParsedOpt("h")) {
@@ -170,6 +173,12 @@ bool ReadCmd::exec(int argc, char **argv) {
     graph = new Graph(matrix,vertexNum);
 
     inFile.close();
+
+    // TmStat stat;
+    // tmusg.getPeriodUsage(stat);
+    // cout << argv[0] << " " << argv[1] << endl;
+    // cout << stat.uTime / 1000.0 << "s" << endl; // print period user time
+
     return true;
 }
 
@@ -196,6 +205,7 @@ WriteDfsCmd::WriteDfsCmd(const char * const name) : Cmd(name) {
 WriteDfsCmd::~WriteDfsCmd() {}
 
 bool WriteDfsCmd::exec(int argc, char **argv) {
+    tmusg.periodStart();
     graph->reset();
     optMgr_.parse(argc, argv);
 
@@ -263,10 +273,20 @@ bool WriteDfsCmd::exec(int argc, char **argv) {
                 outFile << " [label = \"" << graph->getMatrix(suc,pre) << "\"];" << endl;
         }
         if(it==finTimeList.begin()) break;
-    }    
+    }
 
     outFile << "}";
     outFile.close();
+
+    TmStat stat;
+    tmusg.getPeriodUsage(stat);
+    cout << argv[0] << " " << argv[1] << " " << argv[2] << endl;
+    cout << stat.uTime / 1000.0 << "s" << endl; // print period user time
+    // tmusg.getTotalUsage(stat);
+    cout << stat.vmSize / 1024.0 << "MB" << endl; // print current memory
+    cout << stat.vmPeak / 1024.0 << "MB" << endl; // print peak memory
+    cout << endl;
+
     return true;
 }
 
@@ -331,6 +351,7 @@ WriteBfsCmd::WriteBfsCmd(const char * const name) : Cmd(name) {
 WriteBfsCmd::~WriteBfsCmd() {}
 
 bool WriteBfsCmd::exec(int argc, char **argv) {
+    tmusg.periodStart();
     graph->reset();
     optMgr_.parse(argc, argv);
 
@@ -421,6 +442,18 @@ bool WriteBfsCmd::exec(int argc, char **argv) {
 
     outFile << "}";
     outFile.close();
+
+
+    TmStat stat;
+    tmusg.getPeriodUsage(stat);
+    cout << argv[0] << " " << argv[1] << " " << argv[2] << endl;
+    cout << stat.uTime / 1000.0 << "s" << endl; // print period user time
+    // tmusg.getTotalUsage(stat);
+    cout << stat.vmSize / 1024.0 << "MB" << endl; // print current memory
+    cout << stat.vmPeak / 1024.0 << "MB" << endl; // print peak memory
+    cout << endl;
+
+    return true;
 }
 
 
@@ -465,6 +498,7 @@ public:
 };
 
 bool WriteMstCmd::exec(int argc, char **argv) {
+    tmusg.periodStart();
     optMgr_.parse(argc, argv);
     graph->reset();
 
@@ -585,12 +619,21 @@ bool WriteMstCmd::exec(int argc, char **argv) {
         }        
     }    
 
-    // cout << "weight: " << weight << endl;
+    cout << "weight: " << weight << endl;
     outFile << "}";
     outFile.close();
 
 
+    TmStat stat;
+    tmusg.getPeriodUsage(stat);
+    cout << argv[0] << " " << argv[1] << " " << argv[2] << endl;
+    cout << stat.uTime / 1000.0 << "s" << endl; // print period user time
+    // tmusg.getTotalUsage(stat);
+    cout << stat.vmSize / 1024.0 << "MB" << endl; // print current memory
+    cout << stat.vmPeak / 1024.0 << "MB" << endl; // print peak memory
+    cout << endl;
 
+    return true;
 }
 
 void WriteMstCmd::HeapDecreaseKey(vector<Node>& v,int i,int key){
@@ -729,15 +772,18 @@ bool IsSpanningTreeCmd::exec(int argc, char **argv) {
     //check connectivity
     int count = 0; 
     int* visted = new int[spanMap.size()];
+    cout << "spanMap.size(): " << spanMap.size()<<endl;
     for(int i = 0 ; i < spanMap.size() ; i++ )
         visted[i] = 0;
 
-    dfs(1,spanMap,visted,count);
+    dfs(0,spanMap,visted,count);
 
     if(count != spanMap.size()){
-        cout << "No" << endl;
+        cout << "No" << endl << endl;
     }else
-        cout << "Yes" << endl;
+        cout << "Yes" << endl << endl;
+
+    cout << "=====================" << endl << endl;
 
 }
 

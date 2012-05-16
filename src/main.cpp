@@ -13,13 +13,20 @@ using namespace std;
 
 #include "sys_cmd.h"
 #include "user_cmd.h"
+#include "tm_usage.h"
+
 
 using namespace CommonNs;
 
 void initOpts(OptMgr *mgr);
 void initCmds(CmdMgr *mgr);
 
+TmUsage tmusg;
+
 int main(int argc, char **argv) {
+    
+    tmusg.totalStart();
+
 
     OptMgr *optMgr = new OptMgr;
     CmdMgr *cmdMgr = new CmdMgr;
