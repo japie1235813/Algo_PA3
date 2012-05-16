@@ -118,6 +118,9 @@ void initCmds(CmdMgr *mgr) {
   Cmd *writeBfsCmd = new WriteBfsCmd("write_tree_bfs");
   mgr->regCmd(writeBfsCmd);
   Cmd *writeMstCmd = new WriteMstCmd("write_tree_mst");
-  mgr->regCmd(writeMstCmd); 
+  mgr->regCmd(writeMstCmd);
+  Cmd *is_spanning_treeCmd = new IsSpanningTreeCmd("is_spanning_tree");
+  mgr->regCmd(is_spanning_treeCmd); 
+  
 }
 

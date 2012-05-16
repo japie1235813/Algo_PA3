@@ -28,6 +28,7 @@ Graph *graph;
 #define INF     1e9
 
 typedef pair<int*,int> Node;
+typedef pair<int,int> Vertex;
 
 TestCmd::TestCmd(const char * const name) : Cmd(name) {
     optMgr_.setShortDes("test");
@@ -127,13 +128,13 @@ bool ReadCmd::exec(int argc, char **argv) {
     char buf[256];
     while(1){
         inFile.getline(buf,256);
-        cout << "tmp2:" << buf << endl;
+        // cout << "tmp2:" << buf << endl;
         if(buf[0] != '/' && buf[1] != '/') break;
     }
 
     tmp = buf;
     vertexNum = atoi(tmp.substr(8).c_str());
-    cout << "vertexNum: " << vertexNum <<endl;
+    // cout << "vertexNum: " << vertexNum <<endl;
     int** matrix = new int*[vertexNum];    
     for(int i=0;i<vertexNum;i++)
         matrix[i] = new int[vertexNum];
@@ -148,23 +149,23 @@ bool ReadCmd::exec(int argc, char **argv) {
         if(strcmp(tmp.c_str(),"}")==0) break;
         pre = atoi(tmp.substr(1).c_str());
         inFile >> tmp >> tmp;
-        cout << "tmp: " << tmp << endl;
+        // cout << "tmp: " << tmp << endl;
         suc = atoi(tmp.substr(1).c_str());
-        cout << "(pre,suc) : " << pre <<" " << suc <<endl;
+        // cout << "(pre,suc) : " << pre <<" " << suc <<endl;
         inFile.getline(buf,256);
-        cout << "buf: " << buf << endl;
+        // cout << "buf: " << buf << endl;
         string str(buf);
         int pos = str.find_first_of("\"");
         int last = str.find_last_of("\"");
-        cout << "str.sub: " << str.substr(pos+1,last-pos-1) << endl;
+        // cout << "str.sub: " << str.substr(pos+1,last-pos-1) << endl;
         matrix[pre][suc] = atoi(str.substr(pos+1,last-pos-1).c_str());
     }
-    cout << "lalala" <<endl;
-    for(int i = 0 ; i<vertexNum; i++){
-        for(int j = 0 ; j<vertexNum ; j++)
-            cout << matrix[i][j] << " ";
-        cout <<endl;
-    }
+    // cout << "lalala" <<endl;
+    // for(int i = 0 ; i<vertexNum; i++){
+    //     for(int j = 0 ; j<vertexNum ; j++)
+    //         cout << matrix[i][j] << " ";
+    //     cout <<endl;
+    // }
 
     graph = new Graph(matrix,vertexNum);
 
@@ -654,7 +655,76 @@ bool IsSpanningTreeCmd::exec(int argc, char **argv) {
     string tmp;
 
     ifstream inFile(argv[2],ios::in);
-    // if
+    char buf[256];
+    while(1){
+        inFile.getline(buf,256);
+        // cout << "tmp2:" << buf << endl;
+        if(buf[0] != '/' && buf[1] != '/') break;
+    }
 
+
+    map<int,map<int,int> > spanMap;
+    int edge= 0;
+
+    while(1){
+        inFile >> tmp ;
+        if(strcmp(tmp.c_str(),"}")==0) break;
+
+        int pre = atoi(tmp.substr(1).c_str());
+        
+        inFile >> tmp >> tmp;
+        // cout << "tmp: " << tmp << endl;
+        int suc = atoi(tmp.substr(1).c_str());
+        // cout << "(pre,suc) : " << pre <<" " << suc <<endl;
+        
+        inFile.getline(buf,256);
+        // cout << "buf: " << buf << endl;
+        string str(buf);
+        int pos = str.find_first_of("\"");
+        int last = str.find_last_of("\"");
+        // cout << "str.sub: " << str.substr(pos+1,last-pos-1) << endl;
+        int weight = atoi(str.substr(pos+1,last-pos-1).c_str());        
+        
+        spanMap[pre][suc] = weight;
+        spanMap[suc][pre] = weight;
+
+        edge++;
+    }
+
+    if(edge!=spanMap.size()-1){
+        cout <<"NO!!!" <<endl;
+        return 0;
+    }
+
+
+    cout << "spanMap.size" << spanMap.size() << endl;
+    cout << "spanMap:" << endl;
+    for(map<int,map<int,int> >::iterator it = spanMap.begin();it!=spanMap.end();it++){
+        cout << (*it).first << " : " ;
+        for(map<int,int>::iterator i = (*it).second.begin();i!=(*it).second.end();i++){
+            cout << (*i).first << ", " << (*i).second <<  " && "; 
+        }
+        cout <<endl;    
+    }
+
+    // int** matrix;
+    int** matrix = new int*[spanMap.size()];
+    for(int i = 0;i<spanMap.size();i++)
+        matrix[i] = new int[spanMap.size()];
+
+    for(int i = 0;i<spanMap.size();i++)
+        for(int j = 0;j<spanMap.size();j++)
+            matrix[i][j] = 0;
+
+    for(map<int,map<int,int> >::iterator it = spanMap.begin();it!=spanMap.end();it++){
+        cout << (*it).first << " : " ;
+        for(map<int,int>::iterator i = (*it).second.begin();i!=(*it).second.end();i++){
+            cout << (*i).first << ", " << (*i).second <<  " && ";        
+            matrix[(*it).first][(*i).first] = (*i).second;
+        }
+        cout <<endl;    
+    }
+
+    
 
 }
