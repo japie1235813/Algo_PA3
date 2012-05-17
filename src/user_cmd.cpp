@@ -244,14 +244,18 @@ bool WriteDfsCmd::exec(int argc, char **argv) {
     //==============================
     //dfs
     int time = 0;
+    DFS_VISIT(sourcenode,time);
+    time++;
     for(int j=0;j<graph->getlength();j++)
-        if((graph->getMatrix(sourcenode,j)!=NIL || graph->getMatrix(j,sourcenode)!=NIL)&&(graph->getColor(j) == -1))
-            DFS_VISIT(sourcenode,time);
+        if((graph->getMatrix(sourcenode,j)!=NIL || graph->getMatrix(j,sourcenode)!=NIL)&&(graph->getColor(j) == -1)){
+            DFS_VISIT(j,time);
+            cout <<"return!! 0.0" << endl;
+        }
 
 
-    // for(int i=0;i<graph->getlength();i++){
-    //     cout<<graph->getPre(i) << " " <<endl;
-    // }
+    for(int i=0;i<graph->getlength();i++){
+        cout<<graph->getPre(i) << " " <<endl;
+    }
 
 
     //==============================
@@ -264,6 +268,7 @@ bool WriteDfsCmd::exec(int argc, char **argv) {
         graph->finTimeMap[graph->getFinTime(j)] = j;
     }
     finTimeList.sort();
+    int weight = 0;
 
     list<int>::iterator it=finTimeList.end();
     it--;
@@ -273,59 +278,70 @@ bool WriteDfsCmd::exec(int argc, char **argv) {
         if(pre!=-1){
             // cout << "(pre,suc): " << pre << " " << suc << endl;
             outFile << "v" << pre << " -- v" << suc ;
-            if(graph->getMatrix(pre,suc)!=0)
+            if(graph->getMatrix(pre,suc)!=NIL){
                 outFile << " [label = \"" << graph->getMatrix(pre,suc) << "\"];" << endl;
-            else
+                weight += graph->getMatrix(pre,suc);
+            }
+            else{
                 outFile << " [label = \"" << graph->getMatrix(suc,pre) << "\"];" << endl;
+                weight += graph->getMatrix(suc,pre);
+            }
         }
         if(it==finTimeList.begin()) break;
     }
 
-    outFile << "}";
-    outFile.close();
+    outFile << "}"<<endl;
+
+    outFile << "// vertices = " << graph->getlength() << endl;
+    outFile << "// edges = " << graph->getlength()-1 << endl;
+    outFile << "// total_weight = "<< weight << endl;
 
     TmStat stat;
     tmusg.getPeriodUsage(stat);
-    cout << argv[0] << " " << argv[1] << " " << argv[2] << endl;
-    cout << stat.uTime / 1000.0 << "s" << endl; // print period user time
+    // cout << argv[0] << " " << argv[1] << " " << argv[2] << endl;
+    outFile << "// runtime = " << stat.uTime / 1000.0 << "sec" << endl; // print period user time
     // tmusg.getTotalUsage(stat);
-    cout << stat.vmSize / 1024.0 << "MB" << endl; // print current memory
-    cout << stat.vmPeak / 1024.0 << "MB" << endl; // print peak memory
-    cout << endl;
+    // cout << stat.vmSize / 1024.0 << "MB" << endl; // print current memory
+    outFile << "// memory = " << stat.vmPeak / 1024.0 << "MB" << endl; // print peak memory
+    // cout << endl;
 
+    outFile.close();
     return true;
 }
 
 void WriteDfsCmd::DFS_VISIT(int i,int& time){
-    // cout << endl;
-    // cout << "i: " << i <<endl;
+    cout << endl;
+    cout << "i: " << i <<endl;
     time+=1;
     graph->setDisTime(i,time);
     graph->setColor(i,0); //color:gray
     list<int> vertexlist;
     for(int j=0;j<graph->getlength();j++){
-        if( graph->getColor(j) == -1){ //color:white
+        if( graph->getColor(j) == WHITE){ //color:white
             if(graph->getMatrix(i,j)!=NIL){
-                vertexlist.push_back(graph->getMatrix(i,j));
-                graph->sucMap[graph->getMatrix(i,j)] = j;
+                vertexlist.push_back(j);
+                graph->sucMap[j] = graph->getMatrix(i,j);
                 graph->setPre(j,i);
             }
             else if(graph->getMatrix(j,i)!=NIL){
-                vertexlist.push_back(graph->getMatrix(j,i));
-                graph->sucMap[graph->getMatrix(j,i)] = j;
+                vertexlist.push_back(j);
+                graph->sucMap[j] = graph->getMatrix(j,i);
                 graph->setPre(j,i);
             }
         }
     }
-    //vertexlist.sort();
+    vertexlist.sort();
     // cout << "! vertexlist.sort(): " <<endl;
     // for(list<int>::iterator it = vertexlist.begin();it!=vertexlist.end();it++)
     //     cout << *it << " ";
 
-    for(list<int>::iterator it = vertexlist.begin();it!=vertexlist.end();it++)
-        DFS_VISIT(graph->sucMap[*it],time);
+    cout << endl;
+    for(list<int>::iterator it = vertexlist.begin();it!=vertexlist.end();it++){
+        // cout << i << ": go to: " << *it << endl;
+        DFS_VISIT(*it,time);
+    }
 
-    graph->setColor(i,1);
+    graph->setColor(i,BLACK);
     time += 1;
     // if(!vertexlist.empty() ){
     if(graph->getFinTime(i)==-1){
@@ -431,6 +447,7 @@ bool WriteBfsCmd::exec(int argc, char **argv) {
     }
     disTimeList.sort();
 
+    int weight = 0;
     list<int>::iterator it=disTimeList.begin();
     // it--;
     for(;it!=disTimeList.end();it++){
@@ -439,25 +456,32 @@ bool WriteBfsCmd::exec(int argc, char **argv) {
         // cout << "(pre,suc): " << pre << " " << suc << endl;
         if(pre!=-1){
             outFile << "v" << pre << " -- v" << suc ;
-            if(graph->getMatrix(pre,suc)!=NIL)
+            if(graph->getMatrix(pre,suc)!=NIL){
                 outFile << " [label = \"" << graph->getMatrix(pre,suc) << "\"];" << endl;
-            else
+                weight += graph->getMatrix(pre,suc) ;
+            }
+            else{
                 outFile << " [label = \"" << graph->getMatrix(suc,pre) << "\"];" << endl;
+                weight += graph->getMatrix(suc,pre) ;
+            }
         }
     }
 
-    outFile << "}";
-    outFile.close();
+    outFile << "}"<<endl;
 
+    outFile << "// vertices = " << graph->getlength() << endl;
+    outFile << "// edges = " << graph->getlength()-1 << endl;
+    outFile << "// total_weight = "<< weight << endl;
 
     TmStat stat;
     tmusg.getPeriodUsage(stat);
-    cout << argv[0] << " " << argv[1] << " " << argv[2] << endl;
-    cout << stat.uTime / 1000.0 << "s" << endl; // print period user time
+    outFile << "// runtime = " << stat.uTime / 1000.0 << "sec" << endl; // print period user time
     // tmusg.getTotalUsage(stat);
-    cout << stat.vmSize / 1024.0 << "MB" << endl; // print current memory
-    cout << stat.vmPeak / 1024.0 << "MB" << endl; // print peak memory
-    cout << endl;
+    // cout << stat.vmSize / 1024.0 << "MB" << endl; // print current memory
+    outFile << "// memory = " << stat.vmPeak / 1024.0 << "MB" << endl; // print peak memory
+    // cout << endl;
+
+    outFile.close();
 
     return true;
 }
@@ -555,7 +579,7 @@ bool WriteMstCmd::exec(int argc, char **argv) {
         Node n(graph->getKey(i),i);
         pq.push_back(n);
     }
-
+    cout << "pq.size():" << pq.size() <<endl;
     make_heap(pq.begin(),pq.end(),comparison());
 
     for(int i=0;i<graph->getlength();i++){
@@ -646,24 +670,25 @@ while Q 不等於空集合
                 weight += graph->getMatrix(i,pre);
             }
             // cout << "after: " << weight << endl;
-        }else{
-            cerr << "EMPTY PRE: " << i << endl;
         }
     }
 
-    cout << "weight: " << weight << endl;
-    outFile << "}";
-    outFile.close();
+    outFile << "}"<<endl;
 
+    outFile << "// vertices = " << graph->getlength() << endl;
+    outFile << "// edges = " << graph->getlength()-1 << endl;
+    outFile << "// total_weight = "<< weight << endl;
 
     TmStat stat;
     tmusg.getPeriodUsage(stat);
-    cout << argv[0] << " " << argv[1] << " " << argv[2] << endl;
-    cout << stat.uTime / 1000.0 << "s" << endl; // print period user time
+    // cout << argv[0] << " " << argv[1] << " " << argv[2] << endl;
+    outFile << "// runtime = " << stat.uTime / 1000.0 << "sec" << endl; // print period user time
     // tmusg.getTotalUsage(stat);
-    cout << stat.vmSize / 1024.0 << "MB" << endl; // print current memory
-    cout << stat.vmPeak / 1024.0 << "MB" << endl; // print peak memory
-    cout << endl;
+    // cout << stat.vmSize / 1024.0 << "MB" << endl; // print current memory
+    outFile << "// memory = " << stat.vmPeak / 1024.0 << "MB" << endl; // print peak memory
+    // cout << endl;
+
+    outFile.close();
 
     return true;
 }

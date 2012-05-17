@@ -999,3 +999,8 @@ v933 -- v997 [label = "29"];
 v999 -- v998 [label = "25"];
 v757 -- v999 [label = "10"];
 }
+// vertices = 1000
+// edges = 999
+// total_weight = 19948
+// runtime = 112.007sec
+// memory = 16.0078MB

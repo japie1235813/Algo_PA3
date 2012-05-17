@@ -1,3 +1,4 @@
+// DFS tree produced by graphlab
 graph gn1000_dfs {
 v0 -- v1 [label = "21"];
 v1 -- v2 [label = "85"];
@@ -1002,5 +1003,5 @@ v998 -- v999 [label = "25"];
 // vertices = 1000
 // edges = 999
 // total_weight = 49755
-// runtime = 44.003sec
-// memory = 15.8789MB
+// runtime = 0.0 sec
+// memory = 12.0 MB
