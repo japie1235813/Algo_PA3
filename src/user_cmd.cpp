@@ -547,6 +547,7 @@ bool WriteMstCmd::exec(int argc, char **argv) {
         pq.push_back(n);        
     }
     
+    cout << "pq.size():" << pq.size() <<endl;
     make_heap(pq.begin(),pq.end(),comparison());
 
     for(int i=0;i<graph->getlength();i++){
