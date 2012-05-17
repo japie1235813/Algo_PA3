@@ -7,6 +7,7 @@
 #include "tm_usage.h"
 #include "user_cmd.h"
 #include "stdio.h"
+#include <cassert>
 #include <stdlib.h>
 #include <iostream>
 #include <fstream>
@@ -27,6 +28,8 @@ extern TmUsage tmusg;
 #define GRAY    0
 #define BLACK   1
 #define INF     1e9
+
+#define PARENT(x) (((x)+1)/2-1)
 
 typedef pair<int*,int> Node;
 typedef pair<int,int> Vertex;
@@ -90,14 +93,14 @@ Graph::reset(){
         pre[j] = NIL;
         disTime[j] = -1;
         finTime[j] = -1;
-        key[j] = INF;        
+        key[j] = INF;
     }
 }
 
 
 //================ read
 
-ReadCmd::ReadCmd(const char * const name) : Cmd(name) {    
+ReadCmd::ReadCmd(const char * const name) : Cmd(name) {
     optMgr_.setShortDes("read the graph in dot format");
     optMgr_.setDes("Read the graph in dot format");
 
@@ -138,7 +141,7 @@ bool ReadCmd::exec(int argc, char **argv) {
     tmp = buf;
     vertexNum = atoi(tmp.substr(8).c_str());
     // cout << "vertexNum: " << vertexNum <<endl;
-    int** matrix = new int*[vertexNum];    
+    int** matrix = new int*[vertexNum];
     for(int i=0;i<vertexNum;i++)
         matrix[i] = new int[vertexNum];
 
@@ -212,11 +215,11 @@ bool WriteDfsCmd::exec(int argc, char **argv) {
     graph->reset();
     optMgr_.parse(argc, argv);
 
-    if (argc < 5) {        
+    if (argc < 5) {
         fprintf(stderr, "**ERROR SysSetCmd::exec(): ");
         fprintf(stderr, "variable and value needed\n");
         return false;
-    }    
+    }
 
     if (optMgr_.getParsedOpt("h")) {
         optMgr_.usage();
@@ -226,12 +229,12 @@ bool WriteDfsCmd::exec(int argc, char **argv) {
     int sourcenode;
     ofstream outFile;
     string tmp;
-    
-    if (optMgr_.getParsedOpt("s")) {        
+
+    if (optMgr_.getParsedOpt("s")) {
         tmp = optMgr_.getParsedValue("s");
         sourcenode = atoi(tmp.substr(1).c_str());
     }
-    if (optMgr_.getParsedOpt("o")) {        
+    if (optMgr_.getParsedOpt("o")) {
         outFile.open(optMgr_.getParsedValue("o"));
     }
 
@@ -240,7 +243,6 @@ bool WriteDfsCmd::exec(int argc, char **argv) {
 
     //==============================
     //dfs
-
     int time = 0;
     DFS_VISIT(sourcenode,time);
     time++;
@@ -272,7 +274,7 @@ bool WriteDfsCmd::exec(int argc, char **argv) {
     it--;
     for(;;it--){
         int suc = graph->finTimeMap[*it];
-        int pre = graph->getPre(suc);        
+        int pre = graph->getPre(suc);
         if(pre!=-1){
             // cout << "(pre,suc): " << pre << " " << suc << endl;
             outFile << "v" << pre << " -- v" << suc ;
@@ -284,7 +286,7 @@ bool WriteDfsCmd::exec(int argc, char **argv) {
                 outFile << " [label = \"" << graph->getMatrix(suc,pre) << "\"];" << endl;
                 weight += graph->getMatrix(suc,pre);
             }
-        }        
+        }
         if(it==finTimeList.begin()) break;
     }
 
@@ -314,7 +316,7 @@ void WriteDfsCmd::DFS_VISIT(int i,int& time){
     graph->setDisTime(i,time);
     graph->setColor(i,0); //color:gray
     list<int> vertexlist;
-    for(int j=0;j<graph->getlength();j++){        
+    for(int j=0;j<graph->getlength();j++){
         if( graph->getColor(j) == WHITE){ //color:white
             if(graph->getMatrix(i,j)!=NIL){
                 vertexlist.push_back(j);
@@ -328,14 +330,14 @@ void WriteDfsCmd::DFS_VISIT(int i,int& time){
             }
         }
     }
-    vertexlist.sort(); 
+    vertexlist.sort();
     // cout << "! vertexlist.sort(): " <<endl;
     // for(list<int>::iterator it = vertexlist.begin();it!=vertexlist.end();it++)
-    //     cout << *it << " ";    
+    //     cout << *it << " ";
 
     cout << endl;
     for(list<int>::iterator it = vertexlist.begin();it!=vertexlist.end();it++){
-        // cout << i << ": go to: " << *it << endl; 
+        // cout << i << ": go to: " << *it << endl;
         DFS_VISIT(*it,time);
     }
 
@@ -375,11 +377,11 @@ bool WriteBfsCmd::exec(int argc, char **argv) {
     graph->reset();
     optMgr_.parse(argc, argv);
 
-    if (argc < 5) {        
+    if (argc < 5) {
         fprintf(stderr, "**ERROR SysSetCmd::exec(): ");
         fprintf(stderr, "variable and value needed\n");
         return false;
-    }    
+    }
 
     if (optMgr_.getParsedOpt("h")) {
         optMgr_.usage();
@@ -389,12 +391,12 @@ bool WriteBfsCmd::exec(int argc, char **argv) {
     int sourcenode;
     ofstream outFile;
     string tmp;
-    
-    if (optMgr_.getParsedOpt("s")) {        
+
+    if (optMgr_.getParsedOpt("s")) {
         tmp = optMgr_.getParsedValue("s");
         sourcenode = atoi(tmp.substr(1).c_str());
     }
-    if (optMgr_.getParsedOpt("o")) {        
+    if (optMgr_.getParsedOpt("o")) {
         outFile.open(optMgr_.getParsedValue("o"));
     }
 
@@ -410,7 +412,7 @@ bool WriteBfsCmd::exec(int argc, char **argv) {
 
     list<int> queueList;
     queueList.push_back(sourcenode);
-    int popNode;    
+    int popNode;
     int time = 0;
 
     while(!queueList.empty()){
@@ -450,7 +452,7 @@ bool WriteBfsCmd::exec(int argc, char **argv) {
     // it--;
     for(;it!=disTimeList.end();it++){
         int suc = graph->finTimeMap[*it];
-        int pre = graph->getPre(suc);        
+        int pre = graph->getPre(suc);
         // cout << "(pre,suc): " << pre << " " << suc << endl;
         if(pre!=-1){
             outFile << "v" << pre << " -- v" << suc ;
@@ -462,8 +464,8 @@ bool WriteBfsCmd::exec(int argc, char **argv) {
                 outFile << " [label = \"" << graph->getMatrix(suc,pre) << "\"];" << endl;
                 weight += graph->getMatrix(suc,pre) ;
             }
-        }        
-    }    
+        }
+    }
 
     outFile << "}"<<endl;
 
@@ -472,7 +474,7 @@ bool WriteBfsCmd::exec(int argc, char **argv) {
     outFile << "// total_weight = "<< weight << endl;
 
     TmStat stat;
-    tmusg.getPeriodUsage(stat);    
+    tmusg.getPeriodUsage(stat);
     outFile << "// runtime = " << stat.uTime / 1000.0 << "sec" << endl; // print period user time
     // tmusg.getTotalUsage(stat);
     // cout << stat.vmSize / 1024.0 << "MB" << endl; // print current memory
@@ -508,7 +510,7 @@ WriteMstCmd::WriteMstCmd(const char * const name) : Cmd(name) {
 
     opt = new Opt(Opt::STR_REQ, "", "prim");
     opt->addFlag("a");
-    optMgr_.regOpt(opt);    
+    optMgr_.regOpt(opt);
 }
 
 WriteMstCmd::~WriteMstCmd() {}
@@ -525,16 +527,22 @@ public:
   }
 };
 
+void checkPqMapConsistency(const vector<Node>& pq){
+    for(int i=0; i<pq.size(); ++i){
+        assert(graph->pqMap[pq[i]] == i);
+    }
+}
+
 bool WriteMstCmd::exec(int argc, char **argv) {
     tmusg.periodStart();
     optMgr_.parse(argc, argv);
     graph->reset();
 
-    if (argc < 7) {        
+    if (argc < 7) {
         fprintf(stderr, "**ERROR SysSetCmd::exec(): ");
         fprintf(stderr, "variable and value needed\n");
         return false;
-    }    
+    }
 
     if (optMgr_.getParsedOpt("h")) {
         optMgr_.usage();
@@ -544,34 +552,33 @@ bool WriteMstCmd::exec(int argc, char **argv) {
     int sourcenode;
     ofstream outFile;
     string tmp;
-    
-    if (optMgr_.getParsedOpt("r")) {        
+
+    if (optMgr_.getParsedOpt("r")) {
         tmp = optMgr_.getParsedValue("r");
         sourcenode = atoi(tmp.substr(1).c_str());
     }
-    if (optMgr_.getParsedOpt("o")) {        
+    if (optMgr_.getParsedOpt("o")) {
         outFile.open(optMgr_.getParsedValue("o"));
     }
-    
+
     outFile << "graph gn" << graph->getlength() << "_mst_p {" << endl;
 
 
     //========MST
     vector<Node> pq;
-    
+
     //set each node key
     // cout << "graph->getlength(): " << graph->getlength() << endl;
     for(int i=0;i<graph->getlength();i++)
-        graph->setKey(i,INF);        
+        graph->setKey(i,INF);
     graph->setKey(sourcenode,0);
 
 
     //put each vertex into queue
     for(int i=0;i<graph->getlength();i++){
         Node n(graph->getKey(i),i);
-        pq.push_back(n);        
+        pq.push_back(n);
     }
-    
     cout << "pq.size():" << pq.size() <<endl;
     make_heap(pq.begin(),pq.end(),comparison());
 
@@ -580,60 +587,75 @@ bool WriteMstCmd::exec(int argc, char **argv) {
     }
     Node popNode;
 
-    for(vector<Node>::iterator it=pq.begin();it!=pq.end();it++)
-        cout << *((*it).first) <<" , "<< (*it).second << " | " ;
-    cout << endl;
+    //for(vector<Node>::iterator it=pq.begin();it!=pq.end();it++)
+    //    cout << *((*it).first) <<" , "<< (*it).second << " | " ;
+    //cout << endl;
 
     int c = 0;
-    
+/*
+MST-PRIM(G,w,r)
+for each u 屬於 G,V
+  u.key = INF
+  u.pi    = NIL
+r.key = 0
+Q = G.V
+while Q 不等於空集合
+  u = EXTRACT-MIN(Q)
+        for each v 屬於 G.Adj[u]
+            if v 屬於 Q and w(u,v) < v.key
+                v.pi = u
+                v.key = w(u,v)
+*/
     while(1){
         c++;
         popNode = pq.front();
 
         cout <<endl <<endl;
-        cout << "popNode: (" << *popNode.first << "," << popNode.second << ") " <<endl;        
+        cout << "popNode: (" << *popNode.first << "," << popNode.second << ") " <<endl;
         bool success = false;
-
 
         for(int j=0;j<graph->getlength();j++){
             int val = max(graph->getMatrix(j,popNode.second),graph->getMatrix(popNode.second,j));
-            if( val != NIL){ //j belong to popNode's adj                
-                cout << j << ": val: "<<val << " Key: " << *graph->getKey(j) << endl;
-                Node n(graph->getKey(j),j);
-                cout << "graph->pqMap.find(n)->second: " << graph->pqMap.find(n)->second << endl;
-                if( ( (graph->pqMap.find(n)->second)!= NIL ) && (val < *graph->getKey(j))){  //v in queue
-                // if(val < *graph->getKey(j)){ 
+            if( val != NIL){ //j belong to popNode's adj
+                //cout << j << ": val: "<<val << " Key: " << *graph->getKey(j) << endl;
+                Node n(graph->getKey(j),j)  ;
+                //cout << "graph->pqMap.find(n)->second: " << graph->pqMap.find(n)->second << endl;
+                int nPos = graph->pqMap.find(n)->second; // node n's position in pq
+                if( ( nPos != NIL ) && (val < *graph->getKey(j))){  //v in queue
+                // if(val < *graph->getKey(j)){
                     //j in queue and w(j,v) < j.key
                     graph->setPre(j,popNode.second);
                     // graph->setSuc(popNode.second,j);
-                    cout << "graph->setPre("<<popNode.second<<","<<j<<")"<<endl;
+                    //cout << "graph->setPre("<<popNode.second<<","<<j<<")"<<endl;
                     graph->setKey(j,val);
-                    cout << "graph->setKey("<<j<<","<<val<<")"<<endl;
+                    //cout << "graph->setKey("<<j<<","<<val<<")"<<endl;
                     //then increase key <- remeber to modify Map
-                    HeapDecreaseKey(pq,graph->pqMap.find(n)->second,val);
+                    checkPqMapConsistency(pq);
+                    HeapDecreaseKey(pq,nPos,val);
+                    checkPqMapConsistency(pq);
                 }
             }
         }
-        
+
         if(pq.empty()) break;
-    
-        //dequeue        
+
+        //dequeue
         graph->pqMap[popNode] = NIL; //make popNode black
         pop_heap (pq.begin(),pq.end(),comparison()); pq.pop_back();
         // for(vector<Node>::iterator it=pq.begin();it!=pq.end();it++)
         //     cout << *((*it).first) <<" , "<< (*it).second << " | " ;
-        // cout << endl;        
-    
+        // cout << endl;
+
     }
 
-    for(int j=0;j<graph->getlength();j++)
-        cout << j <<" Pre: " << graph->getPre(j) << endl;
+    //for(int j=0;j<graph->getlength();j++)
+    //    cout << j <<" Pre: " << graph->getPre(j) << endl;
 
 
     //=======print out
 
     int weight = 0;
-    for(int i = 0 ;i < graph->getlength() ;i++){        
+    for(int i = 0 ;i < graph->getlength() ;i++){
         int pre = graph->getPre(i);
         // cout << "(pre,suc): " << pre << " " << i << endl;
         if(pre!=-1){
@@ -648,9 +670,9 @@ bool WriteMstCmd::exec(int argc, char **argv) {
                 weight += graph->getMatrix(i,pre);
             }
             // cout << "after: " << weight << endl;
-        }        
-    }    
-    
+        }
+    }
+
     outFile << "}"<<endl;
 
     outFile << "// vertices = " << graph->getlength() << endl;
@@ -680,17 +702,18 @@ void WriteMstCmd::HeapDecreaseKey(vector<Node>& v,int i,int key){
     // cout << "*(v[<<i].first) = key;" << *(v[i].first) << " = " << key <<endl;
     // *(v[i].first) = key;
 
-    while( i>1 && ( *(v[i/2].first) > *(v[i].first) ) ){
-        // cout << "exchange v[i] w/ v[i/2]: " <<endl;
-        // cout << "*(v[i].first): " << *(v[i].first) << " <-> " << v[i/2].first << endl;
-        // cout << "*(v[i].second): " << v[i].second << " <-> " << v[i/2].second << endl;
-
-        graph->pqMap[v[i]] = i/2;
-        graph->pqMap[v[i/2]] = i;        
+    while( i>1 && ( *(v[PARENT(i)].first) > *(v[i].first) ) ){
+        // cout << "exchange v[i] w/ v[PARENT(i)]: " <<endl;
+        // cout << "*(v[i].first): " << *(v[i].first) << " <-> " << v[PARENT(i)].first << endl;
+        // cout << "*(v[i].second): " << v[i].second << " <-> " << v[PARENT(i)].second << endl;
+        assert(graph->pqMap[v[i]] != NIL);
+        graph->pqMap[v[i]] = PARENT(i);
+        assert(graph->pqMap[v[PARENT(i)]] != NIL);
+        graph->pqMap[v[PARENT(i)]] = i;
         Node tmp = v[i];
-        v[i] = v[i/2];
-        v[i/2] = tmp;
-        i = i/2;
+        v[i] = v[PARENT(i)];
+        v[PARENT(i)] = tmp;
+        i = PARENT(i);
     }
     // for(vector<Node>::iterator it=v.begin();it!=v.end();it++)
     //     cout << *((*it).first) <<" , "<< (*it).second << " | " ;
@@ -716,20 +739,20 @@ IsSpanningTreeCmd::IsSpanningTreeCmd(const char * const name) : Cmd(name) {
 
 IsSpanningTreeCmd::~IsSpanningTreeCmd() {}
 
-bool IsSpanningTreeCmd::exec(int argc, char **argv) {    
+bool IsSpanningTreeCmd::exec(int argc, char **argv) {
     optMgr_.parse(argc, argv);
 
-    if (argc < 3) {        
+    if (argc < 3) {
         fprintf(stderr, "**ERROR SysSetCmd::exec(): ");
         fprintf(stderr, "variable and value needed\n");
         return false;
-    }    
+    }
 
     if (optMgr_.getParsedOpt("h")) {
         optMgr_.usage();
         return true;
     }
-    
+
     string tmp;
 
     ifstream inFile(argv[2],ios::in);
@@ -749,20 +772,20 @@ bool IsSpanningTreeCmd::exec(int argc, char **argv) {
         if(strcmp(tmp.c_str(),"}")==0) break;
 
         int pre = atoi(tmp.substr(1).c_str());
-        
+
         inFile >> tmp >> tmp;
         // cout << "tmp: " << tmp << endl;
         int suc = atoi(tmp.substr(1).c_str());
         // cout << "(pre,suc) : " << pre <<" " << suc <<endl;
-        
+
         inFile.getline(buf,256);
         // cout << "buf: " << buf << endl;
         string str(buf);
         int pos = str.find_first_of("\"");
         int last = str.find_last_of("\"");
         // cout << "str.sub: " << str.substr(pos+1,last-pos-1) << endl;
-        int weight = atoi(str.substr(pos+1,last-pos-1).c_str());        
-        
+        int weight = atoi(str.substr(pos+1,last-pos-1).c_str());
+
         spanMap[pre][suc] = weight;
         spanMap[suc][pre] = weight;
 
@@ -781,9 +804,9 @@ bool IsSpanningTreeCmd::exec(int argc, char **argv) {
     // for(map<int,map<int,int> >::iterator it = spanMap.begin();it!=spanMap.end();it++){
     //     cout << (*it).first << " : " ;
     //     for(map<int,int>::iterator i = (*it).second.begin();i!=(*it).second.end();i++){
-    //         cout << (*i).first << ", " << (*i).second <<  " && "; 
+    //         cout << (*i).first << ", " << (*i).second <<  " && ";
     //     }
-    //     cout <<endl;    
+    //     cout <<endl;
     // }
 
     // int** matrix;
@@ -798,14 +821,14 @@ bool IsSpanningTreeCmd::exec(int argc, char **argv) {
     // for(map<int,map<int,int> >::iterator it = spanMap.begin();it!=spanMap.end();it++){
     //     cout << (*it).first << " : " ;
     //     for(map<int,int>::iterator i = (*it).second.begin();i!=(*it).second.end();i++){
-    //         cout << (*i).first << ", " << (*i).second <<  " && ";        
+    //         cout << (*i).first << ", " << (*i).second <<  " && ";
     //         matrix[(*it).first][(*i).first] = (*i).second;
     //     }
-    //     cout <<endl;    
+    //     cout <<endl;
     // }
 
     //check connectivity
-    int count = 0; 
+    int count = 0;
     int* visted = new int[spanMap.size()];
     cout << "spanMap.size(): " << spanMap.size()<<endl;
     for(int i = 0 ; i < spanMap.size() ; i++ )
