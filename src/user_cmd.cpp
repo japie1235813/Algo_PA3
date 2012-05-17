@@ -529,6 +529,7 @@ public:
 
 void checkPqMapConsistency(const vector<Node>& pq){
     for(int i=0; i<pq.size(); ++i){
+        // cout << "i" << i << endl;
         assert(graph->pqMap[pq[i]] == i);
     }
 }
@@ -579,7 +580,7 @@ bool WriteMstCmd::exec(int argc, char **argv) {
         Node n(graph->getKey(i),i);
         pq.push_back(n);
     }
-    cout << "pq.size():" << pq.size() <<endl;
+    // cout << "pq.size():" << pq.size() <<endl;
     make_heap(pq.begin(),pq.end(),comparison());
 
     for(int i=0;i<graph->getlength();i++){
@@ -610,9 +611,9 @@ while Q 不等於空集合
         c++;
         popNode = pq.front();
 
-        cout <<endl <<endl;
-        cout << "popNode: (" << *popNode.first << "," << popNode.second << ") " <<endl;
-        bool success = false;
+        // cout <<endl <<endl;
+        // cout << "popNode: (" << *popNode.first << "," << popNode.second << ") " <<endl;
+        // bool success = false;
 
         for(int j=0;j<graph->getlength();j++){
             int val = max(graph->getMatrix(j,popNode.second),graph->getMatrix(popNode.second,j));
@@ -641,7 +642,26 @@ while Q 不等於空集合
 
         //dequeue
         graph->pqMap[popNode] = NIL; //make popNode black
-        pop_heap (pq.begin(),pq.end(),comparison()); pq.pop_back();
+        
+        // cout << "before pop_heap: " << endl;
+        // for(vector<Node>::iterator it=pq.begin();it!=pq.end();it++)
+        //     cout << *((*it).first) <<" , "<< (*it).second << " | " ;
+        // cout << endl;
+
+        pop_heap (pq.begin(),pq.end(),comparison()); 
+        
+        // cout << "before pop_back: " << endl;
+        // for(vector<Node>::iterator it=pq.begin();it!=pq.end();it++)
+        //     cout << *((*it).first) <<" , "<< (*it).second << " | " ;
+        // cout << endl;
+
+        pq.pop_back();
+        
+        // cout << "pq.size()" << pq.size() << endl;
+        
+        for(int i=0; i<pq.size(); ++i){
+            graph->pqMap[pq[i]] = i;
+        }
         // for(vector<Node>::iterator it=pq.begin();it!=pq.end();it++)
         //     cout << *((*it).first) <<" , "<< (*it).second << " | " ;
         // cout << endl;
@@ -702,9 +722,9 @@ void WriteMstCmd::HeapDecreaseKey(vector<Node>& v,int i,int key){
     // cout << "*(v[<<i].first) = key;" << *(v[i].first) << " = " << key <<endl;
     // *(v[i].first) = key;
 
-    while( i>1 && ( *(v[PARENT(i)].first) > *(v[i].first) ) ){
+    while( i>2 && ( *(v[PARENT(i)].first) > *(v[i].first) ) ){
         // cout << "exchange v[i] w/ v[PARENT(i)]: " <<endl;
-        // cout << "*(v[i].first): " << *(v[i].first) << " <-> " << v[PARENT(i)].first << endl;
+        // cout << "*(v[i].first): " << *(v[i].first) << " <-> " << *(v[PARENT(i)].first) << endl;
         // cout << "*(v[i].second): " << v[i].second << " <-> " << v[PARENT(i)].second << endl;
         assert(graph->pqMap[v[i]] != NIL);
         graph->pqMap[v[i]] = PARENT(i);
@@ -798,34 +818,6 @@ bool IsSpanningTreeCmd::exec(int argc, char **argv) {
         return 0;
     }
 
-
-    // cout << "spanMap.size" << spanMap.size() << endl;
-    // cout << "spanMap:" << endl;
-    // for(map<int,map<int,int> >::iterator it = spanMap.begin();it!=spanMap.end();it++){
-    //     cout << (*it).first << " : " ;
-    //     for(map<int,int>::iterator i = (*it).second.begin();i!=(*it).second.end();i++){
-    //         cout << (*i).first << ", " << (*i).second <<  " && ";
-    //     }
-    //     cout <<endl;
-    // }
-
-    // int** matrix;
-    // int** matrix = new int*[spanMap.size()];
-    // for(int i = 0;i<spanMap.size();i++)
-    //     matrix[i] = new int[spanMap.size()];
-
-    // for(int i = 0;i<spanMap.size();i++)
-    //     for(int j = 0;j<spanMap.size();j++)
-    //         matrix[i][j] = 0;
-
-    // for(map<int,map<int,int> >::iterator it = spanMap.begin();it!=spanMap.end();it++){
-    //     cout << (*it).first << " : " ;
-    //     for(map<int,int>::iterator i = (*it).second.begin();i!=(*it).second.end();i++){
-    //         cout << (*i).first << ", " << (*i).second <<  " && ";
-    //         matrix[(*it).first][(*i).first] = (*i).second;
-    //     }
-    //     cout <<endl;
-    // }
 
     //check connectivity
     int count = 0;

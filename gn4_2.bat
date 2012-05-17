@@ -1,6 +1,6 @@
 
-read_graph inputs/gn100.dot
-write_tree_mst -a prim -r v0 -o outputs/gn100_mst_p_2.dot
+read_graph inputs/gn1000.dot
+write_tree_mst -a prim -r v0 -o tmp1000
 exit
 write_tree_bfs -s v0 -o outputs/gn1000_bfs_2.dot
 write_tree_dfs -s v0 -o outputs/gn1000_dfs_2.dot
