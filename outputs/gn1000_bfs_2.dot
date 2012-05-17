@@ -999,3 +999,8 @@ v920 -- v586 [label = "27"];
 v172 -- v171 [label = "35"];
 v730 -- v729 [label = "80"];
 }
+// vertices = 1000
+// edges = 999
+// total_weight = 51081
+// runtime = 24.001sec
+// memory = 15.7422MB

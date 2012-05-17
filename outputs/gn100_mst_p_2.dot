@@ -99,3 +99,8 @@ v18 -- v97 [label = "2"];
 v37 -- v98 [label = "3"];
 v17 -- v99 [label = "21"];
 }
+// vertices = 100
+// edges = 99
+// total_weight = 1522
+// runtime = 12.001sec
+// memory = 11.8789MB
