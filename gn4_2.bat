@@ -1,6 +1,6 @@
 
-read_graph inputs/gn100.dot
-write_tree_mst -a prim -r v0 -o outputs/gn100_mst_p_2.dot
+read_graph inputs/gn4.dot
+write_tree_mst -a prim -r v0 -o outputs/gn4_mst_p_2.dot
 exit
 read_graph inputs/gn100.dot
 #dot -Tpng inputs/gn10.dot -o outputs/gn10.png

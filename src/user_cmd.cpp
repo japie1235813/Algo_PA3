@@ -147,24 +147,24 @@ bool ReadCmd::exec(int argc, char **argv) {
             matrix[i][j] = NIL;
 
     // inFile >> tmp;
-    cout << "tmp0: " << tmp << endl;
+    // cout << "tmp0: " << tmp << endl;
     while(1){
         inFile >> tmp ;
-        cout << "tmp1: " << tmp << endl;
+        // cout << "tmp1: " << tmp << endl;
         if(strcmp(tmp.c_str(),"}")==0) break;
         pre = atoi(tmp.substr(1).c_str());
         inFile >> tmp >> tmp;
-        cout << "tmp2: " << tmp << endl;
+        // cout << "tmp2: " << tmp << endl;
         suc = atoi(tmp.substr(1).c_str());
-        cout << "(pre,suc) : " << pre <<" " << suc <<endl;
+        // cout << "(pre,suc) : " << pre <<" " << suc <<endl;
         inFile.getline(buf,256);
         // cout << "buf: " << buf << endl;
         string str(buf);
         int pos = str.find_first_of("\"");
         int last = str.find_last_of("\"");
-        cout << "str.sub: " << str.substr(pos+1,last-pos-1) << endl;
+        // cout << "str.sub: " << str.substr(pos+1,last-pos-1) << endl;
         matrix[pre][suc] = atoi(str.substr(pos+1,last-pos-1).c_str());
-        cout << "matrix["<<pre<<"]["<<suc<<"] = "<<atoi(str.substr(pos+1,last-pos-1).c_str())<<endl;
+        // cout << "matrix["<<pre<<"]["<<suc<<"] = "<<atoi(str.substr(pos+1,last-pos-1).c_str())<<endl;
     }
     // cout << "lalala" <<endl;
     // for(int i = 0 ; i<vertexNum; i++){
@@ -535,7 +535,7 @@ bool WriteMstCmd::exec(int argc, char **argv) {
     vector<Node> pq;
     
     //set each node key
-    cout << "graph->getlength(): " << graph->getlength() << endl;
+    // cout << "graph->getlength(): " << graph->getlength() << endl;
     for(int i=0;i<graph->getlength();i++)
         graph->setKey(i,INF);        
     graph->setKey(sourcenode,0);
@@ -564,15 +564,15 @@ bool WriteMstCmd::exec(int argc, char **argv) {
         c++;
         popNode = pq.front();
 
-        cout <<endl <<endl;
-        cout << "popNode: (" << *popNode.first << "," << popNode.second << ") " <<endl;        
+        // cout <<endl <<endl;
+        // cout << "popNode: (" << *popNode.first << "," << popNode.second << ") " <<endl;        
         bool success = false;
 
 
         for(int j=0;j<graph->getlength();j++){
             int val = max(graph->getMatrix(j,popNode.second),graph->getMatrix(popNode.second,j));
             if( val != NIL){ //j belong to popNode's adj                
-                cout << j << ": val: "<<val << " Key: " << *graph->getKey(j) << endl;
+                // cout << j << ": val: "<<val << " Key: " << *graph->getKey(j) << endl;
                 Node n(graph->getKey(j),j);
                 if( ( (graph->pqMap.find(n)->second)!= NIL ) && (val < *graph->getKey(j))){  //v in queue
                 // if(val < *graph->getKey(j)){ 
@@ -599,8 +599,8 @@ bool WriteMstCmd::exec(int argc, char **argv) {
     
     }
 
-    for(int j=0;j<graph->getlength();j++)
-        cout << j <<" Pre: " << graph->getPre(j) << endl;
+    // for(int j=0;j<graph->getlength();j++)
+    //     cout << j <<" Pre: " << graph->getPre(j) << endl;
 
 
     //=======print out
@@ -608,17 +608,19 @@ bool WriteMstCmd::exec(int argc, char **argv) {
     int weight = 0;
     for(int i = 0 ;i < graph->getlength() ;i++){        
         int pre = graph->getPre(i);
-        // cout << "(pre,suc): " << pre << " " << suc << endl;
+        // cout << "(pre,suc): " << pre << " " << i << endl;
         if(pre!=-1){
             outFile << "v" << pre << " -- v" << i ;
+            // cout << "before: " << weight << endl;
             if(graph->getMatrix(pre,i)!=NIL){
                 outFile << " [label = \"" << graph->getMatrix(pre,i) << "\"];" << endl;
                 weight += graph->getMatrix(pre,i);
             }
             else{
                 outFile << " [label = \"" << graph->getMatrix(i,pre) << "\"];" << endl;
-                weight += graph->getMatrix(pre,i);
+                weight += graph->getMatrix(i,pre);
             }
+            // cout << "after: " << weight << endl;
         }        
     }    
 

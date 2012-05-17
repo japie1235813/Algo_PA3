@@ -1,0 +1,16 @@
+        Welcome to GraphLab 
+       (c) NTUEE Algorithms 
+        V 2012.4  
+gn4_2.bat 1> 
+
+gn4_2.bat 2> read_graph inputs/gn4.dot
+
+gn4_2.bat 3> write_tree_mst -a prim -r v0 -o outputs/gn4_mst_p_2.dot
+
+write_tree_mst -a prim
+0s
+11.875MB
+11.8789MB
+
+gn4_2.bat 4> exit
+

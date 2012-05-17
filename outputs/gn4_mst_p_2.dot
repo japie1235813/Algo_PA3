@@ -1,5 +1,5 @@
 graph gn4_mst_p {
 v0 -- v1 [label = "2"];
-v3 -- v2 [label = "0"];
+v3 -- v2 [label = "3"];
 v1 -- v3 [label = "1"];
 }
