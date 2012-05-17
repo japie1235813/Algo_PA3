@@ -301,7 +301,7 @@ bool WriteDfsCmd::exec(int argc, char **argv) {
     // tmusg.getTotalUsage(stat);
     // cout << stat.vmSize / 1024.0 << "MB" << endl; // print current memory
     outFile << "// memory = " << stat.vmPeak / 1024.0 << "MB" << endl; // print peak memory
-    // cout << endl;
+    cout << endl;
 
     outFile.close();
     return true;
