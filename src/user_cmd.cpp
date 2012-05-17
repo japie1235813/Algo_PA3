@@ -554,9 +554,9 @@ bool WriteMstCmd::exec(int argc, char **argv) {
     }
     Node popNode;
 
-    // for(vector<Node>::iterator it=pq.begin();it!=pq.end();it++)
-    //     cout << *((*it).first) <<" , "<< (*it).second << " | " ;
-    // cout << endl;
+    for(vector<Node>::iterator it=pq.begin();it!=pq.end();it++)
+        cout << *((*it).first) <<" , "<< (*it).second << " | " ;
+    cout << endl;
 
     int c = 0;
     
@@ -564,24 +564,25 @@ bool WriteMstCmd::exec(int argc, char **argv) {
         c++;
         popNode = pq.front();
 
-        // cout <<endl <<endl;
-        // cout << "popNode: (" << *popNode.first << "," << popNode.second << ") " <<endl;        
+        cout <<endl <<endl;
+        cout << "popNode: (" << *popNode.first << "," << popNode.second << ") " <<endl;        
         bool success = false;
 
 
         for(int j=0;j<graph->getlength();j++){
             int val = max(graph->getMatrix(j,popNode.second),graph->getMatrix(popNode.second,j));
             if( val != NIL){ //j belong to popNode's adj                
-                // cout << j << ": val: "<<val << " Key: " << *graph->getKey(j) << endl;
+                cout << j << ": val: "<<val << " Key: " << *graph->getKey(j) << endl;
                 Node n(graph->getKey(j),j);
+                cout << "graph->pqMap.find(n)->second: " << graph->pqMap.find(n)->second << endl;
                 if( ( (graph->pqMap.find(n)->second)!= NIL ) && (val < *graph->getKey(j))){  //v in queue
                 // if(val < *graph->getKey(j)){ 
                     //j in queue and w(j,v) < j.key
                     graph->setPre(j,popNode.second);
                     // graph->setSuc(popNode.second,j);
-                    // cout << "graph->setPre("<<popNode.second<<","<<j<<")"<<endl;
+                    cout << "graph->setPre("<<popNode.second<<","<<j<<")"<<endl;
                     graph->setKey(j,val);
-                    // cout << "graph->setKey("<<j<<","<<val<<")"<<endl;
+                    cout << "graph->setKey("<<j<<","<<val<<")"<<endl;
                     //then increase key <- remeber to modify Map
                     HeapDecreaseKey(pq,graph->pqMap.find(n)->second,val);
                 }
@@ -599,8 +600,8 @@ bool WriteMstCmd::exec(int argc, char **argv) {
     
     }
 
-    // for(int j=0;j<graph->getlength();j++)
-    //     cout << j <<" Pre: " << graph->getPre(j) << endl;
+    for(int j=0;j<graph->getlength();j++)
+        cout << j <<" Pre: " << graph->getPre(j) << endl;
 
 
     //=======print out
