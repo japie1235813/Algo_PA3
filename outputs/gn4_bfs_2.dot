@@ -3,3 +3,8 @@ v0 -- v1 [label = "2"];
 v0 -- v3 [label = "4"];
 v1 -- v2 [label = "5"];
 }
+// vertices = 4
+// edges = 3
+// total_weight = 11
+// runtime = 0sec
+// memory = 11.8789MB

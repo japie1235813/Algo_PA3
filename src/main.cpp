@@ -127,7 +127,9 @@ void initCmds(CmdMgr *mgr) {
   Cmd *writeMstCmd = new WriteMstCmd("write_tree_mst");
   mgr->regCmd(writeMstCmd);
   Cmd *is_spanning_treeCmd = new IsSpanningTreeCmd("is_spanning_tree");
-  mgr->regCmd(is_spanning_treeCmd); 
+  mgr->regCmd(is_spanning_treeCmd);
+
+  // pa4
   
 }
 
