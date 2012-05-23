@@ -28,6 +28,9 @@ public:
 class Graph{
 public:
     Graph(int** tmp,int i);
+    Graph(map<int,map<int,int> > d){
+        dMap = d;
+    }
     void reset();
 
     int getlength(){return length;}
@@ -48,6 +51,7 @@ public:
     map<int,int> sucMap;
     map<int,int> finTimeMap;
     map<Node,int> pqMap;
+    map<int,map<int,int> > dMap;
 
 private:
     int* color;

@@ -149,7 +149,7 @@ bool ReadCmd::exec(int argc, char **argv) {
         }
 
 
-        map<int,map<int,int> > dMap;        
+        map<int,map<int,int> > dMap;
         while(1){
             inFile2 >> tmp ;
             if(strcmp(tmp.c_str(),"}")==0) break;
@@ -169,10 +169,10 @@ bool ReadCmd::exec(int argc, char **argv) {
 
             dMap[pre][suc] = weight;
             dMap[suc][pre] = -1*weight;
-            
+            cout << dMap[pre][suc] << " , " << dMap[suc][pre] << endl;
         }
 
-   
+        graph = new Graph(dMap);
         return true;
     }
     
