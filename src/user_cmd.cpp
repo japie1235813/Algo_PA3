@@ -112,6 +112,10 @@ ReadCmd::ReadCmd(const char * const name) : Cmd(name) {
     opt = new Opt(Opt::STR_REQ, "Read the graph in dot format", "<dot_filename>");
     //opt->addFlag("");   //if not add wouldn't appear upon ??
     optMgr_.regOpt(opt);
+
+    opt = new Opt(Opt::STR_REQ, "Read the directed graph in dot format", "<dot_filename>");
+    opt->addFlag("d");
+    optMgr_.regOpt(opt);
 }
 
 
@@ -127,18 +131,64 @@ bool ReadCmd::exec(int argc, char **argv) {
         return true;
     }
 
-    string tmp = "";
-    int vertexNum = -1;
-    int pre = -1 ,suc = -1;
-    ifstream inFile(argv[1],ios::in);
     char buf[256];
+    string tmp = "";
+
+    //========read -d
+
+    if (optMgr_.getParsedOpt("d")) {
+        if (argc < 2) {
+            fprintf(stderr, "**ERROR SysSetCmd::exec(): ");
+            fprintf(stderr, "variable and value needed\n");
+            return false;
+        }
+        ifstream inFile2(argv[2],ios::in);
+        while(1){
+            inFile2.getline(buf,256);        
+            if(buf[0] != '/' && buf[1] != '/') break;
+        }
+
+
+        map<int,map<int,int> > dMap;        
+        while(1){
+            inFile2 >> tmp ;
+            if(strcmp(tmp.c_str(),"}")==0) break;
+
+            int pre = atoi(tmp.substr(1).c_str());
+
+            inFile2 >> tmp >> tmp;
+            // cout << "tmp: " << tmp << endl;
+            int suc = atoi(tmp.substr(1).c_str());
+            // cout << "(pre,suc) : " << pre <<" " << suc <<endl;
+
+            inFile2.getline(buf,256);
+            string str(buf);
+            int pos = str.find_first_of("\"");
+            int last = str.find_last_of("\"");
+            int weight = atoi(str.substr(pos+1,last-pos-1).c_str());
+
+            dMap[pre][suc] = weight;
+            dMap[suc][pre] = -1*weight;
+            
+        }
+
+   
+        return true;
+    }
+    
+
+
+    ifstream inFile(argv[1],ios::in);
     while(1){
-        inFile.getline(buf,256);
-        // cout << "tmp2:" << buf << endl;
+        inFile.getline(buf,256);        
         if(buf[0] != '/' && buf[1] != '/') break;
     }
 
+    int vertexNum = -1;
+    int pre = -1 ,suc = -1;
+
     tmp = buf;
+
     vertexNum = atoi(tmp.substr(8).c_str());
     // cout << "vertexNum: " << vertexNum <<endl;
     int** matrix = new int*[vertexNum];
@@ -149,8 +199,6 @@ bool ReadCmd::exec(int argc, char **argv) {
         for(int j=0;j<vertexNum;j++)
             matrix[i][j] = NIL;
 
-    // inFile >> tmp;
-    // cout << "tmp0: " << tmp << endl;
     while(1){
         inFile >> tmp ;
         // cout << "tmp1: " << tmp << endl;
@@ -850,4 +898,8 @@ IsSpanningTreeCmd::dfs(int v,map<int,map<int,int> > spanMap,int* visted,int& cou
     count++;
     // cout << v << " count: " << count << endl;
 }
+
+
+
+
 

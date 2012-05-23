@@ -11,6 +11,7 @@
 #include <map>
 #include <iostream>
 #include "../lib/cmd.h"
+#include <fstream>
 
 using namespace std;
 typedef pair<int*,int> Node;
