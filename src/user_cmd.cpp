@@ -149,7 +149,8 @@ bool ReadCmd::exec(int argc, char **argv) {
         }
 
 
-        map<int,map<int,int> > dMap;
+        map<int,map<int,Edge> > dMap;
+
         while(1){
             inFile2 >> tmp ;
             if(strcmp(tmp.c_str(),"}")==0) break;
@@ -166,10 +167,11 @@ bool ReadCmd::exec(int argc, char **argv) {
             int pos = str.find_first_of("\"");
             int last = str.find_last_of("\"");
             int weight = atoi(str.substr(pos+1,last-pos-1).c_str());
-
-            dMap[pre][suc] = weight;
-            dMap[suc][pre] = 0;
-            cout << dMap[pre][suc] << " , " << dMap[suc][pre] << endl;
+            
+            dMap[pre][suc] = Edge(weight,0);
+            dMap[suc][pre] = Edge(0,0);
+            // dMap[suc][pre] = 0;
+            // cout << dMap[pre][suc] << " , " << dMap[suc][pre] << endl;            
         }
 
         graph = new Graph(dMap);
@@ -925,6 +927,8 @@ WriteMaxFlowCmd::WriteMaxFlowCmd(const char * const name) : Cmd(name) {
 
 WriteMaxFlowCmd::~WriteMaxFlowCmd() {}
 
+
+
 bool WriteMaxFlowCmd::exec(int argc, char **argv) {
     optMgr_.parse(argc, argv);
     graph->reset();
@@ -956,62 +960,61 @@ bool WriteMaxFlowCmd::exec(int argc, char **argv) {
         outFile.open(optMgr_.getParsedValue("o"));
     }
 
-    //O(n)
-    map<int,map<int,int> > fMap;
-    map<int,map<int,int> >::iterator it=graph->dMap.begin();
-    for(;it!=graph->dMap.end();it++){
-        // map<int,int>::iterator itm = (*it).second.begin();
-        // fMap[(*it).first][(*itm).first] = 0 ;
-    }
+    //while there exists a path from s to t
+    cout << "lalala" << endl;
+    while(existPath(sourcenode,sinknode)){
+        break;
 
+    } 
 
-    //find a path from s to t Gf
+    return true;
+}
+
+bool WriteMaxFlowCmd::existPath(int sourcenode,int sinknode) {
     list<int> queueList;
+    map<int,int> parent;
+    map<int,bool> visited;
+    int popNode = -1;
+    
     queueList.push_back(sourcenode);
-    int popNode=-1;
+    visited[sourcenode] = true;
+    
+
     while(1){
-        if(queueList.empty() || (popNode==sinknode))
+        if(queueList.empty() || popNode == sinknode )
             break;
         popNode = queueList.front();
         queueList.pop_front();
-        map<int,map<int,int> >::iterator itd = graph->dMap.begin();
-        for(; itd!=graph->dMap.end();itd++){
-            map<int,int>::iterator itd2 = graph->dMap[(*itd).first].begin();
+        cout << "popNode: " << popNode << endl;
 
-            for(;itd2!=(graph->dMap[(*itd).first]).end();itd2++){
-                // if( graph->dMap[popNode][(*itd2)] > 0 ){
-                //     if( graph->getColor((*itd2).first) == -1){ //color:white
-                //         graph->setColor((*itd2).first,0);
-                //         // graph->setDisTime(j,++time);
-                //         // cout << " graph->setPre("<<j<<","<<popNode<<")"<<endl;
-                //         graph->setPre((*itd2).first,popNode);
-                //         queueList.push_back((*itd2).first);
-                //     }
-                // }            
-            }
+        //ex dMap[0], dMap[1]... dMap[(*itd)]
+        map<int,Edge>::iterator itd = graph->dMap[popNode].begin();
+
+        for(;itd != graph->dMap[popNode].end() ;itd++){
+            cout << "(*itd).first: " << (*itd).first << endl;
+            //ex dMap[0][1], dMap[0][2]... dMap[(*itd)][(*itm)]
+            // cout << "find key: " << (*key) << endl;
+            if( ((*itd).second).stream() ){
+                //put succer into list
+                map<int,bool>::iterator key = visited.find((*itd).first);
+                if(key==visited.end()){
+                    queueList.push_back((*itd).first);
+                    visited[(*itd).first] = true;
+                    parent[ (*itd).first ] = popNode;
+                }
+            }            
+        }            
+
+    }
+    //cout path
+    cout << "path found: "<<endl;
+    int node = sinknode;
+    while(1){
+        cout << node ;
+        node = parent[node];
+        if(node == sourcenode){
+            cout << node;
+            break;
         }
     }
-
-    //find path p
-    int v = sinknode;
-    int u = -1;
-    int minimum = 1e9;
-    list<pair<int,int> > path;
-    while(u!=sourcenode){
-        u = graph->getPre(v);
-        minimum = min(graph->dMap[u][v],minimum);
-        pair<int,int> tmp(u,v);
-        path.push_back(tmp);
-        cout << "u: " << u << "  v: " << v << endl;
-        cout << "graph->dMap[" << u << "][" << v << "]= " << graph->dMap[u][v] << endl;
-        cout << "minimum: " << minimum << endl;
-    }
-    int cfp = minimum;
-    list<pair<int,int> >::iterator itp = path.begin();
-    for(;itp!=path.end();itp++){
-        fMap[u][v] = fMap[u][v] + cfp;
-    }
-
-
-    return true;
 }

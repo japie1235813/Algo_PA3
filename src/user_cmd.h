@@ -16,7 +16,6 @@
 using namespace std;
 typedef pair<int*,int> Node;
 
-
 class TestCmd : public CommonNs::Cmd {
 public:
          TestCmd(const char * const name);
@@ -25,10 +24,33 @@ public:
     bool exec(int argc, char **argv);
 };
 
+class Edge{
+public:
+    int capacity;
+    int flow;
+    Edge(){}
+    Edge(int c,int f){ 
+        capacity = c;
+        flow = f;
+    }
+    bool stream(){ 
+        if(capacity-flow > 0)
+            return true;
+        else
+            return false; 
+    }
+    bool isEdge(){
+        if(capacity > 0)
+            return true;
+        else
+            return false; 
+    }
+};
+
 class Graph{
 public:
     Graph(int** tmp,int i);
-    Graph(map<int,map<int,int> > d){
+    Graph(map<int,map<int,Edge> > d){
         dMap = d;
         length = d.size();
         cout << "length: " << length << endl;
@@ -58,7 +80,8 @@ public:
     map<int,int> sucMap;
     map<int,int> finTimeMap;
     map<Node,int> pqMap;
-    map<int,map<int,int> > dMap;
+
+    map<int,map<int,Edge> > dMap;
     
 
 private:
@@ -122,7 +145,10 @@ public:
          ~WriteMaxFlowCmd();
 
     bool exec(int argc, char **argv);
+    bool existPath(int,int);
 };
+
+
 
 #endif
 
