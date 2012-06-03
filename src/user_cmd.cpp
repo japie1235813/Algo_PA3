@@ -168,7 +168,7 @@ bool ReadCmd::exec(int argc, char **argv) {
             int weight = atoi(str.substr(pos+1,last-pos-1).c_str());
 
             dMap[pre][suc] = weight;
-            dMap[suc][pre] = -1*weight;
+            dMap[suc][pre] = 0;
             cout << dMap[pre][suc] << " , " << dMap[suc][pre] << endl;
         }
 
