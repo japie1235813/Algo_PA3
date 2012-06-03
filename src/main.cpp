@@ -130,6 +130,8 @@ void initCmds(CmdMgr *mgr) {
   mgr->regCmd(is_spanning_treeCmd);
 
   // pa4
+  Cmd *write_max_flowCmd = new WriteMaxFlowCmd("write_max_flow");
+  mgr->regCmd(write_max_flowCmd);
   
 }
 

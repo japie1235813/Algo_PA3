@@ -810,15 +810,15 @@ IsSpanningTreeCmd::~IsSpanningTreeCmd() {}
 bool IsSpanningTreeCmd::exec(int argc, char **argv) {
     optMgr_.parse(argc, argv);
 
+    if (optMgr_.getParsedOpt("h")) {
+        optMgr_.usage();
+        return true;
+    }
+
     if (argc < 3) {
         fprintf(stderr, "**ERROR SysSetCmd::exec(): ");
         fprintf(stderr, "variable and value needed\n");
         return false;
-    }
-
-    if (optMgr_.getParsedOpt("h")) {
-        optMgr_.usage();
-        return true;
     }
 
     string tmp;
@@ -899,7 +899,119 @@ IsSpanningTreeCmd::dfs(int v,map<int,map<int,int> > spanMap,int* visted,int& cou
     // cout << v << " count: " << count << endl;
 }
 
+//=====max flow
+
+WriteMaxFlowCmd::WriteMaxFlowCmd(const char * const name) : Cmd(name) {
+    optMgr_.setShortDes("test");
+    optMgr_.setDes("test");
+
+    Opt *opt = new Opt(Opt::BOOL, "print usage", "");
+    opt->addFlag("h");
+    opt->addFlag("help");
+    optMgr_.regOpt(opt);
+
+    opt = new Opt(Opt::STR_REQ, "Perform maximum flow starting from the source node", "<sourcenode>");
+    opt->addFlag("s");
+    optMgr_.regOpt(opt);
+
+    opt = new Opt(Opt::STR_REQ, "Perform maximum flow starting to the sink node", "<sinknode>");
+    opt->addFlag("t");
+    optMgr_.regOpt(opt);
+
+    opt = new Opt(Opt::STR_REQ, "write to a dot file", "<dot_filename>");
+    opt->addFlag("o");
+    optMgr_.regOpt(opt);
+}
+
+WriteMaxFlowCmd::~WriteMaxFlowCmd() {}
+
+bool WriteMaxFlowCmd::exec(int argc, char **argv) {
+    optMgr_.parse(argc, argv);
+    graph->reset();
+
+    if (optMgr_.getParsedOpt("h")) {
+        optMgr_.usage();
+        return true;
+    }
+    if (argc < 7) {
+        fprintf(stderr, "**ERROR SysSetCmd::exec(): ");
+        fprintf(stderr, "variable and value needed\n");
+        return false;
+    }
+    int sourcenode = -1;
+    int sinknode = -1;
+    ofstream outFile;
+    string tmp;
+
+    if (optMgr_.getParsedOpt("s")) {
+        tmp = optMgr_.getParsedValue("s");
+        sourcenode = atoi(tmp.substr(1).c_str());
+    }
+
+    if (optMgr_.getParsedOpt("t")) {
+        tmp = optMgr_.getParsedValue("t");
+        sinknode = atoi(tmp.substr(1).c_str());
+    }
+    if (optMgr_.getParsedOpt("o")) {
+        outFile.open(optMgr_.getParsedValue("o"));
+    }
+
+    //O(n)
+    map<int,map<int,int> > fMap;
+    map<int,map<int,int> >::iterator it=graph->dMap.begin();
+    for(;it!=graph->dMap.end();it++){
+        // map<int,int>::iterator itm = (*it).second.begin();
+        // fMap[(*it).first][(*itm).first] = 0 ;
+    }
 
 
+    //find a path from s to t Gf
+    list<int> queueList;
+    queueList.push_back(sourcenode);
+    int popNode=-1;
+    while(1){
+        if(queueList.empty() || (popNode==sinknode))
+            break;
+        popNode = queueList.front();
+        queueList.pop_front();
+        map<int,map<int,int> >::iterator itd = graph->dMap.begin();
+        for(; itd!=graph->dMap.end();itd++){
+            map<int,int>::iterator itd2 = graph->dMap[(*itd).first].begin();
+
+            for(;itd2!=(graph->dMap[(*itd).first]).end();itd2++){
+                // if( graph->dMap[popNode][(*itd2)] > 0 ){
+                //     if( graph->getColor((*itd2).first) == -1){ //color:white
+                //         graph->setColor((*itd2).first,0);
+                //         // graph->setDisTime(j,++time);
+                //         // cout << " graph->setPre("<<j<<","<<popNode<<")"<<endl;
+                //         graph->setPre((*itd2).first,popNode);
+                //         queueList.push_back((*itd2).first);
+                //     }
+                // }            
+            }
+        }
+    }
+
+    //find path p
+    int v = sinknode;
+    int u = -1;
+    int minimum = 1e9;
+    list<pair<int,int> > path;
+    while(u!=sourcenode){
+        u = graph->getPre(v);
+        minimum = min(graph->dMap[u][v],minimum);
+        pair<int,int> tmp(u,v);
+        path.push_back(tmp);
+        cout << "u: " << u << "  v: " << v << endl;
+        cout << "graph->dMap[" << u << "][" << v << "]= " << graph->dMap[u][v] << endl;
+        cout << "minimum: " << minimum << endl;
+    }
+    int cfp = minimum;
+    list<pair<int,int> >::iterator itp = path.begin();
+    for(;itp!=path.end();itp++){
+        fMap[u][v] = fMap[u][v] + cfp;
+    }
 
 
+    return true;
+}

@@ -30,6 +30,13 @@ public:
     Graph(int** tmp,int i);
     Graph(map<int,map<int,int> > d){
         dMap = d;
+        length = d.size();
+        cout << "length: " << length << endl;
+        color = new int[length];
+        pre = new int[length];
+        disTime = new int[length];
+        finTime = new int[length];
+        key = new int[length];        
     }
     void reset();
 
@@ -52,6 +59,7 @@ public:
     map<int,int> finTimeMap;
     map<Node,int> pqMap;
     map<int,map<int,int> > dMap;
+    
 
 private:
     int* color;
@@ -106,6 +114,14 @@ public:
 
     bool exec(int argc, char **argv);
     void dfs(int v,map<int,map<int,int> > spanMap,int* visted,int& count);
+};
+
+class WriteMaxFlowCmd : public CommonNs::Cmd {
+public:
+         WriteMaxFlowCmd(const char * const name);
+         ~WriteMaxFlowCmd();
+
+    bool exec(int argc, char **argv);
 };
 
 #endif
