@@ -167,9 +167,13 @@ bool ReadCmd::exec(int argc, char **argv) {
             int pos = str.find_first_of("\"");
             int last = str.find_last_of("\"");
             int weight = atoi(str.substr(pos+1,last-pos-1).c_str());
-            
+
             dMap[pre][suc] = Edge(weight,0);
             dMap[suc][pre] = Edge(0,0);
+
+            cout << "weight: " << weight << endl;
+            cout << "dMap["<<pre<<"]["<<suc<<"].capacity: "
+            << dMap[pre][suc].capacity << endl;
             // dMap[suc][pre] = 0;
             // cout << dMap[pre][suc] << " , " << dMap[suc][pre] << endl;            
         }
@@ -962,17 +966,19 @@ bool WriteMaxFlowCmd::exec(int argc, char **argv) {
 
     //while there exists a path from s to t
     cout << "lalala" << endl;
-    while(existPath(sourcenode,sinknode)){
+    map<int,int> parent;
+    while(existPath(sourcenode,sinknode,parent)){
+        int cfp = findMinf(sourcenode,sinknode,parent);
+        cout<<"cfp: " << cfp << endl;
         break;
-
     } 
 
     return true;
 }
 
-bool WriteMaxFlowCmd::existPath(int sourcenode,int sinknode) {
+bool WriteMaxFlowCmd::existPath(int sourcenode,int sinknode,map<int,int> &parent) {
     list<int> queueList;
-    map<int,int> parent;
+    
     map<int,bool> visited;
     int popNode = -1;
     
@@ -1006,15 +1012,52 @@ bool WriteMaxFlowCmd::existPath(int sourcenode,int sinknode) {
         }            
 
     }
+
     //cout path
     cout << "path found: "<<endl;
     int node = sinknode;
     while(1){
-        cout << node ;
+        cout << node << " ";
         node = parent[node];
         if(node == sourcenode){
             cout << node;
             break;
         }
     }
+    cout << endl;
+
+    cout << popNode << endl;
+    if (popNode == sinknode)
+        return true;
+    else
+        return false;
+}
+
+
+int WriteMaxFlowCmd::findMinf(int source,int sink,map<int,int>& parent){
+
+    int minf = 1e9;
+    int node = sink;    
+    int parNode = parent[node];
+    while(1){
+        // cout << "dMap[" << parNode << "][" << node << "].capacity = " 
+        // << (graph->dMap)[parNode][node].capacity << endl;
+        // cout << "dMap[" << parNode << "][" << node << "].flow = " 
+        // << (graph->dMap)[parNode][node].flow << endl;
+
+        if((graph->dMap)[parNode][node].capacity < minf){
+            minf = (graph->dMap)[parNode][node].capacity;
+            cout << "minf: " << minf << endl;
+        }
+        
+        if(parNode == source){
+            return minf;
+            break;
+        }
+
+
+        node = parNode;
+        parNode = parent[node];
+    }    
+
 }

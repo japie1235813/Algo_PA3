@@ -145,7 +145,8 @@ public:
          ~WriteMaxFlowCmd();
 
     bool exec(int argc, char **argv);
-    bool existPath(int,int);
+    bool existPath(int,int,map<int,int>&);
+    int findMinf(int,int,map<int,int>&);
 };
 
 
