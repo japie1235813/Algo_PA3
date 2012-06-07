@@ -1,5 +1,5 @@
-read_graph -d pa4inputs/dg1000.dot
-write_max_flow -s v0 -t v999 -o pa4outputs/dg1000_mf.dot
+read_graph -d pa4inputs/dg6.dot
+write_max_flow -s v0 -t v5 -o pa4outputs/dg6_mf.dot
 exit
 dot -Tpng pa4inputs/dg10.dot -o pa4outputs/dg10.png
 display pa4outputs/dg10.png &

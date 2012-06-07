@@ -1,13 +1,13 @@
         Welcome to GraphLab 
        (c) NTUEE Algorithms 
         V 2012.4  
-/dg10.bat 1> read_graph -d pa4inputs/dg1000.dot
+/dg10.bat 1> read_graph -d pa4inputs/dg100.dot
 
-length: 1000
-/dg10.bat 2> write_max_flow -s v0 -t v999 -o pa4outputs/dg1000_mf.dot
+length: 100
+/dg10.bat 2> write_max_flow -s v0 -t v99 -o pa4outputs/dg100_mf.dot
 
-edge : 1921
-vNum : 858
-maxif : 20940
+edge : 66
+vNum : 40
+maxif : 619
 /dg10.bat 3> exit
 

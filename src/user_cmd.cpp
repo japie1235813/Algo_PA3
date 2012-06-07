@@ -933,6 +933,7 @@ WriteMaxFlowCmd::~WriteMaxFlowCmd() {}
 
 
 bool WriteMaxFlowCmd::exec(int argc, char **argv) {
+    tmusg.periodStart();
     optMgr_.parse(argc, argv);
     graph->reset();
 
@@ -965,14 +966,12 @@ bool WriteMaxFlowCmd::exec(int argc, char **argv) {
 
     //while there exists a path from s to t
     int maxif = 0;
-    while(1){
-        // cout << "lalala" << endl;
+    while(1){        
         map<int,int> parent;
         if(!existPath(sourcenode,sinknode,parent))
             break;
         int cfp = findMinf(sourcenode,sinknode,parent);
-        maxif += cfp;
-        // cout<<"cfp: " << cfp << endl;
+        maxif += cfp;       
         int node = sinknode;
         int parNode = parent[sinknode];
         while(1){
@@ -994,9 +993,29 @@ bool WriteMaxFlowCmd::exec(int argc, char **argv) {
             vNum++; 
 
 
+    //=======print out file  
+    outFile << "digraph dg" << graph->getlength() << "_mf {" << endl;
+    for(int i = 0 ; i < graph->getlength();i++){
+        map<int,Edge>::iterator itd = graph->dMap[i].begin();
+        for(;itd!=graph->dMap[i].end();itd++){
+            int f = (*itd).second.getFlow();
+            if( f > 0)
+                outFile << "v" << i << " -> v" << (*itd).first << " [label = \"" << f << "\"];" << endl;
+        }
+    }TmStat stat;
+    tmusg.getPeriodUsage(stat);
+
+    outFile << "}" << endl;
+    outFile << "// vertices = " << vNum << endl;
+    outFile << "// edges = " << graph->getEdgeNum() << endl;
+    outFile << "// max flow = " << maxif << endl;
+    outFile << "// runtime = " << stat.uTime / 1000.0 << " sec" << endl; // print period user time
+    outFile << "// memory = " << stat.vmPeak / 1024.0 << " MB" << endl; // print peak memory
+    
     cout << "edge : " << graph->getEdgeNum() << endl;
     cout << "vNum : " << vNum << endl;
     cout << "maxif : " << maxif  << endl;
+    outFile.close();
     return true;
 }
 
@@ -1037,21 +1056,6 @@ bool WriteMaxFlowCmd::existPath(int sourcenode,int sinknode,map<int,int> &parent
 
     }
 
-    //====== cout path
-    // cout << "path found: "<<endl;
-    // int node = sinknode;
-    // while(1){
-    //     cout << node << " ";
-    //     node = parent[node];
-    //     if(node == sourcenode){
-    //         cout << node;
-    //         break;
-    //     }
-    // }
-    // cout << endl;
-
-    // cout << "popNode:" << popNode << endl;
-
     int node = sinknode;
     int parNode = parent[node];
     if (popNode == sinknode){
@@ -1084,23 +1088,14 @@ int WriteMaxFlowCmd::findMinf(int source,int sink,map<int,int>& parent){
     int minf = 1e9;
     int node = sink;    
     int parNode = parent[node];
-    while(1){
-        // cout << "dMap[" << parNode << "][" << node << "].capacity = " 
-        // << (graph->dMap)[parNode][node].capacity << endl;
-        // cout << "dMap[" << parNode << "][" << node << "].flow = " 
-        // << (graph->dMap)[parNode][node].flow << endl;
-
+    while(1){        
         if((graph->dMap)[parNode][node].remain() < minf){
-            minf = (graph->dMap)[parNode][node].remain();
-            // cout << "minf: " << minf << endl;
-        }
-        
+            minf = (graph->dMap)[parNode][node].remain();            
+        }        
         if(parNode == source){
             return minf;
             break;
         }
-
-
         node = parNode;
         parNode = parent[node];
     }    

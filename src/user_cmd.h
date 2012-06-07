@@ -50,21 +50,12 @@ public:
         else
             return false; 
     }
-    void addF(int f){        
-        flow += f;        
-    }
-    void subF(int f){        
-        flow -= f;    
-    }
-    int remain(){
-        return capacity - flow;
-    }
-    void setCount(){
-        count = true;
-    }
-    bool getCount(){
-        return count;
-    }
+    void addF(int f){flow += f;}
+    void subF(int f){flow -= f;}
+    int remain(){return capacity - flow;}
+    void setCount(){count = true;}
+    bool getCount(){return count;}
+    int getFlow(){return flow;}    
 };
 
 class Graph{
