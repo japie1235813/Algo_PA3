@@ -169,11 +169,10 @@ bool ReadCmd::exec(int argc, char **argv) {
             int weight = atoi(str.substr(pos+1,last-pos-1).c_str());
 
             dMap[pre][suc] = Edge(weight,0);
-            dMap[suc][pre] = Edge(0,0);
-
-            cout << "weight: " << weight << endl;
-            cout << "dMap["<<pre<<"]["<<suc<<"].capacity: "
-            << dMap[pre][suc].capacity << endl;
+            dMap[suc][pre] = Edge(0,0);            
+            // cout << "weight: " << weight << endl;
+            // cout << "dMap["<<pre<<"]["<<suc<<"].capacity: "
+            // << dMap[pre][suc].capacity << endl;
             // dMap[suc][pre] = 0;
             // cout << dMap[pre][suc] << " , " << dMap[suc][pre] << endl;            
         }
@@ -967,19 +966,17 @@ bool WriteMaxFlowCmd::exec(int argc, char **argv) {
     //while there exists a path from s to t
     int maxif = 0;
     while(1){
-        cout << "lalala" << endl;
+        // cout << "lalala" << endl;
         map<int,int> parent;
         if(!existPath(sourcenode,sinknode,parent))
             break;
         int cfp = findMinf(sourcenode,sinknode,parent);
         maxif += cfp;
-        cout<<"cfp: " << cfp << endl;
+        // cout<<"cfp: " << cfp << endl;
         int node = sinknode;
         int parNode = parent[sinknode];
         while(1){
-            cout << "parNode: " << parNode << " , node: " << node << endl;
-            if((graph->dMap[parNode][node]).isEdge()){
-                cout << "isEdge!!" << endl;
+           if((graph->dMap[parNode][node]).isEdge()){
                 (graph->dMap[parNode][node]).addF(cfp);
             }
             else{
@@ -990,9 +987,15 @@ bool WriteMaxFlowCmd::exec(int argc, char **argv) {
             node = parNode;
             parNode = parent[node];
         }
-        // break;
     } 
+    int vNum = 0;
+    for(int i=0;i<graph->getlength();i++)
+        if(graph->getColor(i) == GRAY)
+            vNum++; 
 
+
+    cout << "edge : " << graph->getEdgeNum() << endl;
+    cout << "vNum : " << vNum << endl;
     cout << "maxif : " << maxif  << endl;
     return true;
 }
@@ -1012,13 +1015,13 @@ bool WriteMaxFlowCmd::existPath(int sourcenode,int sinknode,map<int,int> &parent
             break;
         popNode = queueList.front();
         queueList.pop_front();
-        cout << "popNode: " << popNode << endl;
+        // cout << "popNode: " << popNode << endl;
 
         //ex dMap[0], dMap[1]... dMap[(*itd)]
         map<int,Edge>::iterator itd = graph->dMap[popNode].begin();
 
         for(;itd != graph->dMap[popNode].end() ;itd++){
-            cout << "(*itd).first: " << (*itd).first << endl;
+            // cout << "(*itd).first: " << (*itd).first << endl;
             //ex dMap[0][1], dMap[0][2]... dMap[(*itd)][(*itm)]
             // cout << "find key: " << (*key) << endl;
             if( ((*itd).second).stream() ){
@@ -1035,22 +1038,43 @@ bool WriteMaxFlowCmd::existPath(int sourcenode,int sinknode,map<int,int> &parent
     }
 
     //====== cout path
-    cout << "path found: "<<endl;
-    int node = sinknode;
-    while(1){
-        cout << node << " ";
-        node = parent[node];
-        if(node == sourcenode){
-            cout << node;
-            break;
-        }
-    }
-    cout << endl;
+    // cout << "path found: "<<endl;
+    // int node = sinknode;
+    // while(1){
+    //     cout << node << " ";
+    //     node = parent[node];
+    //     if(node == sourcenode){
+    //         cout << node;
+    //         break;
+    //     }
+    // }
+    // cout << endl;
 
-    cout << "popNode:" << popNode << endl;
-    if (popNode == sinknode)
+    // cout << "popNode:" << popNode << endl;
+
+    int node = sinknode;
+    int parNode = parent[node];
+    if (popNode == sinknode){
+        while(1){
+            if(!((graph->dMap)[parNode][node]).getCount()){
+                ((graph->dMap)[parNode][node]).setCount();
+                graph->setEdgeNum();
+            }
+
+            if(graph->getColor(node) == WHITE)
+                graph->setColor(node,GRAY);
+            
+            if(parNode == sourcenode){               
+                graph->setColor(parNode,GRAY);                
+                break;
+            }
+
+            node = parent[node];
+            parNode = parent[node];            
+        }        
         return true;
-    else
+    }
+    else 
         return false;
 }
 
@@ -1066,9 +1090,9 @@ int WriteMaxFlowCmd::findMinf(int source,int sink,map<int,int>& parent){
         // cout << "dMap[" << parNode << "][" << node << "].flow = " 
         // << (graph->dMap)[parNode][node].flow << endl;
 
-        if((graph->dMap)[parNode][node].capacity < minf){
+        if((graph->dMap)[parNode][node].remain() < minf){
             minf = (graph->dMap)[parNode][node].remain();
-            cout << "minf: " << minf << endl;
+            // cout << "minf: " << minf << endl;
         }
         
         if(parNode == source){

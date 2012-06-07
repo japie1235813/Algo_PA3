@@ -28,38 +28,42 @@ class Edge{
 public:
     int capacity;
     int flow;
+    bool count;
     Edge(){}
     Edge(int c,int f){ 
         capacity = c;
         flow = f;
+        count = false;
     }
     bool stream(){
-        cout << "capacity: " << capacity << endl;
-        cout << "flow: " << flow << endl;
+        // cout << "capacity: " << capacity << endl;
+        // cout << "flow: " << flow << endl;
         if(capacity-flow > 0)
             return true;
         else
             return false; 
     }
     bool isEdge(){
-        cout << "isEdge,capacity: " << capacity << endl;
+        // cout << "isEdge,capacity: " << capacity << endl;
         if(capacity > 0)
             return true;
         else
             return false; 
     }
-    void addF(int f){
-        cout << "flow: " << flow << endl;
-        flow += f;
-        cout << "flow: " << flow << endl;
+    void addF(int f){        
+        flow += f;        
     }
-    void subF(int f){
-        cout << "flow: " << flow << endl;
-        flow -= f;
-        cout << "flow: " << flow << endl;
+    void subF(int f){        
+        flow -= f;    
     }
     int remain(){
         return capacity - flow;
+    }
+    void setCount(){
+        count = true;
+    }
+    bool getCount(){
+        return count;
     }
 };
 
@@ -74,7 +78,9 @@ public:
         pre = new int[length];
         disTime = new int[length];
         finTime = new int[length];
-        key = new int[length];        
+        key = new int[length];   
+        edgeNum = 0;        
+        reset(); 
     }
     void reset();
 
@@ -85,6 +91,7 @@ public:
     int getFinTime(int i){return finTime[i];}
     int getMatrix(int i,int j){return matrix[i][j];}
     int* getKey(int i){return &key[i];}
+    int getEdgeNum(){return edgeNum;}
 
 	void setColor(int i,int x){color[i]=x;}
     void setPre(int i,int x){pre[i]=x;}
@@ -92,6 +99,7 @@ public:
     void setFinTime(int i,int x){finTime[i]=x;}
     void setMatrix(int i,int j,int x){matrix[i][j]=x;}
     void setKey(int i,int x){key[i]=x;}
+    void setEdgeNum(){edgeNum++;}
 
     map<int,int> sucMap;
     map<int,int> finTimeMap;
@@ -108,6 +116,7 @@ private:
 	int** matrix;
     int length;
     int* key;
+    int edgeNum;
 };
 
 class ReadCmd : public CommonNs::Cmd {
