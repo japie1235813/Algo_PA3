@@ -132,6 +132,8 @@ void initCmds(CmdMgr *mgr) {
   // pa4
   Cmd *write_max_flowCmd = new WriteMaxFlowCmd("write_max_flow");
   mgr->regCmd(write_max_flowCmd);
-  
+  Cmd *is_flowCmd = new IsFlowCmd("is_flow");
+  mgr->regCmd(is_flowCmd);
+
 }
 

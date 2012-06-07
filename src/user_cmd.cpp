@@ -954,11 +954,13 @@ bool WriteMaxFlowCmd::exec(int argc, char **argv) {
     if (optMgr_.getParsedOpt("s")) {
         tmp = optMgr_.getParsedValue("s");
         sourcenode = atoi(tmp.substr(1).c_str());
+        graph->setSource(sourcenode);
     }
 
     if (optMgr_.getParsedOpt("t")) {
         tmp = optMgr_.getParsedValue("t");
         sinknode = atoi(tmp.substr(1).c_str());
+        graph->setSink(sinknode);
     }
     if (optMgr_.getParsedOpt("o")) {
         outFile.open(optMgr_.getParsedValue("o"));
@@ -1002,7 +1004,8 @@ bool WriteMaxFlowCmd::exec(int argc, char **argv) {
             if( f > 0)
                 outFile << "v" << i << " -> v" << (*itd).first << " [label = \"" << f << "\"];" << endl;
         }
-    }TmStat stat;
+    }
+    TmStat stat;
     tmusg.getPeriodUsage(stat);
 
     outFile << "}" << endl;
@@ -1012,9 +1015,6 @@ bool WriteMaxFlowCmd::exec(int argc, char **argv) {
     outFile << "// runtime = " << stat.uTime / 1000.0 << " sec" << endl; // print period user time
     outFile << "// memory = " << stat.vmPeak / 1024.0 << " MB" << endl; // print peak memory
     
-    cout << "edge : " << graph->getEdgeNum() << endl;
-    cout << "vNum : " << vNum << endl;
-    cout << "maxif : " << maxif  << endl;
     outFile.close();
     return true;
 }
@@ -1100,4 +1100,89 @@ int WriteMaxFlowCmd::findMinf(int source,int sink,map<int,int>& parent){
         parNode = parent[node];
     }    
 
+}
+
+
+//=====is flow
+
+IsFlowCmd::IsFlowCmd(const char * const name) : Cmd(name) {
+    optMgr_.setShortDes("test");
+    optMgr_.setDes("test");
+
+    Opt *opt = new Opt(Opt::BOOL, "print usage", "Check if the dot file is a flow of the graph. The output is simply Yes or No.");
+    opt->addFlag("h");
+    opt->addFlag("help");
+    optMgr_.regOpt(opt);
+
+    opt = new Opt(Opt::STR_REQ, "Perform maximum flow starting from the source node", "<sourcenode>");
+    opt->addFlag("s");
+    optMgr_.regOpt(opt);
+
+    opt = new Opt(Opt::STR_REQ, "Perform maximum flow starting to the sink node", "<sinknode>");
+    opt->addFlag("t");
+    optMgr_.regOpt(opt);
+
+    opt = new Opt(Opt::STR_REQ, "write to a dot file", "<dot_filename>");
+    opt->addFlag("i");
+    optMgr_.regOpt(opt);
+}
+
+IsFlowCmd::~IsFlowCmd() {}
+
+
+bool IsFlowCmd::exec(int argc, char **argv) {
+    optMgr_.parse(argc, argv);
+    graph->reset();
+
+    if (optMgr_.getParsedOpt("h")) {
+        optMgr_.usage();
+        return true;
+    }
+    if (argc < 3) {
+        fprintf(stderr, "**ERROR SysSetCmd::exec(): ");
+        fprintf(stderr, "variable and value needed\n");
+        return false;
+    }
+
+    ofstream outFile;
+    string tmp;
+
+    if (optMgr_.getParsedOpt("i")) {
+        outFile.open(optMgr_.getParsedValue("i"));
+    }
+
+
+    int* a = new int[graph->getlength()];
+    for(int i=0 ; i < graph->getlength(); i++){
+        a[i] = 0;
+    }
+    for(int i = 0 ; i < graph->getlength();i++){
+        
+        map<int,Edge>::iterator itd = graph->dMap[i].begin();
+        for(;itd!=graph->dMap[i].end();itd++){
+            int f = (*itd).second.getFlow();
+            if( f > 0){
+                a[i] -= f ;
+                a[((*itd).first)] += f ;
+            }
+        }
+    }
+
+    for(int i = 0 ; i < graph->getlength();i++){
+        if( (i != graph->getSource()) && (i != graph->getSink()) ){
+            if(a[i]!=0){
+                cout << "No" << endl;
+                return true;
+            }  
+        }
+    }
+    
+    if(a[graph->getSource()] != - a[graph->getSink()] ){
+        cout << "No" << endl;
+        return true;
+    }
+
+
+    cout << "Yes" << endl;
+    return true;
 }

@@ -83,14 +83,18 @@ public:
     int getMatrix(int i,int j){return matrix[i][j];}
     int* getKey(int i){return &key[i];}
     int getEdgeNum(){return edgeNum;}
+    int getSource(){ return sourcenode;}
+    int getSink(){ return sinknode;}
 
-	void setColor(int i,int x){color[i]=x;}
+    void setColor(int i,int x){color[i]=x;}
     void setPre(int i,int x){pre[i]=x;}
     void setDisTime(int i,int x){disTime[i]=x;}
     void setFinTime(int i,int x){finTime[i]=x;}
     void setMatrix(int i,int j,int x){matrix[i][j]=x;}
     void setKey(int i,int x){key[i]=x;}
     void setEdgeNum(){edgeNum++;}
+    int setSource(int i){sourcenode = i;}
+    int setSink(int i){sinknode = i;}
 
     map<int,int> sucMap;
     map<int,int> finTimeMap;
@@ -108,6 +112,8 @@ private:
     int length;
     int* key;
     int edgeNum;
+    int sourcenode;
+    int sinknode;
 };
 
 class ReadCmd : public CommonNs::Cmd {
@@ -165,6 +171,13 @@ public:
     int findMinf(int,int,map<int,int>&);
 };
 
+class IsFlowCmd : public CommonNs::Cmd {
+public:
+         IsFlowCmd(const char * const name);
+         ~IsFlowCmd();
+
+    bool exec(int argc, char **argv);
+};
 
 
 #endif
