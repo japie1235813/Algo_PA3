@@ -1,0 +1,333 @@
+        Welcome to GraphLab 
+       (c) NTUEE Algorithms 
+        V 2012.4  
+/dg6.bat 1> read_graph -d pa4inputs/dg6.dot
+
+weight: 4
+dMap[0][1].capacity: 4
+weight: 1
+dMap[0][2].capacity: 1
+weight: 3
+dMap[0][3].capacity: 3
+weight: 7
+dMap[1][4].capacity: 7
+weight: 3
+dMap[2][4].capacity: 3
+weight: 5
+dMap[2][5].capacity: 5
+weight: 1
+dMap[3][4].capacity: 1
+weight: 6
+dMap[4][5].capacity: 6
+length: 6
+/dg6.bat 2> write_max_flow -s v0 -t v5 -o pa4outputs/dg6_mf.dot
+
+lalala
+popNode: 0
+(*itd).first: 1
+capacity: 4
+flow: 0
+(*itd).first: 2
+capacity: 1
+flow: 0
+(*itd).first: 3
+capacity: 3
+flow: 0
+popNode: 1
+(*itd).first: 0
+capacity: 0
+flow: 0
+(*itd).first: 4
+capacity: 7
+flow: 0
+popNode: 2
+(*itd).first: 0
+capacity: 0
+flow: 0
+(*itd).first: 4
+capacity: 3
+flow: 0
+(*itd).first: 5
+capacity: 5
+flow: 0
+popNode: 3
+(*itd).first: 0
+capacity: 0
+flow: 0
+(*itd).first: 4
+capacity: 1
+flow: 0
+popNode: 4
+(*itd).first: 1
+capacity: 0
+flow: 0
+(*itd).first: 2
+capacity: 0
+flow: 0
+(*itd).first: 3
+capacity: 0
+flow: 0
+(*itd).first: 5
+capacity: 6
+flow: 0
+popNode: 5
+(*itd).first: 2
+capacity: 0
+flow: 0
+(*itd).first: 4
+capacity: 0
+flow: 0
+path found: 
+5 2 0
+5
+minf: 5
+minf: 1
+cfp: 1
+parNode: 2 , sourcenode: 0
+flow: 0
+flow: 1
+lalala
+popNode: 0
+(*itd).first: 1
+capacity: 4
+flow: 0
+(*itd).first: 2
+capacity: 1
+flow: 1
+(*itd).first: 3
+capacity: 3
+flow: 0
+popNode: 1
+(*itd).first: 0
+capacity: 0
+flow: 0
+(*itd).first: 4
+capacity: 7
+flow: 0
+popNode: 3
+(*itd).first: 0
+capacity: 0
+flow: 0
+(*itd).first: 4
+capacity: 1
+flow: 0
+popNode: 4
+(*itd).first: 1
+capacity: 0
+flow: 0
+(*itd).first: 2
+capacity: 0
+flow: 0
+(*itd).first: 3
+capacity: 0
+flow: 0
+(*itd).first: 5
+capacity: 6
+flow: 0
+popNode: 5
+(*itd).first: 2
+capacity: 0
+flow: 0
+(*itd).first: 4
+capacity: 0
+flow: 0
+path found: 
+5 4 1 0
+5
+minf: 6
+minf: 4
+cfp: 4
+parNode: 4 , sourcenode: 0
+flow: 0
+flow: 4
+parNode: 1 , sourcenode: 0
+flow: 0
+flow: 4
+lalala
+popNode: 0
+(*itd).first: 1
+capacity: 4
+flow: 4
+(*itd).first: 2
+capacity: 1
+flow: 1
+(*itd).first: 3
+capacity: 3
+flow: 0
+(*itd).first: 4
+capacity: 0
+flow: 4
+popNode: 3
+(*itd).first: 0
+capacity: 0
+flow: 0
+(*itd).first: 4
+capacity: 1
+flow: 0
+popNode: 4
+(*itd).first: 0
+capacity: 0
+flow: 0
+(*itd).first: 1
+capacity: 0
+flow: 0
+(*itd).first: 2
+capacity: 0
+flow: 0
+(*itd).first: 3
+capacity: 0
+flow: 0
+(*itd).first: 5
+capacity: 6
+flow: 0
+popNode: 5
+(*itd).first: 2
+capacity: 0
+flow: 0
+(*itd).first: 4
+capacity: 0
+flow: 0
+path found: 
+5 4 3 0
+5
+minf: 6
+minf: 1
+cfp: 1
+parNode: 4 , sourcenode: 0
+flow: 4
+flow: 5
+parNode: 3 , sourcenode: 0
+flow: 0
+flow: 1
+lalala
+popNode: 0
+(*itd).first: 1
+capacity: 4
+flow: 4
+(*itd).first: 2
+capacity: 1
+flow: 1
+(*itd).first: 3
+capacity: 3
+flow: 1
+(*itd).first: 4
+capacity: 0
+flow: 5
+popNode: 3
+(*itd).first: 0
+capacity: 0
+flow: 0
+(*itd).first: 4
+capacity: 1
+flow: 0
+popNode: 4
+(*itd).first: 0
+capacity: 0
+flow: 0
+(*itd).first: 1
+capacity: 0
+flow: 0
+(*itd).first: 2
+capacity: 0
+flow: 0
+(*itd).first: 3
+capacity: 0
+flow: 0
+(*itd).first: 5
+capacity: 6
+flow: 0
+popNode: 5
+(*itd).first: 2
+capacity: 0
+flow: 0
+(*itd).first: 4
+capacity: 0
+flow: 0
+path found: 
+5 4 3 0
+5
+minf: 6
+minf: 1
+cfp: 1
+parNode: 4 , sourcenode: 0
+flow: 5
+flow: 6
+parNode: 3 , sourcenode: 0
+flow: 1
+flow: 2
+lalala
+popNode: 0
+(*itd).first: 1
+capacity: 4
+flow: 4
+(*itd).first: 2
+capacity: 1
+flow: 1
+(*itd).first: 3
+capacity: 3
+flow: 2
+(*itd).first: 4
+capacity: 0
+flow: 6
+popNode: 3
+(*itd).first: 0
+capacity: 0
+flow: 0
+(*itd).first: 4
+capacity: 1
+flow: 0
+popNode: 4
+(*itd).first: 0
+capacity: 0
+flow: 0
+(*itd).first: 1
+capacity: 0
+flow: 0
+(*itd).first: 2
+capacity: 0
+flow: 0
+(*itd).first: 3
+capacity: 0
+flow: 0
+(*itd).first: 5
+capacity: 6
+flow: 0
+popNode: 5
+(*itd).first: 2
+capacity: 0
+flow: 0
+(*itd).first: 4
+capacity: 0
+flow: 0
+path found: 
+5 4 3 0
+5
+minf: 6
+minf: 1
+cfp: 1
+parNode: 4 , sourcenode: 0
+flow: 6
+flow: 7
+parNode: 3 , sourcenode: 0
+flow: 2
+flow: 3
+lalala
+popNode: 0
+(*itd).first: 1
+capacity: 4
+flow: 4
+(*itd).first: 2
+capacity: 1
+flow: 1
+(*itd).first: 3
+capacity: 3
+flow: 3
+(*itd).first: 4
+capacity: 0
+flow: 7
+path found: 
+5 0
+0
+maxif : 8
+/dg6.bat 3> exit
+

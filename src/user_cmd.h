@@ -33,17 +33,33 @@ public:
         capacity = c;
         flow = f;
     }
-    bool stream(){ 
+    bool stream(){
+        cout << "capacity: " << capacity << endl;
+        cout << "flow: " << flow << endl;
         if(capacity-flow > 0)
             return true;
         else
             return false; 
     }
     bool isEdge(){
+        cout << "isEdge,capacity: " << capacity << endl;
         if(capacity > 0)
             return true;
         else
             return false; 
+    }
+    void addF(int f){
+        cout << "flow: " << flow << endl;
+        flow += f;
+        cout << "flow: " << flow << endl;
+    }
+    void subF(int f){
+        cout << "flow: " << flow << endl;
+        flow -= f;
+        cout << "flow: " << flow << endl;
+    }
+    int remain(){
+        return capacity - flow;
     }
 };
 

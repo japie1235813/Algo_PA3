@@ -965,14 +965,35 @@ bool WriteMaxFlowCmd::exec(int argc, char **argv) {
     }
 
     //while there exists a path from s to t
-    cout << "lalala" << endl;
-    map<int,int> parent;
-    while(existPath(sourcenode,sinknode,parent)){
+    int maxif = 0;
+    while(1){
+        cout << "lalala" << endl;
+        map<int,int> parent;
+        if(!existPath(sourcenode,sinknode,parent))
+            break;
         int cfp = findMinf(sourcenode,sinknode,parent);
+        maxif += cfp;
         cout<<"cfp: " << cfp << endl;
-        break;
+        int node = sinknode;
+        int parNode = parent[sinknode];
+        while(1){
+            cout << "parNode: " << parNode << " , node: " << node << endl;
+            if((graph->dMap[parNode][node]).isEdge()){
+                cout << "isEdge!!" << endl;
+                (graph->dMap[parNode][node]).addF(cfp);
+            }
+            else{
+                (graph->dMap[node][parNode]).addF(cfp);
+            }            
+            if(parNode == sourcenode)
+                break;
+            node = parNode;
+            parNode = parent[node];
+        }
+        // break;
     } 
 
+    cout << "maxif : " << maxif  << endl;
     return true;
 }
 
@@ -1013,7 +1034,7 @@ bool WriteMaxFlowCmd::existPath(int sourcenode,int sinknode,map<int,int> &parent
 
     }
 
-    //cout path
+    //====== cout path
     cout << "path found: "<<endl;
     int node = sinknode;
     while(1){
@@ -1026,7 +1047,7 @@ bool WriteMaxFlowCmd::existPath(int sourcenode,int sinknode,map<int,int> &parent
     }
     cout << endl;
 
-    cout << popNode << endl;
+    cout << "popNode:" << popNode << endl;
     if (popNode == sinknode)
         return true;
     else
@@ -1046,7 +1067,7 @@ int WriteMaxFlowCmd::findMinf(int source,int sink,map<int,int>& parent){
         // << (graph->dMap)[parNode][node].flow << endl;
 
         if((graph->dMap)[parNode][node].capacity < minf){
-            minf = (graph->dMap)[parNode][node].capacity;
+            minf = (graph->dMap)[parNode][node].remain();
             cout << "minf: " << minf << endl;
         }
         
