@@ -963,7 +963,8 @@ bool WriteMaxFlowCmd::exec(int argc, char **argv) {
         graph->setSink(sinknode);
     }
     if (optMgr_.getParsedOpt("o")) {
-        outFile.open(optMgr_.getParsedValue("o"));
+        tmp = optMgr_.getParsedValue("o");
+        outFile.open(tmp.c_str());
     }
 
     //while there exists a path from s to t
@@ -995,7 +996,8 @@ bool WriteMaxFlowCmd::exec(int argc, char **argv) {
             vNum++; 
 
 
-    //=======print out file  
+    //=======print out file
+    cout << "here write out files..." << endl;
     outFile << "digraph dg" << graph->getlength() << "_mf {" << endl;
     for(int i = 0 ; i < graph->getlength();i++){
         map<int,Edge>::iterator itd = graph->dMap[i].begin();
